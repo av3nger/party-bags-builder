@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-5" data-wp-bind--hidden="context.currentStep !== 5">
+<div class="pbb-step pbb-step-5" data-wp-context='{"stepNumber": 5}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Enter Kids Names', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">
@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 			// For now, render a reasonable number server-side (e.g., 10) and let JS handle more.
 			for ( $i = 0; $i < 10; $i++ ) :
 				?>
-				<div class="pbb-name-input-wrapper" data-wp-bind--hidden="<?php echo esc_attr( $i ); ?> >= context.kidCount">
+				<div class="pbb-name-input-wrapper" data-wp-bind--hidden="<?php echo esc_attr( $i ); ?> >= state.kidCount">
 					<label for="pbb-kid-name-<?php echo esc_attr( $i ); ?>" class="pbb-name-label">
 						<?php
 						/* translators: %d: kid number */
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 						pattern="[A-Za-z0-9 ]+"
 						data-index="<?php echo esc_attr( $i ); ?>"
 						data-wp-on--input="actions.updateKidName"
-						data-wp-bind--value="context.kidNames[<?php echo esc_attr( $i ); ?>] || ''"
+						data-wp-bind--value="state.kidNames[<?php echo esc_attr( $i ); ?>] || ''"
 						placeholder="<?php esc_attr_e( 'Enter name...', 'party-bag-builder' ); ?>"
 					/>
 				</div>
@@ -49,7 +49,7 @@ defined( 'ABSPATH' ) || exit;
 
 			<!-- Additional inputs for 11-50 (rendered conditionally) -->
 			<?php for ( $i = 10; $i < 50; $i++ ) : ?>
-				<div class="pbb-name-input-wrapper" data-wp-bind--hidden="<?php echo esc_attr( $i ); ?> >= context.kidCount">
+				<div class="pbb-name-input-wrapper" data-wp-bind--hidden="<?php echo esc_attr( $i ); ?> >= state.kidCount">
 					<label for="pbb-kid-name-<?php echo esc_attr( $i ); ?>" class="pbb-name-label">
 						<?php
 						/* translators: %d: kid number */
@@ -64,16 +64,16 @@ defined( 'ABSPATH' ) || exit;
 						pattern="[A-Za-z0-9 ]+"
 						data-index="<?php echo esc_attr( $i ); ?>"
 						data-wp-on--input="actions.updateKidName"
-						data-wp-bind--value="context.kidNames[<?php echo esc_attr( $i ); ?>] || ''"
+						data-wp-bind--value="state.kidNames[<?php echo esc_attr( $i ); ?>] || ''"
 						placeholder="<?php esc_attr_e( 'Enter name...', 'party-bag-builder' ); ?>"
 					/>
 				</div>
 			<?php endfor; ?>
 		</div>
 
-		<div class="pbb-validation-message" data-wp-bind--hidden="context.errors.length === 0">
+		<div class="pbb-validation-message" data-wp-bind--hidden="state.errors.length === 0">
 			<span class="pbb-error-icon">⚠️</span>
-			<span data-wp-text="context.errors[0]"></span>
+			<span data-wp-text="state.errors[0]"></span>
 		</div>
 
 		<div class="pbb-step-navigation">

@@ -141,7 +141,17 @@
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 	gap: 1.5rem;
-	margin-bottom: 2rem;
+	margin: 0 -12rem 2rem;
+}
+
+.pbb-preview-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 1.5rem;
+}
+
+.pbb-product-image {
+	width: 100%;
 }
 
 .pbb-tier-card {
@@ -193,7 +203,11 @@
 	.pbb-tier-features {
 		margin: 0;
 		padding: 0;
-		list-style: none;
+
+		ul {
+			list-style: none;
+			margin-left: -2rem;
+		}
 
 		li {
 			padding: 0.5rem 0 0.5rem 1.5rem;
@@ -207,6 +221,10 @@
 				left: 0;
 				color: #46b450;
 				font-weight: 600;
+			}
+
+			&:last-of-type::before {
+				content: '+';
 			}
 		}
 	}
@@ -310,7 +328,8 @@
 		}
 	}
 
-	.pbb-tier-grid {
+	.pbb-tier-grid,
+	.pbb-preview-grid {
 		grid-template-columns: 1fr;
 	}
 

@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-3" data-wp-bind--hidden="context.currentStep !== 3">
+<div class="pbb-step pbb-step-3" data-wp-context='{"stepNumber": 3}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Select Your Toys', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">
@@ -20,9 +20,9 @@ defined( 'ABSPATH' ) || exit;
 		<div class="pbb-selection-counter">
 			<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>
 			<span class="pbb-counter-value">
-				<span data-wp-text="context.selectedToys.length">0</span>
+				<span data-wp-text="state.selectedToys.length">0</span>
 				<?php esc_html_e( ' of ', 'party-bag-builder' ); ?>
-				<span data-wp-text="context.tierConfig?.includes?.toys || 0">0</span>
+				<span data-wp-text="state.maxToysAllowed">0</span>
 			</span>
 		</div>
 
@@ -40,8 +40,8 @@ defined( 'ABSPATH' ) || exit;
 								class="pbb-product-checkbox"
 								value="<?php echo esc_attr( $toy['id'] ); ?>"
 								data-wp-on--change="actions.toggleToy"
-								data-wp-bind--checked="context.selectedToys.includes(<?php echo esc_attr( $toy['id'] ); ?>)"
-								data-wp-bind--disabled="!context.selectedToys.includes(<?php echo esc_attr( $toy['id'] ); ?>) && context.selectedToys.length >= (context.tierConfig?.includes?.toys || 0)"
+								data-wp-bind--checked="state.selectedToys.includes(<?php echo esc_attr( $toy['id'] ); ?>)"
+								data-wp-bind--disabled="!state.selectedToys.includes(<?php echo esc_attr( $toy['id'] ); ?>) && state.selectedToys.length >= state.maxToysAllowed"
 							/>
 
 							<span class="pbb-product-content">
@@ -99,7 +99,7 @@ defined( 'ABSPATH' ) || exit;
 				type="button"
 				class="pbb-button pbb-button-primary pbb-button-next"
 				data-wp-on--click="actions.nextStep"
-				data-wp-bind--disabled="context.selectedToys.length !== (context.tierConfig?.includes?.toys || 0)"
+				data-wp-bind--disabled="state.selectedToys.length !== state.maxToysAllowed"
 			>
 				<?php esc_html_e( 'Next Step', 'party-bag-builder' ); ?>
 				<span class="pbb-button-icon">→</span>

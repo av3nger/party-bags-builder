@@ -12,16 +12,16 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import Edit from './edit';
+import edit from './edit';
 import block from './block.json';
 
 import './editor.scss';
-import './wizard.scss';
+import './style.scss';
 
 /**
  * Register the block.
  */
 registerBlockType( block, {
-	edit: Edit,
+	edit,
 	save: () => null,
 } );

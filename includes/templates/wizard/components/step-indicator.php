@@ -24,8 +24,9 @@ $step_labels = array(
 		<?php for ( $i = 1; $i <= 6; $i++ ) : ?>
 			<div
 				class="pbb-step-indicator-item"
-				data-wp-class--active="<?php echo esc_attr( "context.currentStep === $i" ); ?>"
-				data-wp-class--completed="<?php echo esc_attr( "context.currentStep > $i" ); ?>"
+				data-wp-context='{"stepNumber": <?php echo esc_js( $i ); ?>}'
+				data-wp-class--active="state.isCurrentStep"
+				data-wp-class--completed="state.isStepCompleted"
 			>
 				<span class="pbb-step-number"><?php echo esc_html( $i ); ?></span>
 				<span class="pbb-step-label"><?php echo esc_html( $step_labels[ $i ] ); ?></span>

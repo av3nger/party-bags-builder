@@ -15,12 +15,13 @@
 	],
 	"supports": {
 		"html": false,
+		"interactivity": true,
 		"multiple": false
 	},
 	"textdomain": "party-bag-builder",
 	"render": "file:./render.php",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./editor.css",
-	"style": "file:./wizard.css",
-	"viewScriptModule": "file:./store.js"
+	"style": "file:./style-index.css",
+	"viewScriptModule": "file:./view.js"
 }

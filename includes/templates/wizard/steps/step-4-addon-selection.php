@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-4" data-wp-bind--hidden="context.currentStep !== 4">
+<div class="pbb-step pbb-step-4" data-wp-context='{"stepNumber": 4}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Add Extra Goodies (Optional)', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">
@@ -20,13 +20,13 @@ defined( 'ABSPATH' ) || exit;
 		<div class="pbb-selection-counter">
 			<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>
 			<span class="pbb-counter-value">
-				<span data-wp-text="context.selectedAddons.length">0</span>
+				<span data-wp-text="state.selectedAddons.length">0</span>
 				<?php esc_html_e( ' of ', 'party-bag-builder' ); ?>
-				<span data-wp-text="context.tierConfig?.includes?.max_addons || 0">0</span>
+				<span data-wp-text="state.maxAddonsAllowed">0</span>
 				<?php esc_html_e( ' max', 'party-bag-builder' ); ?>
 			</span>
-			<span class="pbb-free-addons" data-wp-bind--hidden="!(context.tierConfig?.includes?.free_addons > 0)">
-				(<span data-wp-text="context.tierConfig?.includes?.free_addons || 0">0</span>
+			<span class="pbb-free-addons" data-wp-bind--hidden="!state.freeAddonsAllowed">
+				(<span data-wp-text="state.freeAddonsAllowed">0</span>
 				<?php esc_html_e( ' FREE', 'party-bag-builder' ); ?>)
 			</span>
 		</div>
@@ -41,8 +41,8 @@ defined( 'ABSPATH' ) || exit;
 								class="pbb-product-checkbox"
 								value="<?php echo esc_attr( $addon['id'] ); ?>"
 								data-wp-on--change="actions.toggleAddon"
-								data-wp-bind--checked="context.selectedAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>)"
-								data-wp-bind--disabled="!context.selectedAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>) && context.selectedAddons.length >= (context.tierConfig?.includes?.max_addons || 0)"
+								data-wp-bind--checked="state.selectedAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>)"
+								data-wp-bind--disabled="!state.selectedAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>) && state.selectedAddons.length >= state.maxAddonsAllowed"
 							/>
 
 							<span class="pbb-product-content">
@@ -69,7 +69,7 @@ defined( 'ABSPATH' ) || exit;
 											?>
 										</span>
 										<!-- This will be shown dynamically if addon is marked free -->
-										<span class="pbb-free-indicator" data-wp-bind--hidden="!context.priceBreakdown.freeAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>)">
+										<span class="pbb-free-indicator" data-wp-bind--hidden="!state.priceBreakdown.freeAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>)">
 											<?php esc_html_e( 'FREE (included)', 'party-bag-builder' ); ?>
 										</span>
 									</div>
@@ -98,7 +98,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<!-- Tag Style Selection (shown when applicable) -->
 		<?php if ( ! empty( $context['tag_styles'] ) ) : ?>
-			<div class="pbb-tag-style-section" data-wp-bind--hidden="context.selectedAddons.length === 0">
+			<div class="pbb-tag-style-section" data-wp-bind--hidden="state.selectedAddons.length === 0">
 				<h3 class="pbb-subsection-title"><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h3>
 				<p class="pbb-subsection-description">
 					<?php esc_html_e( 'Select a color style for personalized name tags', 'party-bag-builder' ); ?>
@@ -108,8 +108,9 @@ defined( 'ABSPATH' ) || exit;
 					<?php foreach ( $context['tag_styles'] as $style ) : ?>
 						<div
 							class="pbb-tag-style-card"
+							data-wp-context='{"tagStyleId": "<?php echo esc_js( $style['id'] ); ?>"}'
 							data-wp-on--click="actions.setTagStyle"
-							data-wp-class--selected="context.selectedTagStyle === '<?php echo esc_attr( $style['id'] ); ?>'"
+							data-wp-class--selected="state.isTagStyleSelected"
 							data-tag-style-id="<?php echo esc_attr( $style['id'] ); ?>"
 						>
 							<?php if ( ! empty( $style['preview_url'] ) ) : ?>
