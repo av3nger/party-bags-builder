@@ -76,8 +76,8 @@ if ( empty( $party_bag_data ) ) {
 							<?php
 							$free_addons = $party_bag_data['price_breakdown']['free_addons'] ?? array();
 							foreach ( $party_bag_data['selected_addons'] as $item ) :
-								$addon_id   = absint( $item['id'] );
-								$is_free    = in_array( $addon_id, $free_addons, true );
+								$addon_id = absint( $item['id'] );
+								$is_free  = in_array( $addon_id, $free_addons, true );
 								?>
 								<li>
 									<?php echo esc_html( $item['name'] ); ?>
@@ -134,9 +134,9 @@ if ( empty( $party_bag_data ) ) {
 							<tr>
 								<td>
 									<?php
-									/* translators: 1: tier name, 2: kid count */
 									echo esc_html(
 										sprintf(
+											/* translators: 1: tier name, 2: kid count */
 											__( '%1$s tier × %2$d kids:', 'party-bag-builder' ),
 											ucfirst( $party_bag_data['tier'] ?? '' ),
 											absint( $party_bag_data['kid_count'] )

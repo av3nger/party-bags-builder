@@ -12,35 +12,35 @@ defined( 'ABSPATH' ) || exit;
 
 // Prepare initial state for Interactivity API.
 $initial_state = array(
-	'currentStep'    => 1,
-	'totalSteps'     => 6,
-	'kidCount'       => 0,
-	'selectedTier'   => null,
-	'tierConfig'     => null,
-	'commonItems'    => $context['common_items'],
-	'selectedToys'   => array(),
-	'selectedAddons' => array(),
+	'currentStep'      => 1,
+	'totalSteps'       => 6,
+	'kidCount'         => 0,
+	'selectedTier'     => null,
+	'tierConfig'       => null,
+	'commonItems'      => $context['common_items'],
+	'selectedToys'     => array(),
+	'selectedAddons'   => array(),
 	'selectedTagStyle' => null,
-	'kidNames'       => array(),
-	'priceBreakdown' => array(
+	'kidNames'         => array(),
+	'priceBreakdown'   => array(
 		'base'   => 0,
 		'addons' => 0,
 		'total'  => 0,
 	),
-	'isLoading'      => false,
-	'errors'         => array(),
+	'isLoading'        => false,
+	'errors'           => array(),
 );
 
 // Encode context for JavaScript.
 $context_json = wp_json_encode(
 	array(
-		'state' => $initial_state,
-		'tiers' => $context['tiers'],
+		'state'     => $initial_state,
+		'tiers'     => $context['tiers'],
 		'tagStyles' => $context['tag_styles'],
-		'toys'  => $context['toys'],
-		'addons' => $context['addons'],
-		'restUrl' => $context['rest_url'],
-		'nonce' => $context['nonce'],
+		'toys'      => $context['toys'],
+		'addons'    => $context['addons'],
+		'restUrl'   => $context['rest_url'],
+		'nonce'     => $context['nonce'],
 	)
 );
 ?>

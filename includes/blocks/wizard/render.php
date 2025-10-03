@@ -42,4 +42,4 @@ foreach ( $context['tag_styles'] as &$style ) {
 }
 
 // Include the wizard container template.
-require_once PBB_PLUGIN_DIR . 'templates/wizard-container.php';
+require_once PBB_PLUGIN_DIR . 'includes/templates/wizard-container.php';

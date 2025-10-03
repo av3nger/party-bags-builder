@@ -65,7 +65,7 @@ final class Order_Handler {
 		}
 
 		// Load template.
-		$template_path = PBB_PLUGIN_DIR . 'templates/admin/order-meta-display.php';
+		$template_path = PBB_PLUGIN_DIR . 'includes/templates/admin/order-meta-display.php';
 
 		if ( file_exists( $template_path ) ) {
 			include $template_path;
