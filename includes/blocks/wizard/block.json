@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "party-bag-builder/wizard",
+	"version": "1.0.0",
+	"title": "Party Bag Builder",
+	"category": "widgets",
+	"icon": "cart",
+	"description": "Interactive wizard for building custom party bags",
+	"keywords": [
+		"party",
+		"bag",
+		"builder",
+		"wizard"
+	],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"textdomain": "party-bag-builder",
+	"render": "file:./render.php",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./wizard.css",
+	"viewScriptModule": "file:./store.js"
+}

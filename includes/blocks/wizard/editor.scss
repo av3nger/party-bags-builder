@@ -1,0 +1,45 @@
+/**
+ * Editor Styles
+ *
+ * Styles for the Party Bag Builder block in the WordPress editor.
+ */
+
+.pbb-editor-placeholder {
+	padding: 2rem;
+	border: 2px dashed #ddd;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	text-align: center;
+
+	.pbb-editor-message {
+		margin-bottom: 2rem;
+
+		.dashicons {
+			width: 48px;
+			height: 48px;
+			font-size: 48px;
+			color: #0073aa;
+			margin-bottom: 1rem;
+		}
+
+		h3 {
+			margin: 0 0 0.5rem;
+			font-size: 1.5rem;
+			color: #23282d;
+		}
+
+		p {
+			margin: 0;
+			font-size: 0.875rem;
+			color: #666;
+		}
+	}
+
+	.pbb-editor-preview {
+		margin-top: 2rem;
+		padding: 1.5rem;
+		background: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+	}
+}

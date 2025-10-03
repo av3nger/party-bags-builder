@@ -1,0 +1,324 @@
+/**
+ * Wizard Styles
+ *
+ * Frontend styles for the Party Bag Builder wizard.
+ */
+
+.pbb-wizard-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 2rem 1rem;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+.pbb-wizard-wrapper {
+	position: relative;
+}
+
+// Step Indicator
+.pbb-step-indicator {
+	margin-bottom: 3rem;
+	padding-bottom: 2rem;
+	border-bottom: 2px solid #f1f1f1;
+
+	&-inner {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	&-item {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+		position: relative;
+		cursor: default;
+
+		&.active {
+			.pbb-step-number {
+				background-color: #0073aa;
+				color: #fff;
+				border-color: #0073aa;
+			}
+
+			.pbb-step-label {
+				color: #0073aa;
+				font-weight: 600;
+			}
+		}
+
+		&.completed {
+			.pbb-step-number {
+				background-color: #46b450;
+				color: #fff;
+				border-color: #46b450;
+
+				&::after {
+					content: '✓';
+				}
+			}
+		}
+	}
+
+	.pbb-step-number {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background-color: #fff;
+		border: 2px solid #ddd;
+		color: #666;
+		font-weight: 600;
+		font-size: 1rem;
+		transition: all 0.3s ease;
+	}
+
+	.pbb-step-label {
+		font-size: 0.875rem;
+		color: #666;
+		text-align: center;
+		transition: all 0.3s ease;
+	}
+}
+
+// Wizard Steps
+.pbb-wizard-content {
+	min-height: 400px;
+}
+
+.pbb-wizard-step {
+	&[hidden] {
+		display: none;
+	}
+
+	h2 {
+		margin: 0 0 0.5rem;
+		font-size: 2rem;
+		color: #23282d;
+	}
+
+	.pbb-step-description {
+		margin: 0 0 2rem;
+		font-size: 1rem;
+		color: #666;
+	}
+}
+
+// Kid Count Input
+.pbb-kid-count-input {
+	margin: 2rem 0;
+
+	input[type="number"] {
+		width: 100%;
+		max-width: 200px;
+		padding: 1rem;
+		font-size: 1.5rem;
+		text-align: center;
+		border: 2px solid #ddd;
+		border-radius: 8px;
+		transition: border-color 0.3s ease;
+
+		&:focus {
+			outline: none;
+			border-color: #0073aa;
+		}
+	}
+
+	label {
+		display: block;
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		color: #666;
+	}
+}
+
+// Tier Grid
+.pbb-tier-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.pbb-tier-card {
+	padding: 2rem;
+	background: #fff;
+	border: 2px solid #ddd;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+
+	&:hover {
+		border-color: #0073aa;
+		box-shadow: 0 4px 12px rgba(0, 115, 170, 0.1);
+		transform: translateY(-2px);
+	}
+
+	&.selected {
+		border-color: #0073aa;
+		background-color: #f0f7fa;
+		box-shadow: 0 4px 12px rgba(0, 115, 170, 0.15);
+	}
+
+	.pbb-tier-name {
+		margin: 0 0 1rem;
+		font-size: 1.5rem;
+		color: #23282d;
+	}
+
+	.pbb-tier-price {
+		margin-bottom: 1rem;
+		font-size: 2rem;
+		font-weight: 700;
+		color: #0073aa;
+
+		.pbb-tier-price-label {
+			display: block;
+			font-size: 0.875rem;
+			font-weight: 400;
+			color: #666;
+		}
+	}
+
+	.pbb-tier-description {
+		margin: 0 0 1rem;
+		font-size: 0.875rem;
+		color: #666;
+	}
+
+	.pbb-tier-features {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			padding: 0.5rem 0 0.5rem 1.5rem;
+			position: relative;
+			font-size: 0.875rem;
+			color: #333;
+
+			&::before {
+				content: '✓';
+				position: absolute;
+				left: 0;
+				color: #46b450;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+// Step Navigation
+.pbb-step-navigation {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: 2rem;
+	padding-top: 2rem;
+	border-top: 2px solid #f1f1f1;
+}
+
+// Buttons
+.pbb-button {
+	padding: 1rem 2rem;
+	font-size: 1rem;
+	font-weight: 600;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&-primary {
+		background-color: #0073aa;
+		color: #fff;
+
+		&:not(:disabled):hover {
+			background-color: #005a87;
+		}
+	}
+
+	&-secondary {
+		background-color: #f1f1f1;
+		color: #23282d;
+
+		&:not(:disabled):hover {
+			background-color: #ddd;
+		}
+	}
+}
+
+// Price Display
+.pbb-price-display {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #fff;
+	border-top: 2px solid #ddd;
+	box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+	z-index: 100;
+
+	&[hidden] {
+		display: none;
+	}
+
+	&-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 1rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.pbb-price-label {
+		font-size: 1rem;
+		color: #666;
+	}
+
+	.pbb-price-amount {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #0073aa;
+	}
+}
+
+// Responsive
+@media (max-width: 768px) {
+	.pbb-step-indicator {
+		&-inner {
+			gap: 0.5rem;
+		}
+
+		.pbb-step-number {
+			width: 32px;
+			height: 32px;
+			font-size: 0.875rem;
+		}
+
+		.pbb-step-label {
+			font-size: 0.75rem;
+		}
+	}
+
+	.pbb-tier-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.pbb-step-navigation {
+		flex-direction: column-reverse;
+
+		.pbb-button {
+			width: 100%;
+		}
+	}
+}
