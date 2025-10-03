@@ -1,17 +1,17 @@
 {
   "name": "party-bag-builder",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "party-bag-builder.php",
   "scripts": {
     "build": "wp-scripts build",
     "start": "wp-scripts start",
     "lint:js": "wp-scripts lint-js",
     "format": "wp-scripts format"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["plugin", "wordperss"],
+  "author": "vCore Digital",
+  "license": "MIT",
+  "description": "Party bag builder WordPress plugin",
   "devDependencies": {
     "@wordpress/scripts": "^30.25.0"
   },
