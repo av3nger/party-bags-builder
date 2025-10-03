@@ -13,32 +13,33 @@ defined( 'ABSPATH' ) || exit;
 // Prepare context for Interactivity API.
 $interactive_context = array(
 	// State.
-	'currentStep'      => 1,
-	'totalSteps'       => 6,
-	'kidCount'         => 0,
-	'selectedTier'     => null,
-	'tierConfig'       => null,
-	'selectedToys'     => array(),
-	'selectedAddons'   => array(),
-	'selectedTagStyle' => null,
-	'kidNames'         => array(),
-	'priceBreakdown'   => array(
+	'currentStep'        => 1,
+	'totalSteps'         => 6,
+	'kidCount'           => 0,
+	'selectedTier'       => null,
+	'tierConfig'         => null,
+	'selectedToys'       => array(),
+	'selectedAddons'     => array(),
+	'selectedTagStyle'   => null,
+	'kidNames'           => array(),
+	'priceBreakdown'     => array(
 		'base'       => 0,
 		'addons'     => 0,
 		'total'      => 0,
 		'freeAddons' => array(),
 		'paidAddons' => array(),
 	),
-	'isLoading'        => false,
-	'errors'           => array(),
+	'showPriceBreakdown' => false,
+	'isLoading'          => false,
+	'errors'             => array(),
 	// Data.
-	'tiers'            => $context['tiers'],
-	'tag_styles'       => $context['tag_styles'],
-	'common_items'     => $context['common_items'],
-	'toys'             => $context['toys'],
-	'addons'           => $context['addons'],
-	'rest_url'         => $context['rest_url'],
-	'nonce'            => $context['nonce'],
+	'tiers'              => $context['tiers'],
+	'tag_styles'         => $context['tag_styles'],
+	'common_items'       => $context['common_items'],
+	'toys'               => $context['toys'],
+	'addons'             => $context['addons'],
+	'rest_url'           => $context['rest_url'],
+	'nonce'              => $context['nonce'],
 );
 
 // Encode context for JavaScript.
@@ -52,32 +53,7 @@ $context_json = wp_json_encode( $interactive_context );
 >
 	<div class="pbb-wizard-wrapper">
 		<!-- Step Indicator -->
-		<div class="pbb-step-indicator">
-			<div class="pbb-step-indicator-inner">
-				<?php for ( $i = 1; $i <= 6; $i++ ) : ?>
-					<div
-						class="pbb-step-indicator-item"
-						data-wp-class--active="<?php echo esc_attr( "context.currentStep === $i" ); ?>"
-						data-wp-class--completed="<?php echo esc_attr( "context.currentStep > $i" ); ?>"
-					>
-						<span class="pbb-step-number"><?php echo esc_html( $i ); ?></span>
-						<span class="pbb-step-label">
-							<?php
-							$labels = array(
-								1 => __( 'Kid Count', 'party-bag-builder' ),
-								2 => __( 'Tier', 'party-bag-builder' ),
-								3 => __( 'Toys', 'party-bag-builder' ),
-								4 => __( 'Add-ons', 'party-bag-builder' ),
-								5 => __( 'Names', 'party-bag-builder' ),
-								6 => __( 'Review', 'party-bag-builder' ),
-							);
-							echo esc_html( $labels[ $i ] );
-							?>
-						</span>
-					</div>
-				<?php endfor; ?>
-			</div>
-		</div>
+		<?php require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/components/step-indicator.php'; ?>
 
 		<!-- Wizard Content -->
 		<div class="pbb-wizard-content">
@@ -93,16 +69,6 @@ $context_json = wp_json_encode( $interactive_context );
 		</div>
 
 		<!-- Price Display (Sticky) -->
-		<div
-			class="pbb-price-display"
-			data-wp-bind--hidden="!context.selectedTier"
-		>
-			<div class="pbb-price-display-inner">
-				<span class="pbb-price-label"><?php esc_html_e( 'Total:', 'party-bag-builder' ); ?></span>
-				<span class="pbb-price-amount">
-					$<span data-wp-text="context.priceBreakdown.total.toFixed(2)">0.00</span>
-				</span>
-			</div>
-		</div>
+		<?php require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/components/price-display.php'; ?>
 	</div>
 </div>

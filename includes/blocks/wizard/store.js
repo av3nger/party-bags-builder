@@ -230,6 +230,14 @@ store( 'party-bag-builder', {
 			context.priceBreakdown = calculatePriceBreakdown( context );
 			context.callbacks.onPriceUpdate();
 		},
+
+		/**
+		 * Toggle price breakdown visibility.
+		 */
+		togglePriceBreakdown: () => {
+			const context = getContext();
+			context.showPriceBreakdown = ! context.showPriceBreakdown;
+		},
 	},
 
 	callbacks: {
