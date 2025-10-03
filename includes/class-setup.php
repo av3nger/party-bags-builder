@@ -212,7 +212,6 @@ final class Setup {
 			array(
 				'name'  => '3D Printed Name Tag',
 				'price' => 2.00,
-				'stock' => 9999,
 			),
 			array(
 				'name'  => 'Premium Toy - Deluxe Car',
