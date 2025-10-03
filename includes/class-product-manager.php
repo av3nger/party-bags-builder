@@ -10,6 +10,7 @@
 namespace PBB;
 
 use WC_Product;
+use WP_Query;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -209,7 +210,7 @@ final class Product_Manager {
 			),
 		);
 
-		$query = new \WP_Query( $args );
+		$query = new WP_Query( $args );
 		return $query->found_posts;
 	}
 }

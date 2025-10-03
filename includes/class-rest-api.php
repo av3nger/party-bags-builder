@@ -32,10 +32,18 @@ final class Rest_API {
 	private Product_Manager $product_manager;
 
 	/**
+	 * Cart Handler instance
+	 *
+	 * @var Cart_Handler
+	 */
+	private Cart_Handler $cart_handler;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$this->product_manager = new Product_Manager();
+		$this->cart_handler    = new Cart_Handler();
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 
@@ -319,14 +327,19 @@ final class Rest_API {
 			);
 		}
 
-		// TODO: This will be implemented when Cart_Handler is created.
-		// For now, return a placeholder response.
+		// Add to cart using Cart Handler.
+		$result = $this->cart_handler->add_party_bag_to_cart( $party_bag_data );
+
+		if ( ! $result['success'] ) {
+			return new WP_REST_Response(
+				$result,
+				400
+			);
+		}
+
 		return new WP_REST_Response(
-			array(
-				'success' => false,
-				'message' => __( 'Cart handler not yet implemented', 'party-bag-builder' ),
-			),
-			501
+			$result,
+			200
 		);
 	}
 }
