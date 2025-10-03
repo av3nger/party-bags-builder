@@ -47,7 +47,8 @@ final class Setup {
 	 * Create product categories.
 	 */
 	private static function create_categories(): void {
-		$categories = require PBB_PLUGIN_DIR . 'includes/config-categories.php';
+		$config     = require PBB_PLUGIN_DIR . 'includes/config.php';
+		$categories = $config['categories'];
 
 		foreach ( $categories as $category ) {
 			$existing_term = term_exists( $category['slug'], 'product_cat' );

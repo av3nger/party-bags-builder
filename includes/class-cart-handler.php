@@ -179,8 +179,9 @@ final class Cart_Handler {
 		$base = $tier_base_price * $kid_count;
 
 		// Get tier configuration for free addon count.
-		$tiers = require PBB_PLUGIN_DIR . 'includes/config-tiers.php';
-		$tier  = $party_bag_data['tier'] ?? '';
+		$config = require PBB_PLUGIN_DIR . 'includes/config.php';
+		$tiers  = $config['tiers'];
+		$tier   = $party_bag_data['tier'] ?? '';
 
 		$free_addon_count = 0;
 		if ( isset( $tiers[ $tier ]['includes']['free_addons'] ) ) {
