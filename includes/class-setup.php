@@ -158,7 +158,7 @@ final class Setup {
 		$category_id = self::get_category_id( 'bag-common' );
 
 		foreach ( $common_items as $item ) {
-			self::create_sample_product( $item['name'], $item['price'], $item['stock'], $category_id );
+			self::create_sample_product( $item['name'], $item['price'], $category_id, $item['stock'] );
 		}
 	}
 
@@ -199,7 +199,7 @@ final class Setup {
 		$category_id = self::get_category_id( 'bag-toys' );
 
 		foreach ( $toys as $toy ) {
-			self::create_sample_product( $toy['name'], $toy['price'], $toy['stock'], $category_id );
+			self::create_sample_product( $toy['name'], $toy['price'], $category_id, $toy['stock'] );
 		}
 	}
 
@@ -229,7 +229,7 @@ final class Setup {
 		$category_id = self::get_category_id( 'bag-addons' );
 
 		foreach ( $addons as $addon ) {
-			self::create_sample_product( $addon['name'], $addon['price'], $addon['stock'], $category_id );
+			self::create_sample_product( $addon['name'], $addon['price'], $category_id, $addon['stock'] ?? 0 );
 		}
 	}
 
@@ -238,12 +238,12 @@ final class Setup {
 	 *
 	 * @param string $name        Product name.
 	 * @param float  $price       Product price.
-	 * @param int    $stock       Stock quantity.
 	 * @param int    $category_id Category ID.
+	 * @param int    $stock       Optional. Stock quantity.
 	 *
 	 * @throws WC_Data_Exception Throws exception when invalid data is found.
 	 */
-	private static function create_sample_product( string $name, float $price, int $stock, int $category_id ): void {
+	private static function create_sample_product( string $name, float $price, int $category_id, int $stock = 0 ): void {
 		$product = new WC_Product_Simple();
 		$product->set_name( $name );
 		$product->set_status( 'publish' );
@@ -251,7 +251,9 @@ final class Setup {
 		$product->set_price( $price );
 		$product->set_regular_price( $price );
 		$product->set_manage_stock( true );
-		$product->set_stock_quantity( $stock );
+		if ( $stock > 0 ) {
+			$product->set_stock_quantity( $stock );
+		}
 		$product->set_stock_status( 'instock' );
 		$product->set_category_ids( array( $category_id ) );
 
