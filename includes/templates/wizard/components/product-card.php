@@ -6,7 +6,7 @@
  *
  * @package PartyBagBuilder
  *
- * @var array  $product        Product data (id, name, description, image_url, price, stock_quantity).
+ * @var array  $product        Product data (id, name, description, image_url, price).
  * @var bool   $show_checkbox  Whether to show checkbox for selection.
  * @var bool   $show_price     Whether to show price badge.
  * @var string $price_label    Custom price label (e.g., '+$X.XX per bag').
@@ -83,25 +83,6 @@ $disabled_condition = $disabled_condition ?? '';
 					</span>
 				<?php endif; ?>
 			</div>
-		<?php endif; ?>
-
-		<?php if ( isset( $product['stock_quantity'] ) ) : ?>
-			<?php if ( $product['stock_quantity'] < 20 && $product['stock_quantity'] > 0 ) : ?>
-				<span class="pbb-stock-badge pbb-stock-low">
-					<?php
-					/* translators: %d: stock quantity */
-					echo esc_html( sprintf( __( 'Only %d left', 'party-bag-builder' ), $product['stock_quantity'] ) );
-					?>
-				</span>
-			<?php elseif ( $product['stock_quantity'] > 0 ) : ?>
-				<span class="pbb-stock-badge pbb-stock-available">
-					<?php esc_html_e( 'In Stock', 'party-bag-builder' ); ?>
-				</span>
-			<?php else : ?>
-				<span class="pbb-stock-badge pbb-stock-out">
-					<?php esc_html_e( 'Out of Stock', 'party-bag-builder' ); ?>
-				</span>
-			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 

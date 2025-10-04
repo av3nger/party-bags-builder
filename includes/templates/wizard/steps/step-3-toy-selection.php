@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-3" data-wp-context='{"stepNumber": 3}' data-wp-bind--hidden="!state.isCurrentStep">
+<div class="pbb-step pbb-step-3" data-wp-context='{"step": {"id": 3}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Select Your Toys', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">
@@ -33,15 +33,15 @@ defined( 'ABSPATH' ) || exit;
 					// Filter out products with insufficient stock.
 					$min_stock = 1; // Will be compared against kidCount in JS.
 					?>
-					<div class="pbb-product-card pbb-selectable-card">
+					<div class="pbb-product-card pbb-selectable-card" data-wp-context='{"toyId": <?php echo esc_js( $toy['id'] ); ?>}'>
 						<label class="pbb-product-label">
 							<input
 								type="checkbox"
 								class="pbb-product-checkbox"
 								value="<?php echo esc_attr( $toy['id'] ); ?>"
 								data-wp-on--change="actions.toggleToy"
-								data-wp-bind--checked="state.selectedToys.includes(<?php echo esc_attr( $toy['id'] ); ?>)"
-								data-wp-bind--disabled="!state.selectedToys.includes(<?php echo esc_attr( $toy['id'] ); ?>) && state.selectedToys.length >= state.maxToysAllowed"
+								data-wp-bind--checked="state.isToySelected"
+								data-wp-bind--disabled="!state.isToySelected && state.selectedToys.length >= state.maxToysAllowed"
 							/>
 
 							<span class="pbb-product-content">
@@ -59,22 +59,7 @@ defined( 'ABSPATH' ) || exit;
 									<?php if ( ! empty( $toy['description'] ) ) : ?>
 										<p class="pbb-product-description"><?php echo esc_html( wp_trim_words( $toy['description'], 15 ) ); ?></p>
 									<?php endif; ?>
-
-									<?php if ( $toy['stock_quantity'] < 20 && $toy['stock_quantity'] > 0 ) : ?>
-										<span class="pbb-stock-badge pbb-stock-low">
-											<?php
-											/* translators: %d: stock quantity */
-											echo esc_html( sprintf( __( 'Only %d left', 'party-bag-builder' ), $toy['stock_quantity'] ) );
-											?>
-										</span>
-									<?php elseif ( $toy['stock_quantity'] > 0 ) : ?>
-										<span class="pbb-stock-badge pbb-stock-available">
-											<?php esc_html_e( 'In Stock', 'party-bag-builder' ); ?>
-										</span>
-									<?php endif; ?>
 								</div>
-
-								<span class="pbb-checkmark">✓</span>
 							</span>
 						</label>
 					</div>

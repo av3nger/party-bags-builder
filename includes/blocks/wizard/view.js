@@ -20,15 +20,16 @@ function scrollWizardToTop() {
 
 const { state } = store( 'party-bag-builder', {
 	state: {
-		// Generic context-based getters for directives
 		get isCurrentStep() {
-			const context = getContext();
-			return state.currentStep === context.stepNumber;
+			const { step } = getContext();
+			return step.id === state.currentStep;
 		},
 		get isStepCompleted() {
-			const context = getContext();
-			return state.currentStep > context.stepNumber;
+			const { step } = getContext();
+			return state.currentStep > step.id;
 		},
+
+		// Generic context-based getters for directives
 		get isTierSelected() {
 			const context = getContext();
 			return state.selectedTier === context.tierId;
@@ -36,6 +37,18 @@ const { state } = store( 'party-bag-builder', {
 		get isTagStyleSelected() {
 			const context = getContext();
 			return state.selectedTagStyle === context.tagStyleId;
+		},
+		get isToySelected() {
+			const context = getContext();
+			return state.selectedToys.includes( context.toyId );
+		},
+		get isAddonSelected() {
+			const context = getContext();
+			return state.selectedAddons.includes( context.addonId );
+		},
+		get isAddonFree() {
+			const context = getContext();
+			return state.priceBreakdown.freeAddons.includes( context.addonId );
 		},
 		// Formatted prices (reused across templates)
 		get tierBasePrice() {

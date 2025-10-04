@@ -63,13 +63,12 @@ final class Product_Manager {
 		$short_description = $product->get_short_description();
 
 		return array(
-			'id'             => $product->get_id(),
-			'name'           => $product->get_name(),
-			'description'    => $short_description ? $short_description : $product->get_description(),
-			'image_url'      => $image_url,
-			'price'          => (float) $product->get_price(),
-			'stock_quantity' => $product->get_stock_quantity() ?? 0,
-			'is_in_stock'    => $product->is_in_stock(),
+			'id'          => $product->get_id(),
+			'name'        => $product->get_name(),
+			'description' => $short_description ? $short_description : $product->get_description(),
+			'image_url'   => $image_url,
+			'price'       => (float) $product->get_price(),
+			'is_in_stock' => $product->is_in_stock(),
 		);
 	}
 

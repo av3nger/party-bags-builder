@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-2" data-wp-context='{"stepNumber": 2}' data-wp-bind--hidden="!state.isCurrentStep">
+<div class="pbb-step pbb-step-2" data-wp-context='{"step": {"id": 2}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Choose Your Tier', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">

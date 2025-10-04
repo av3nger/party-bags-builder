@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-4" data-wp-context='{"stepNumber": 4}' data-wp-bind--hidden="!state.isCurrentStep">
+<div class="pbb-step pbb-step-4" data-wp-context='{"step": {"id": 4}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Add Extra Goodies (Optional)', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">
@@ -34,15 +34,15 @@ defined( 'ABSPATH' ) || exit;
 		<?php if ( ! empty( $context['addons'] ) ) : ?>
 			<div class="pbb-product-grid">
 				<?php foreach ( $context['addons'] as $addon ) : ?>
-					<div class="pbb-product-card pbb-selectable-card">
+					<div class="pbb-product-card pbb-selectable-card" data-wp-context='{"addonId": <?php echo esc_js( $addon['id'] ); ?>}'>
 						<label class="pbb-product-label">
 							<input
 								type="checkbox"
 								class="pbb-product-checkbox"
 								value="<?php echo esc_attr( $addon['id'] ); ?>"
 								data-wp-on--change="actions.toggleAddon"
-								data-wp-bind--checked="state.selectedAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>)"
-								data-wp-bind--disabled="!state.selectedAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>) && state.selectedAddons.length >= state.maxAddonsAllowed"
+								data-wp-bind--checked="state.isAddonSelected"
+								data-wp-bind--disabled="!state.isAddonSelected && state.selectedAddons.length >= state.maxAddonsAllowed"
 							/>
 
 							<span class="pbb-product-content">
@@ -69,22 +69,11 @@ defined( 'ABSPATH' ) || exit;
 											?>
 										</span>
 										<!-- This will be shown dynamically if addon is marked free -->
-										<span class="pbb-free-indicator" data-wp-bind--hidden="!state.priceBreakdown.freeAddons.includes(<?php echo esc_attr( $addon['id'] ); ?>)">
+										<span class="pbb-free-indicator" data-wp-bind--hidden="!state.isAddonFree">
 											<?php esc_html_e( 'FREE (included)', 'party-bag-builder' ); ?>
 										</span>
 									</div>
-
-									<?php if ( $addon['stock_quantity'] < 20 && $addon['stock_quantity'] > 0 ) : ?>
-										<span class="pbb-stock-badge pbb-stock-low">
-											<?php
-											/* translators: %d: stock quantity */
-											echo esc_html( sprintf( __( 'Only %d left', 'party-bag-builder' ), $addon['stock_quantity'] ) );
-											?>
-										</span>
-									<?php endif; ?>
 								</div>
-
-								<span class="pbb-checkmark">✓</span>
 							</span>
 						</label>
 					</div>
