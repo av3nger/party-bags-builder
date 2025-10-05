@@ -4,7 +4,14 @@
  * @package PartyBagBuilder
  */
 
+/**
+ * WordPress packages
+ */
 import { store, getContext } from '@wordpress/interactivity';
+
+/**
+ * Internal packages
+ */
 import { calculatePriceBreakdown } from './pricing';
 import { addToCart } from './api';
 
@@ -20,6 +27,46 @@ function scrollWizardToTop() {
 
 const { state } = store( 'party-bag-builder', {
 	state: {
+		get includedToysLabel() {
+			const { tier } = getContext();
+			const toys = tier?.includes?.toys || 0;
+
+			return wp.i18n.sprintf(
+					wp.i18n._n(
+							'%d toy of your choice',
+							'%d toys of your choice',
+							toys,
+							'party-bag-builder'
+					),
+					toys
+			);
+		},
+		get includedAddonsLabel() {
+			const { tier } = getContext();
+			const addons = tier?.includes?.free_addons || 0;
+
+			return wp.i18n.sprintf(
+					wp.i18n._n(
+							'%d FREE addon',
+							'%d FREE addons',
+							addons,
+							'party-bag-builder'
+					),
+					addons
+			);
+		},
+		get totalAddonsLabel() {
+			const { tier } = getContext();
+			const addons = tier?.includes?.max_addons || 0;
+
+			return wp.i18n.sprintf(
+					wp.i18n.__(
+							'Up to %d total addons',
+							'party-bag-builder'
+					),
+					addons
+			);
+		},
 		get isCurrentStep() {
 			const { step } = getContext();
 			return step.id === state.currentStep;
@@ -28,11 +75,13 @@ const { state } = store( 'party-bag-builder', {
 			const { step } = getContext();
 			return state.currentStep > step.id;
 		},
-
-		// Generic context-based getters for directives
+		get currentTierPrice() {
+			const { tier } = getContext();
+			return ( ( tier.base_price || 0 ) * state.kidCount ).toFixed( 2 );
+		},
 		get isTierSelected() {
-			const context = getContext();
-			return state.selectedTier === context.tierId;
+			const { tier } = getContext();
+			return state.selectedTier === tier.id;
 		},
 		get isTagStyleSelected() {
 			const context = getContext();
@@ -57,10 +106,6 @@ const { state } = store( 'party-bag-builder', {
 		get tierTotalPrice() {
 			return ( ( state.tierConfig?.base_price || 0 ) * state.kidCount ).toFixed( 2 );
 		},
-		get currentTierPrice() {
-			const context = getContext();
-			return ( ( context.tierBasePrice || 0 ) * state.kidCount ).toFixed( 2 );
-		},
 		get breakdownBasePrice() {
 			return state.priceBreakdown.base.toFixed( 2 );
 		},
@@ -80,7 +125,8 @@ const { state } = store( 'party-bag-builder', {
 			return state.tierConfig?.includes?.toys || 0;
 		},
 		get freeAddonsAllowed() {
-			return state.tierConfig?.includes?.free_addons || 0;
+			const { tier } = getContext();
+			return (tier?.includes?.free_addons || 0) > 0;
 		},
 		get kidNamesDisplay() {
 			const names = state.kidNames.filter( ( n ) => n.trim() !== '' ).join( ', ' );
@@ -122,6 +168,10 @@ const { state } = store( 'party-bag-builder', {
 		 */
 		selectTier: () => {
 			const context = getContext();
+			console.log(context)
+			console.log(context.tiers)
+			console.log(context.tierId)
+			console.log(state)
 			const tier = context.tier;
 
 			if ( tier ) {

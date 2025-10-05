@@ -19,11 +19,6 @@ $product_manager = Plugin::instance()->product_manager;
 // Load configuration.
 $config = require PBB_PLUGIN_DIR . 'includes/config.php';
 
-// Fetch products for server-rendering.
-$common_items = $product_manager->get_products_by_category( 'bag-common' );
-$toys         = $product_manager->get_products_by_category( 'bag-toys' );
-$addons       = $product_manager->get_products_by_category( 'bag-addons' );
-
 // Initialize Interactivity API state (reactive).
 wp_interactivity_state(
 	'party-bag-builder',
@@ -53,9 +48,9 @@ wp_interactivity_state(
 $context = array(
 	'tiers'        => array_values( $config['tiers'] ),
 	'tag_styles'   => array_values( $config['tag_styles'] ),
-	'common_items' => $common_items,
-	'toys'         => $toys,
-	'addons'       => $addons,
+	'common_items' => $product_manager->get_products_by_category( 'bag-common' ),
+	'toys'         => $product_manager->get_products_by_category( 'bag-toys' ),
+	'addons'       => $product_manager->get_products_by_category( 'bag-addons' ),
 	'rest_url'     => rest_url( 'bag-builder/v1/add-to-cart' ),
 	'nonce'        => wp_create_nonce( 'wp_rest' ),
 );

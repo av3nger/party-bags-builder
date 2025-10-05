@@ -18,62 +18,37 @@ defined( 'ABSPATH' ) || exit;
 		</p>
 
 		<div class="pbb-tier-grid">
-			<?php foreach ( $context['tiers'] as $tier ) : ?>
+			<template data-wp-each--tier="context.tiers">
 				<div
 					class="pbb-tier-card"
-					data-tier-id="<?php echo esc_attr( $tier['id'] ); ?>"
-					data-wp-context='<?php echo esc_attr( wp_json_encode( array( 'tierId' => $tier['id'], 'tierBasePrice' => $tier['base_price'], 'tier' => $tier ) ) ); ?>'
 					data-wp-on--click="actions.selectTier"
 					data-wp-class--selected="state.isTierSelected"
 				>
 					<div class="pbb-tier-header">
-						<h3 class="pbb-tier-name"><?php echo esc_html( $tier['name'] ); ?></h3>
+						<h3 class="pbb-tier-name" data-wp-text="context.tier.name"></h3>
 						<div class="pbb-tier-price">
-							<?php
-							/* translators: %s: price */
-							echo esc_html( sprintf( __( '$%s per bag', 'party-bag-builder' ), number_format( $tier['base_price'], 2 ) ) );
-							?>
+							$<span data-wp-text="context.tier.base_price"></span>.00
+							<?php esc_html_e( 'per bag', 'party-bag-builder' ); ?>
 						</div>
 					</div>
 
 					<div class="pbb-tier-features">
 						<ul>
 							<li><?php esc_html_e( 'All base items included', 'party-bag-builder' ); ?></li>
-							<li>
-								<?php
-								/* translators: %d: number of toys */
-								echo esc_html( sprintf( _n( '%d toy of your choice', '%d toys of your choice', $tier['includes']['toys'], 'party-bag-builder' ), $tier['includes']['toys'] ) );
-								?>
-							</li>
-							<?php if ( $tier['includes']['free_addons'] > 0 ) : ?>
-								<li>
-									<?php
-									/* translators: %d: number of free addons */
-									echo esc_html( sprintf( _n( '%d FREE addon', '%d FREE addons', $tier['includes']['free_addons'], 'party-bag-builder' ), $tier['includes']['free_addons'] ) );
-									?>
-								</li>
-							<?php endif; ?>
-							<li>
-								<?php
-								/* translators: %d: maximum number of addons */
-								echo esc_html( sprintf( __( 'Up to %d total addons', 'party-bag-builder' ), $tier['includes']['max_addons'] ) );
-								?>
-							</li>
+							<li data-wp-text="state.includedToysLabel"></li>
+							<li data-wp-text="state.includedAddonsLabel" data-wp-bind--hidden="!state.freeAddonsAllowed"></li>
+							<li data-wp-text="state.totalAddonsLabel"></li>
 						</ul>
 					</div>
 
 					<div class="pbb-tier-total">
 						<div class="pbb-total-label"><?php esc_html_e( 'Your total:', 'party-bag-builder' ); ?></div>
 						<div class="pbb-total-amount">
-							<?php
-							/* translators: %s will be replaced with calculated price */
-							echo esc_html__( '$', 'party-bag-builder' );
-							?>
-							<span data-wp-text="state.currentTierPrice">0.00</span>
+							$<span data-wp-text="state.currentTierPrice">0.00</span>
 						</div>
 					</div>
 				</div>
-			<?php endforeach; ?>
+			</template>
 		</div>
 
 		<!-- Common Items Preview (shown when tier is selected) -->
