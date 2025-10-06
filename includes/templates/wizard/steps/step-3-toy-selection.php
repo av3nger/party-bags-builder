@@ -29,10 +29,6 @@ defined( 'ABSPATH' ) || exit;
 		<?php if ( ! empty( $context['toys'] ) ) : ?>
 			<div class="pbb-product-grid">
 				<?php foreach ( $context['toys'] as $toy ) : ?>
-					<?php
-					// Filter out products with insufficient stock.
-					$min_stock = 1; // Will be compared against kidCount in JS.
-					?>
 					<div class="pbb-product-card pbb-selectable-card" data-wp-context='{"toyId": <?php echo esc_js( $toy['id'] ); ?>}'>
 						<label class="pbb-product-label">
 							<input
@@ -41,7 +37,7 @@ defined( 'ABSPATH' ) || exit;
 								value="<?php echo esc_attr( $toy['id'] ); ?>"
 								data-wp-on--change="actions.toggleToy"
 								data-wp-bind--checked="state.isToySelected"
-								data-wp-bind--disabled="!state.isToySelected && state.selectedToys.length >= state.maxToysAllowed"
+								data-wp-bind--disabled="state.isToyInputDisabled"
 							/>
 
 							<span class="pbb-product-content">

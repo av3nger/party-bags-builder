@@ -25,8 +25,11 @@ function scrollWizardToTop() {
 	}
 }
 
-const { state } = store( 'party-bag-builder', {
+const { state, actions } = store( 'party-bag-builder', {
 	state: {
+		get isStep1() {
+			return state.currentStep === 1;
+		},
 		get includedToysLabel() {
 			const { tier } = getContext();
 			const toys = tier?.includes?.toys || 0;
@@ -91,6 +94,9 @@ const { state } = store( 'party-bag-builder', {
 			const context = getContext();
 			return state.selectedToys.includes( context.toyId );
 		},
+		get isToyInputDisabled() {
+			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
+		},
 		get isAddonSelected() {
 			const context = getContext();
 			return state.selectedAddons.includes( context.addonId );
@@ -102,9 +108,6 @@ const { state } = store( 'party-bag-builder', {
 		// Formatted prices (reused across templates)
 		get tierBasePrice() {
 			return ( state.tierConfig?.base_price || 0 ).toFixed( 2 );
-		},
-		get tierTotalPrice() {
-			return ( ( state.tierConfig?.base_price || 0 ) * state.kidCount ).toFixed( 2 );
 		},
 		get breakdownBasePrice() {
 			return state.priceBreakdown.base.toFixed( 2 );
@@ -135,19 +138,6 @@ const { state } = store( 'party-bag-builder', {
 		get addToCartButtonText() {
 			return state.isLoading ? 'Adding...' : 'Add to Cart';
 		},
-		// Derived state for validation and UI
-		get hasErrors() {
-			return state.errors.length > 0;
-		},
-		get hasSelectedTier() {
-			return state.selectedTier !== null;
-		},
-		get toysSelected() {
-			return state.selectedToys.length;
-		},
-		get addonsSelected() {
-			return state.selectedAddons.length;
-		},
 	},
 	actions: {
 		/**
@@ -167,12 +157,7 @@ const { state } = store( 'party-bag-builder', {
 		 * Select a tier and load its configuration.
 		 */
 		selectTier: () => {
-			const context = getContext();
-			console.log(context)
-			console.log(context.tiers)
-			console.log(context.tierId)
-			console.log(state)
-			const tier = context.tier;
+			const { tier } = getContext();
 
 			if ( tier ) {
 				state.selectedTier = tier.id;
@@ -254,6 +239,10 @@ const { state } = store( 'party-bag-builder', {
 			if ( state.currentStep === 1 && state.kidCount < 1 ) {
 				state.errors = [ 'Please select the number of kids.' ];
 				return;
+			}
+
+			if ( state.currentStep === 1 ) {
+				actions.selectTier();
 			}
 
 			if ( state.currentStep === 2 && ! state.selectedTier ) {
