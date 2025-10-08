@@ -95,8 +95,8 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.selectedTagStyle === context.tagStyleId;
 		},
 		get isToySelected() {
-			const context = getContext();
-			return state.selectedToys.includes( context.toyId );
+			const { toy } = getContext();
+			return state.selectedToys.includes( toy.id );
 		},
 		get isToyInputDisabled() {
 			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
@@ -197,18 +197,17 @@ const { state, actions } = store( 'party-bag-builder', {
 		/**
 		 * Toggle toy selection.
 		 */
-		toggleToy: ( event ) => {
-			const toyId = parseInt( event.target.value, 10 );
+		toggleToy: () => {
+			const { toy } = getContext();
+
 			const maxToys = state.tierConfig?.includes?.toys || 0;
 
-			const index = state.selectedToys.indexOf( toyId );
-
-			if ( index > -1 ) {
+			if ( state.selectedToys.indexOf( toy.id ) > -1 ) {
 				// Remove toy
-				state.selectedToys = state.selectedToys.filter( ( id ) => id !== toyId );
+				state.selectedToys = state.selectedToys.filter( ( id ) => id !== toy.id );
 			} else if ( state.selectedToys.length < maxToys ) {
 				// Add toy if under limit
-				state.selectedToys = [ ...state.selectedToys, toyId ];
+				state.selectedToys = [ ...state.selectedToys, toy.id ];
 			}
 		},
 

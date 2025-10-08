@@ -169,9 +169,9 @@
 		}
 
 		&:hover {
+			background-color: var(--pbb--colors--blue);
 			border: none;
 			color: var(--pbb-color-white);
-			opacity: .9;
 		}
 
 		& svg {
@@ -214,15 +214,7 @@ label[for="pbb-kid-count"] {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1.5rem;
-	margin: 3rem -2rem;
-
-	@media (min-width: 800px) {
-		margin: 3rem -6rem;
-	}
-
-	@media (min-width: 1024px) {
-		margin: 3rem -11rem;
-	}
+	margin: 3rem auto;
 }
 
 .pbb-product-grid,
@@ -233,18 +225,36 @@ label[for="pbb-kid-count"] {
 	margin-bottom: 2rem;
 }
 
-.pbb-product-image {
-	border: 1px solid var(--pbb--colors--grey-200);
-	border-radius: 1rem;
-	box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent, 0 1px 2px 0 rgba(0, 0, 0, .05);
-	width: 100%;
+.pbb-preview-grid {
+	margin: 0 auto;
+	max-width: 600px;
+
+	& .pbb-preview-card {
+		border: 1px solid var(--pbb--colors--grey-100);
+		border-radius: 8px;
+		box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+		overflow: hidden;
+	}
+
+	& img {
+		border-bottom: 1px solid var(--pbb--colors--grey-100);
+		width: 100%;
+	}
+
+	& .pbb-product-name {
+		margin: 0.5rem 0.5rem 0.9rem;
+	}
+}
+
+.pbb-product-grid {
+	margin-top: 2rem;
 }
 
 .pbb-tier-card {
 	animation-duration: 200ms;
 	background-color: var(--pbb-color-white);
-	border: 1px solid var(--pbb--colors--grey-200);
-	border-radius: 1rem;
+	border: 2px solid var(--pbb--colors--grey-200);
+	border-radius: 8px;
 	box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.05) 0 1px 2px 0;
 	color: var(--pbb--colors--grey-800);
 	cursor: pointer;
@@ -255,11 +265,7 @@ label[for="pbb-kid-count"] {
 	&:hover,
 	&.selected {
 		border-color: var(--pbb--colors--blue);
-		border-width: 2px;
-	}
-
-	&:not(.selected):hover {
-		transform: scaleX(1.05) scaleY(1.05);
+		box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
 	}
 
 	&.selected {
@@ -326,6 +332,109 @@ label[for="pbb-kid-count"] {
 			font-size: 1.5rem;
 			font-weight: 600;
 		}
+	}
+}
+
+// Selectable cards
+.pbb-selectable-card {
+	border: 2px solid var(--pbb--colors--grey-200);
+	border-radius: 8px;
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+	transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+	&:hover,
+	&.selected {
+		border-color: var(--pbb--colors--blue);
+		box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
+
+		&:not(.selected) img {
+			transform: matrix(1.1, 0, 0, 1.1, 0, 0)
+		}
+	}
+
+	&.disabled {
+		cursor: not-allowed;
+		opacity: .5;
+	}
+
+	& .pbb-product-image {
+		aspect-ratio: 1/1;
+		background-color: var(--pbb--colors--grey-100);
+		overflow: hidden;
+		position: relative;
+
+		& img {
+			height: 100%;
+			max-width: 100%;
+			object-fit: cover;
+			transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+			width: 100%;
+		}
+	}
+
+	& .pbb-product-image-cover,
+	& .pbb-product-image-disabled {
+		align-items: center;
+		display: flex;
+		inset: 0;
+		justify-content: center;
+		position: absolute;
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	& .pbb-product-image-cover {
+		background-color: color-mix(in srgb, var(--pbb--colors--blue), transparent 95%);
+
+		& .pbb-product-image-check {
+			align-items: center;
+			background-color: var(--pbb--colors--blue);
+			border-radius: 9999px;
+			box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+			display: flex;
+			height: 4rem;
+			justify-content: center;
+			width: 4rem;
+
+			& svg {
+				color: var(--pbb-color-white);
+				height: 2rem;
+				width: 2rem;
+			}
+		}
+	}
+
+	& .pbb-product-image-disabled {
+		background-color: color-mix(in srgb, var(--pbb--colors--grey-100), transparent 60%);
+
+		& span {
+			background-color: color-mix(in srgb, var(--pbb--colors--grey-800), transparent 20%);
+			border-radius: 8px;
+			color: var(--pbb-color-white);
+			font-size: 0.875rem;
+			font-weight: 500;
+			line-height: 1.25rem;
+			padding: 0.5rem 1rem;
+		}
+	}
+
+	& .pbb-product-info {
+		border-top: 1px solid var(--pbb--colors--grey-100);
+		padding: 1.5rem 1rem;
+	}
+
+	& .pbb-product-name {
+		font-weight: 500;
+		margin: 0;
+	}
+
+	& .pbb-product-description {
+		font-size: 1rem;
+		margin: 0;
 	}
 }
 

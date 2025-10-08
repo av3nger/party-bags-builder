@@ -28,38 +28,33 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( ! empty( $context['toys'] ) ) : ?>
 			<div class="pbb-product-grid">
-				<?php foreach ( $context['toys'] as $toy ) : ?>
-					<div class="pbb-product-card pbb-selectable-card" data-wp-context='{"toyId": <?php echo esc_js( $toy['id'] ); ?>}'>
-						<label class="pbb-product-label">
-							<input
-								type="checkbox"
-								class="pbb-product-checkbox"
-								value="<?php echo esc_attr( $toy['id'] ); ?>"
-								data-wp-on--change="actions.toggleToy"
-								data-wp-bind--checked="state.isToySelected"
-								data-wp-bind--disabled="state.isToyInputDisabled"
-							/>
-
-							<span class="pbb-product-content">
-								<?php if ( ! empty( $toy['image_url'] ) ) : ?>
-									<img src="<?php echo esc_url( $toy['image_url'] ); ?>" alt="<?php echo esc_attr( $toy['name'] ); ?>" class="pbb-product-image">
-								<?php else : ?>
-									<div class="pbb-product-image pbb-placeholder-image">
-										<span class="pbb-placeholder-icon">🎁</span>
-									</div>
-								<?php endif; ?>
-
-								<div class="pbb-product-info">
-									<h4 class="pbb-product-name"><?php echo esc_html( $toy['name'] ); ?></h4>
-
-									<?php if ( ! empty( $toy['description'] ) ) : ?>
-										<p class="pbb-product-description"><?php echo esc_html( wp_trim_words( $toy['description'], 15 ) ); ?></p>
-									<?php endif; ?>
+				<template data-wp-each--toy="context.toys">
+					<div
+						class="pbb-product-card pbb-selectable-card"
+						data-wp-class--selected="state.isToySelected"
+						data-wp-class--disabled="state.isToyInputDisabled"
+						data-wp-on--click="actions.toggleToy"
+					>
+						<div class="pbb-product-image">
+							<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
+							<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isToySelected">
+								<div class="pbb-product-image-check">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M20 6 9 17l-5-5"></path>
+									</svg>
 								</div>
-							</span>
-						</label>
+							</div>
+							<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isToyInputDisabled">
+								<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
+							</div>
+						</div>
+
+						<div class="pbb-product-info">
+							<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
+							<p class="pbb-product-description" data-wp-text="context.toy.description"></p>
+						</div>
 					</div>
-				<?php endforeach; ?>
+				</template>
 			</div>
 		<?php else : ?>
 			<div class="pbb-error-message">

@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 			<h3 class="pbb-preview-title"><?php esc_html_e( 'Each party bag includes the following base items:', 'party-bag-builder' ); ?></h3>
 
 			<?php if ( ! empty( $context['common_items'] ) ) : ?>
-				<div class="pbb-product-grid pbb-preview-grid">
+				<div class="pbb-preview-grid">
 					<?php foreach ( $context['common_items'] as $item ) : ?>
 						<div class="pbb-product-card pbb-preview-card">
 							<?php if ( ! empty( $item['image_url'] ) ) : ?>
