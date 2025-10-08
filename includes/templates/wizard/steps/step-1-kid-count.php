@@ -16,9 +16,11 @@ defined( 'ABSPATH' ) || exit;
 		</p>
 
 		<div class="pbb-kid-count-input">
-			<label for="pbb-kid-count" class="screen-reader-text">
-				<?php esc_html_e( 'Number of kids', 'party-bag-builder' ); ?>
-			</label>
+			<button data-wp-on--click="actions.decrementKidCount">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M5 12h14"></path>
+				</svg>
+			</button>
 			<input
 				type="number"
 				id="pbb-kid-count"
@@ -30,8 +32,17 @@ defined( 'ABSPATH' ) || exit;
 				data-wp-bind--value="state.kidCount"
 				placeholder="5"
 			/>
-			<span class="pbb-input-label"><?php esc_html_e( 'kids', 'party-bag-builder' ); ?></span>
+			<button data-wp-on--click="actions.incrementKidCount">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M5 12h14"></path>
+					<path d="M12 5v14"></path>
+				</svg>
+			</button>
 		</div>
+
+		<label for="pbb-kid-count">
+			<?php esc_html_e( 'kids', 'party-bag-builder' ); ?>
+		</label>
 
 		<div class="pbb-step-navigation">
 			<button

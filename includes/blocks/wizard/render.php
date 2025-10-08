@@ -32,9 +32,9 @@ wp_interactivity_state(
 		'selectedTagStyle'   => null,
 		'kidNames'           => array_fill( 0, 5, '' ),
 		'priceBreakdown'     => array(
-			'base'       => 0,
+			'base'       => $config['tiers']['medium']['base_price'],
 			'addons'     => 0,
-			'total'      => 0,
+			'total'      => $config['tiers']['medium']['base_price'] * 5,
 			'freeAddons' => array(),
 			'paidAddons' => array(),
 		),
@@ -64,7 +64,6 @@ foreach ( $context['tag_styles'] as &$style ) {
 
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	class="pbb-wizard-container"
 	data-wp-interactive="party-bag-builder"
 	<?php echo wp_kses_data( wp_interactivity_data_wp_context( $context ) ); ?>
 >

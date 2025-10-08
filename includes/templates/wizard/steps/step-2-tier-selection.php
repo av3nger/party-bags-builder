@@ -28,18 +28,16 @@ defined( 'ABSPATH' ) || exit;
 						<h3 class="pbb-tier-name" data-wp-text="context.tier.name"></h3>
 						<div class="pbb-tier-price">
 							$<span data-wp-text="context.tier.base_price"></span>.00
-							<?php esc_html_e( 'per bag', 'party-bag-builder' ); ?>
+							<span class="pbb-tier-price-label"><?php esc_html_e( 'per bag', 'party-bag-builder' ); ?></span>
 						</div>
 					</div>
 
-					<div class="pbb-tier-features">
-						<ul>
-							<li><?php esc_html_e( 'All base items included', 'party-bag-builder' ); ?></li>
-							<li data-wp-text="state.includedToysLabel"></li>
-							<li data-wp-text="state.includedAddonsLabel" data-wp-bind--hidden="!state.freeAddonsAllowed"></li>
-							<li data-wp-text="state.totalAddonsLabel"></li>
-						</ul>
-					</div>
+					<ul class="pbb-tier-features">
+						<li><?php esc_html_e( 'All base items included', 'party-bag-builder' ); ?></li>
+						<li data-wp-text="state.includedToysLabel"></li>
+						<li data-wp-text="state.includedAddonsLabel" data-wp-bind--hidden="!state.freeAddonsAllowed"></li>
+						<li data-wp-text="state.totalAddonsLabel"></li>
+					</ul>
 
 					<div class="pbb-tier-total">
 						<div class="pbb-total-label"><?php esc_html_e( 'Your total:', 'party-bag-builder' ); ?></div>

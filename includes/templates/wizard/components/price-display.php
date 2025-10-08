@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 <div
 	class="pbb-price-display"
-	data-wp-bind--hidden="state.isStep1"
+	data-wp-bind--hidden="state.isStepOne"
 >
 	<div class="pbb-price-display-inner">
 		<div class="pbb-price-summary">

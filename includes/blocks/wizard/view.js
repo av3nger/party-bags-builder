@@ -27,8 +27,12 @@ function scrollWizardToTop() {
 
 const { state, actions } = store( 'party-bag-builder', {
 	state: {
-		get isStep1() {
+		get isStepOne() {
 			return state.currentStep === 1;
+		},
+		get isLastStep() {
+			const { step } = getContext();
+			return step.id === 6;
 		},
 		get includedToysLabel() {
 			const { tier } = getContext();
@@ -149,6 +153,28 @@ const { state, actions } = store( 'party-bag-builder', {
 			if ( count >= 1 && count <= 50 ) {
 				state.kidCount = count;
 				state.kidNames = Array( count ).fill( '' );
+				state.priceBreakdown = calculatePriceBreakdown( state );
+			}
+		},
+
+		/**
+		 * Increment kids count by 1.
+		 */
+		incrementKidCount: () => {
+			if ( state.kidCount < 50 ) {
+				state.kidCount += 1;
+				state.kidNames = Array( state.kidCount ).fill( '' );
+				state.priceBreakdown = calculatePriceBreakdown( state );
+			}
+		},
+
+		/**
+		 * Decrement kids count by 1.
+		 */
+		decrementKidCount: () => {
+			if ( state.kidCount > 1 ) {
+				state.kidCount -= 1;
+				state.kidNames = Array( state.kidCount ).fill( '' );
 				state.priceBreakdown = calculatePriceBreakdown( state );
 			}
 		},

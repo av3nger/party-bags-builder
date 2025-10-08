@@ -44,8 +44,22 @@ $steps = array(
 			data-wp-class--active="state.isCurrentStep"
 			data-wp-class--completed="state.isStepCompleted"
 		>
-			<span class="pbb-step-number" data-wp-text="context.step.id"></span>
+			<span class="pbb-step-number">
+				<span data-wp-bind--hidden="!state.isStepCompleted">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M20 6 9 17l-5-5"></path>
+					</svg>
+				</span>
+				<span data-wp-text="context.step.id" data-wp-bind--hidden="state.isStepCompleted"></span>
+			</span>
 			<span class="pbb-step-label" data-wp-text="context.step.value"></span>
+		</div>
+		<div
+			class="pbb-step-indicator-connector"
+			data-wp-bind--hidden="state.isLastStep"
+			data-wp-class--completed="state.isStepCompleted"
+		>
+			<div class="pbb-step-connector-inner"></div>
 		</div>
 	</template>
 </div>
