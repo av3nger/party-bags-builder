@@ -5,6 +5,11 @@
  */
 
 /**
+ * WordPress packages
+ */
+import { getContext } from '@wordpress/interactivity';
+
+/**
  * Calculate price breakdown based on wizard state.
  *
  * @param {Object} state - The wizard state from Interactivity API context.
@@ -12,7 +17,8 @@
  * @return {Object} Price breakdown with base, addons, total, and addon categorization.
  */
 export function calculatePriceBreakdown( state ) {
-	const { kidCount, tierConfig, selectedAddons, addons } = state;
+	const { kidCount, tierConfig, selectedAddons } = state;
+	const { addons } = getContext();
 
 	// Default breakdown if tier not selected
 	if ( ! tierConfig || ! kidCount ) {

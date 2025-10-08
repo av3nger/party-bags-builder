@@ -33,51 +33,41 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( ! empty( $context['addons'] ) ) : ?>
 			<div class="pbb-product-grid">
-				<?php foreach ( $context['addons'] as $addon ) : ?>
-					<div class="pbb-product-card pbb-selectable-card" data-wp-context='{"addonId": <?php echo esc_js( $addon['id'] ); ?>}'>
-						<label class="pbb-product-label">
-							<input
-								type="checkbox"
-								class="pbb-product-checkbox"
-								value="<?php echo esc_attr( $addon['id'] ); ?>"
-								data-wp-on--change="actions.toggleAddon"
-								data-wp-bind--checked="state.isAddonSelected"
-								data-wp-bind--disabled="!state.isAddonSelected && state.selectedAddons.length >= state.maxAddonsAllowed"
-							/>
-
-							<span class="pbb-product-content">
-								<?php if ( ! empty( $addon['image_url'] ) ) : ?>
-									<img src="<?php echo esc_url( $addon['image_url'] ); ?>" alt="<?php echo esc_attr( $addon['name'] ); ?>" class="pbb-product-image">
-								<?php else : ?>
-									<div class="pbb-product-image pbb-placeholder-image">
-										<span class="pbb-placeholder-icon">⭐</span>
-									</div>
-								<?php endif; ?>
-
-								<div class="pbb-product-info">
-									<h4 class="pbb-product-name"><?php echo esc_html( $addon['name'] ); ?></h4>
-
-									<?php if ( ! empty( $addon['description'] ) ) : ?>
-										<p class="pbb-product-description"><?php echo esc_html( wp_trim_words( $addon['description'], 15 ) ); ?></p>
-									<?php endif; ?>
-
-									<div class="pbb-price-badge">
-										<span class="pbb-price-amount">
-											<?php
-											/* translators: %s: price */
-											echo esc_html( sprintf( __( '+$%s per bag', 'party-bag-builder' ), number_format( $addon['price'], 2 ) ) );
-											?>
-										</span>
-										<!-- This will be shown dynamically if addon is marked free -->
-										<span class="pbb-free-indicator" data-wp-bind--hidden="!state.isAddonFree">
-											<?php esc_html_e( 'FREE (included)', 'party-bag-builder' ); ?>
-										</span>
-									</div>
+				<template data-wp-each--addon="context.addons">
+					<div
+						class="pbb-product-card pbb-selectable-card"
+						data-wp-class--selected="state.isAddonSelected"
+						data-wp-class--disabled="state.isAddonInputDisabled"
+						data-wp-on--click="actions.toggleAddon"
+					>
+						<div class="pbb-product-image">
+							<img data-wp-bind--src="context.addon.image_url" data-wp-bind--alt="context.addon.name" />
+							<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isAddonSelected">
+								<div class="pbb-product-image-check">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M20 6 9 17l-5-5"></path>
+									</svg>
 								</div>
-							</span>
-						</label>
+							</div>
+							<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isAddonInputDisabled">
+								<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
+							</div>
+						</div>
+
+						<div class="pbb-product-info">
+							<h4 class="pbb-product-name" data-wp-text="context.addon.name"></h4>
+							<p class="pbb-product-description" data-wp-text="context.addon.description"></p>
+							<div class="pbb-price-badge">
+								<span class="pbb-price-amount">
+									+$<span data-wp-text="context.addon.price"></span> <?php esc_html_e( 'per bag', 'party-bag-builder' ); ?>
+								</span>
+								<span class="pbb-free-indicator" data-wp-bind--hidden="!state.isAddonFree">
+									<?php esc_html_e( 'FREE (included)', 'party-bag-builder' ); ?>
+								</span>
+							</div>
+						</div>
 					</div>
-				<?php endforeach; ?>
+				</template>
 			</div>
 		<?php else : ?>
 			<p class="pbb-info-message">

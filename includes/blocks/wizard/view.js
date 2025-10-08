@@ -102,12 +102,15 @@ const { state, actions } = store( 'party-bag-builder', {
 			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
 		},
 		get isAddonSelected() {
-			const context = getContext();
-			return state.selectedAddons.includes( context.addonId );
+			const { addon } = getContext();
+			return state.selectedAddons.includes( addon.id );
+		},
+		get isAddonInputDisabled() {
+			return !state.isAddonSelected && state.selectedAddons.length >= state.maxAddonsAllowed;
 		},
 		get isAddonFree() {
-			const context = getContext();
-			return state.priceBreakdown.freeAddons.includes( context.addonId );
+			const { addon } = getContext();
+			return state.priceBreakdown.freeAddons.includes( addon.id );
 		},
 		// Formatted prices (reused across templates)
 		get tierBasePrice() {
@@ -214,18 +217,17 @@ const { state, actions } = store( 'party-bag-builder', {
 		/**
 		 * Toggle addon selection.
 		 */
-		toggleAddon: ( event ) => {
-			const addonId = parseInt( event.target.value, 10 );
+		toggleAddon: () => {
+			const { addon } = getContext();
+
 			const maxAddons = state.tierConfig?.includes?.max_addons || 0;
 
-			const index = state.selectedAddons.indexOf( addonId );
-
-			if ( index > -1 ) {
+			if ( state.selectedAddons.indexOf( addon.id ) > -1 ) {
 				// Remove addon
-				state.selectedAddons = state.selectedAddons.filter( ( id ) => id !== addonId );
+				state.selectedAddons = state.selectedAddons.filter( ( id ) => id !== addon.id );
 			} else if ( state.selectedAddons.length < maxAddons ) {
 				// Add addon if under limit
-				state.selectedAddons = [ ...state.selectedAddons, addonId ];
+				state.selectedAddons = [ ...state.selectedAddons, addon.id ];
 			}
 
 			state.priceBreakdown = calculatePriceBreakdown( state );

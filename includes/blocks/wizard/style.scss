@@ -432,9 +432,14 @@ label[for="pbb-kid-count"] {
 		margin: 0;
 	}
 
-	& .pbb-product-description {
+	& .pbb-product-description,
+	& .pbb-price-badge {
 		font-size: 1rem;
 		margin: 0;
+	}
+
+	& .pbb-price-badge {
+		margin-top: 0.5rem;
 	}
 }
 
