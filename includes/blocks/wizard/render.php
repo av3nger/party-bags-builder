@@ -54,12 +54,6 @@ $context = array(
 	'rest_url'     => rest_url( 'bag-builder/v1/add-to-cart' ),
 	'nonce'        => wp_create_nonce( 'wp_rest' ),
 );
-
-// Add full preview URLs for tag styles.
-foreach ( $context['tag_styles'] as &$style ) {
-	$style['preview_url'] = PBB_PLUGIN_URL . 'assets/images/tag-examples/' . $style['preview_image'];
-	unset( $style['preview_image'] );
-}
 ?>
 
 <div

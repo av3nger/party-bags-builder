@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
 				<span data-wp-text="state.selectedAddons.length">0</span>
 				<?php esc_html_e( ' of ', 'party-bag-builder' ); ?>
 				<span data-wp-text="state.maxAddonsAllowed">0</span>
-				<?php esc_html_e( ' max', 'party-bag-builder' ); ?>
+				<?php esc_html_e( ' addons', 'party-bag-builder' ); ?>
 			</span>
 			<span class="pbb-free-addons" data-wp-bind--hidden="!state.freeAddonsAllowed">
 				(<span data-wp-text="state.freeAddonsAllowed">0</span>
@@ -78,37 +78,28 @@ defined( 'ABSPATH' ) || exit;
 		<!-- Tag Style Selection (shown when applicable) -->
 		<?php if ( ! empty( $context['tag_styles'] ) ) : ?>
 			<div class="pbb-tag-style-section" data-wp-bind--hidden="state.selectedAddons.length === 0">
-				<h3 class="pbb-subsection-title"><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h3>
+				<h3 class="pbb-subsection-title"><?php esc_html_e( '3D Printed Name Tags', 'party-bag-builder' ); ?></h3>
 				<p class="pbb-subsection-description">
-					<?php esc_html_e( 'Select a color style for personalized name tags', 'party-bag-builder' ); ?>
+					<?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?>
 				</p>
 
-				<div class="pbb-tag-styles-grid">
-					<?php foreach ( $context['tag_styles'] as $style ) : ?>
-						<div
-							class="pbb-tag-style-card"
-							data-wp-context='{"tagStyleId": "<?php echo esc_js( $style['id'] ); ?>"}'
-							data-wp-on--click="actions.setTagStyle"
-							data-wp-class--selected="state.isTagStyleSelected"
-							data-tag-style-id="<?php echo esc_attr( $style['id'] ); ?>"
-						>
-							<?php if ( ! empty( $style['preview_url'] ) ) : ?>
-								<img src="<?php echo esc_url( $style['preview_url'] ); ?>" alt="<?php echo esc_attr( $style['id'] ); ?>" class="pbb-tag-preview-image">
-							<?php else : ?>
-								<div class="pbb-tag-color-swatches">
-									<span class="pbb-color-swatch pbb-tag-color" style="background-color: <?php echo esc_attr( $style['tag_color'] ); ?>"></span>
-									<span class="pbb-color-swatch pbb-base-color" style="background-color: <?php echo esc_attr( $style['base_color'] ); ?>"></span>
+				<div class="pbb-tag-style-wrapper">
+					<h4><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h4>
+					<div class="pbb-product-grid">
+						<template data-wp-each--style="context.tag_styles">
+							<div
+								class="pbb-product-card pbb-selectable-card"
+								data-wp-on--click="actions.setTagStyle"
+								data-wp-class--selected="state.isTagStyleSelected"
+							>
+								<div class="pbb-tag-style-color" data-wp-bind--data-color="context.style.id">
+									<span><?php esc_html_e( 'Name', 'party-bag-builder' ); ?></span>
 								</div>
-							<?php endif; ?>
-							<div class="pbb-tag-style-name">
-								<?php
-								// Convert ID to readable name (e.g., 'red-white' -> 'Red & White').
-								echo esc_html( ucwords( str_replace( '-', ' & ', $style['id'] ) ) );
-								?>
+								<p class="pbb-tag-style-name" data-wp-text="context.style.name"></p>
 							</div>
-							<span class="pbb-checkmark">✓</span>
-						</div>
-					<?php endforeach; ?>
+						</template>
+					</div>
+					<p>*<?php esc_html_e( 'Note: Colors are for reference only and may vary slightly from the actual product.', 'party-bag-builder' ); ?></p>
 				</div>
 			</div>
 		<?php endif; ?>

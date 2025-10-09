@@ -91,8 +91,8 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.selectedTier === tier.id;
 		},
 		get isTagStyleSelected() {
-			const context = getContext();
-			return state.selectedTagStyle === context.tagStyleId;
+			const { style } = getContext();
+			return state.selectedTagStyle === style.id;
 		},
 		get isToySelected() {
 			const { toy } = getContext();
@@ -236,10 +236,11 @@ const { state, actions } = store( 'party-bag-builder', {
 		/**
 		 * Set tag style selection.
 		 */
-		setTagStyle: ( event ) => {
-			const tagStyleId = event.target.dataset.tagStyleId;
-			if ( tagStyleId ) {
-				state.selectedTagStyle = tagStyleId;
+		setTagStyle: () => {
+			const { style } = getContext();
+
+			if ( style.id ) {
+				state.selectedTagStyle = style.id;
 			}
 		},
 
