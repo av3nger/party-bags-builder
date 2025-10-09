@@ -32,7 +32,7 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 		get isLastStep() {
 			const { step } = getContext();
-			return step.id === 6;
+			return step.id === 5;
 		},
 		get includedToysLabel() {
 			const { tier } = getContext();
@@ -105,6 +105,17 @@ const { state, actions } = store( 'party-bag-builder', {
 		get freeAddonsAllowed() {
 			const { tier } = getContext();
 			return (tier?.includes?.free_addons || 0) > 0;
+		},
+		get isNameTagAddonSelected() {
+			return state.tierConfig?.includes?.free_addons > 0 || state.nameTagAddonEnabled;
+		},
+		get shouldShowInput() {
+			const { inputIndex } = getContext();
+			return inputIndex < state.kidCount;
+		},
+		get getKidNameByIndex() {
+			const { inputIndex } = getContext();
+			return state.kidNames[ inputIndex ] || '';
 		},
 		get kidNamesDisplay() {
 			const names = state.kidNames.filter( ( n ) => n.trim() !== '' ).join( ', ' );
@@ -200,6 +211,20 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
+		 * Toggle name tag addon (for non-premium tiers).
+		 */
+		toggleNameTagAddon: () => {
+			state.nameTagAddonEnabled = ! state.nameTagAddonEnabled;
+
+			// Reset tag style and names if unchecked
+			if ( ! state.nameTagAddonEnabled ) {
+				state.selectedTagStyle = null;
+			}
+
+			state.priceBreakdown = calculatePriceBreakdown( state );
+		},
+
+		/**
 		 * Set tag style selection.
 		 */
 		setTagStyle: () => {
@@ -211,7 +236,25 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
-		 * Update kid name at specific index.
+		 * Handle kid name input using event delegation.
+		 */
+		handleKidNameInput: ( event ) => {
+			// Check if the event target is an input with data-index
+			if ( event.target.classList.contains( 'pbb-name-input' ) ) {
+				const index = parseInt( event.target.dataset.index, 10 );
+				const name = event.target.value;
+
+				if ( index >= 0 && index < state.kidNames.length ) {
+					// Create new array to trigger reactivity
+					const updatedNames = [ ...state.kidNames ];
+					updatedNames[ index ] = name;
+					state.kidNames = updatedNames;
+				}
+			}
+		},
+
+		/**
+		 * Update kid name at specific index (legacy, kept for compatibility).
 		 */
 		updateKidName: ( event ) => {
 			const index = parseInt( event.target.dataset.index, 10 );
@@ -252,14 +295,14 @@ const { state, actions } = store( 'party-bag-builder', {
 				}
 			}
 
-			if ( state.currentStep === 4 && ! state.selectedTagStyle ) {
+			if ( state.currentStep === 4 && state.isNameTagAddonSelected && ! state.selectedTagStyle ) {
 				state.errors = [ 'Please select a tag style.' ];
 				return;
 			}
 
 			// Clear errors and advance
 			state.errors = [];
-			if ( state.currentStep < 6 ) {
+			if ( state.currentStep < 5 ) {
 				state.currentStep += 1;
 				scrollWizardToTop();
 			}
@@ -281,7 +324,7 @@ const { state, actions } = store( 'party-bag-builder', {
 		 * Navigate to specific step.
 		 */
 		goToStep: ( step ) => {
-			if ( step >= 1 && step <= 6 ) {
+			if ( step >= 1 && step <= 5 ) {
 				state.currentStep = step;
 				state.errors = [];
 				scrollWizardToTop();

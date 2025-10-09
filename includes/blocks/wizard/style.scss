@@ -114,29 +114,28 @@
 // Wizard Steps
 .pbb-wizard-content {
 	min-height: 400px;
-}
 
-.pbb-step-content {
-	text-align: center;
-}
-
-.pbb-wizard-step {
-	&[hidden] {
-		display: none;
-	}
-
-	h2 {
+	& .pbb-step-title {
 		color: var(--pbb--colors--grey-800);
 		font-size: 2rem;
 		font-weight: 500;
 		margin: 0 0 0.5rem;
 	}
 
-	.pbb-step-description {
+	& .pbb-step-description {
 		color: var(--pbb--colors--grey-800);
 		font-size: 1rem;
 		margin: 0 0 2rem;
 	}
+
+	& .pbb-selection-counter {
+		font-size: 1rem;
+		text-align: left;
+	}
+}
+
+.pbb-step-content {
+	text-align: center;
 }
 
 // Kid Count Input
@@ -210,19 +209,21 @@ label[for="pbb-kid-count"] {
 	margin-top: 0.5rem;
 }
 
-// Tier Grid
-.pbb-tier-grid {
+.pbb-tier-grid,
+.pbb-product-grid,
+.pbb-preview-grid,
+.pbb-names-grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
 	gap: 1.5rem;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.pbb-tier-grid {
 	margin: 3rem auto;
 }
 
 .pbb-product-grid,
 .pbb-preview-grid {
-	display: grid;
-	gap: 1.5rem;
-	grid-template-columns: repeat(3, 1fr);
 	margin-bottom: 2rem;
 
 	.pbb-tag-style-section & {
@@ -263,7 +264,7 @@ label[for="pbb-kid-count"] {
 }
 
 .pbb-product-grid {
-	margin-top: 2rem;
+	margin-top: 1rem;
 }
 
 .pbb-tier-card {
@@ -512,26 +513,65 @@ label[for="pbb-kid-count"] {
 		font-weight: 500;
 		line-height: 1.25rem;
 		margin: 0.75rem auto 0;
+		text-align: center;
 	}
 }
 
-.pbb-tag-style-wrapper {
-	border: 1px solid var(--pbb--colors--grey-100);
-	border-radius: 8px;
-	box-shadow: var(--pbb-shadow-md);
-	padding: 1.5rem;
+.pbb-tag-style-section {
+	border-top: 1px solid var(--pbb--colors--grey-100);
+	padding-top: 1rem;
+	text-align: left;
 
-	& > h4 {
-		font-weight: 500;
-		margin-bottom: 1rem;
-		margin-top: 0;
-		text-align: left;
+	& .pbb-subsection-title {
+		font-weight: 600;
 	}
 
-	& > p {
+	& .pbb-subsection-description {
 		font-size: 1rem;
-		margin-bottom: 0;
-		text-align: left;
+	}
+
+	& .pbb-tag-style-wrapper {
+		border: 1px solid var(--pbb--colors--grey-100);
+		border-radius: 8px;
+		box-shadow: var(--pbb-shadow-md);
+		padding: 1.5rem;
+
+		& label {
+			font-size: 1rem;
+		}
+
+		& h4 {
+			font-weight: 500;
+			margin-bottom: 1rem;
+			margin-top: 1.5rem;
+		}
+
+		& p {
+			font-size: 1rem;
+			margin-bottom: 0;
+		}
+
+		& .pbb-name-input-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+
+			&[hidden] {
+				display: none;
+			}
+		}
+
+		& .pbb-name-label {
+			font-weight: 400;
+		}
+
+		& .pbb-name-input {
+			border: 1px solid var(--pbb--colors--grey-200);
+			border-radius: 4px;
+			font-size: 1rem;
+			line-height: 1.5rem;
+			padding: 0.5rem 0.75rem;
+		}
 	}
 }
 

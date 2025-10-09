@@ -1,6 +1,6 @@
 <?php
 /**
- * Step 6 - Review & Summary
+ * Step 5 - Review & Summary
  *
  * @package PartyBagBuilder
  */
@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-6" data-wp-context='{"step": {"id": 6}}' data-wp-bind--hidden="!state.isCurrentStep">
+<div class="pbb-step pbb-step-5" data-wp-context='{"step": {"id": 5}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Review Your Order', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-description">

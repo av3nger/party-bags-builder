@@ -23,24 +23,25 @@ $config = require PBB_PLUGIN_DIR . 'includes/config.php';
 wp_interactivity_state(
 	'party-bag-builder',
 	array(
-		'currentStep'        => 1,
-		'kidCount'           => 5,
-		'selectedTier'       => 'medium',
-		'tierConfig'         => $config['tiers']['medium'],
-		'selectedToys'       => array(),
-		'selectedAddons'     => array(),
-		'selectedTagStyle'   => null,
-		'kidNames'           => array_fill( 0, 5, '' ),
-		'priceBreakdown'     => array(
+		'currentStep'         => 1,
+		'kidCount'            => 5,
+		'selectedTier'        => 'medium',
+		'tierConfig'          => $config['tiers']['medium'],
+		'selectedToys'        => array(),
+		'selectedAddons'      => array(),
+		'nameTagAddonEnabled' => false,
+		'selectedTagStyle'    => null,
+		'kidNames'            => array_fill( 0, 5, '' ),
+		'priceBreakdown'      => array(
 			'base'       => $config['tiers']['medium']['base_price'],
 			'addons'     => 0,
 			'total'      => $config['tiers']['medium']['base_price'] * 5,
 			'freeAddons' => array(),
 			'paidAddons' => array(),
 		),
-		'showPriceBreakdown' => false,
-		'isLoading'          => false,
-		'errors'             => array(),
+		'showPriceBreakdown'  => false,
+		'isLoading'           => false,
+		'errors'              => array(),
 	)
 );
 
@@ -73,8 +74,7 @@ $context = array(
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-2-tier-selection.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-3-toy-selection.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-4-addon-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-kid-names.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-6-review.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-review.php';
 			?>
 		</div>
 
