@@ -295,6 +295,11 @@ label[for="pbb-kid-count"] {
 		margin: 0 0 1rem;
 	}
 
+	.pbb-tier-subheading {
+		font-size: 1rem;
+		margin: 0;
+	}
+
 	.pbb-tier-price {
 		margin-bottom: 1rem;
 		font-size: 2rem;
@@ -316,6 +321,7 @@ label[for="pbb-kid-count"] {
 	ul.pbb-tier-features {
 		list-style: none;
 		margin-left: -2.25rem;
+		margin-top: 0.5rem;
 
 		li {
 			font-size: 0.875rem;

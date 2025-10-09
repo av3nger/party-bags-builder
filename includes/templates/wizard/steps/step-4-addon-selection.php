@@ -21,8 +21,6 @@ defined( 'ABSPATH' ) || exit;
 			<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>
 			<span class="pbb-counter-value">
 				<span data-wp-text="state.selectedAddons.length">0</span>
-				<?php esc_html_e( ' of ', 'party-bag-builder' ); ?>
-				<span data-wp-text="state.maxAddonsAllowed">0</span>
 				<?php esc_html_e( ' addons', 'party-bag-builder' ); ?>
 			</span>
 			<span class="pbb-free-addons" data-wp-bind--hidden="!state.freeAddonsAllowed">
@@ -37,7 +35,6 @@ defined( 'ABSPATH' ) || exit;
 					<div
 						class="pbb-product-card pbb-selectable-card"
 						data-wp-class--selected="state.isAddonSelected"
-						data-wp-class--disabled="state.isAddonInputDisabled"
 						data-wp-on--click="actions.toggleAddon"
 					>
 						<div class="pbb-product-image">
@@ -48,9 +45,6 @@ defined( 'ABSPATH' ) || exit;
 										<path d="M20 6 9 17l-5-5"></path>
 									</svg>
 								</div>
-							</div>
-							<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isAddonInputDisabled">
-								<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
 							</div>
 						</div>
 
@@ -78,6 +72,8 @@ defined( 'ABSPATH' ) || exit;
 		<!-- Tag Style Selection (shown when applicable) -->
 		<?php if ( ! empty( $context['tag_styles'] ) ) : ?>
 			<div class="pbb-tag-style-section" data-wp-bind--hidden="state.selectedAddons.length === 0">
+				<input type="checkbox">Add personalized 3D printed name tags
+
 				<h3 class="pbb-subsection-title"><?php esc_html_e( '3D Printed Name Tags', 'party-bag-builder' ); ?></h3>
 				<p class="pbb-subsection-description">
 					<?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?>
@@ -100,6 +96,32 @@ defined( 'ABSPATH' ) || exit;
 						</template>
 					</div>
 					<p>*<?php esc_html_e( 'Note: Colors are for reference only and may vary slightly from the actual product.', 'party-bag-builder' ); ?></p>
+
+					<div
+						<template data-wp-each--name="state.kidNames">
+							<div>
+								<label>Bag #<span data-wp-text="context.name.i + 1"></span></label>
+								<input
+									type="text"
+									placeholder="Enter child's name"
+									data-wp-model="context.name"
+								/>
+								<p>0/20 characters</p>
+							</div>
+						</template>
+
+
+						<div>
+							<label>Bag #1</label>
+							<input type="text" placeholder="Enter child's name" value="">
+							<p>0/20 characters</p>
+						</div>
+						<div>
+							<label>Bag #1</label>
+							<input type="text" placeholder="Enter child's name" value="">
+							<p>0/20 characters</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		<?php endif; ?>

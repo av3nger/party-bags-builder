@@ -52,7 +52,6 @@ return array(
 				'common'      => 'all',
 				'toys'        => 1,
 				'free_addons' => 0,
-				'max_addons'  => 2,
 			),
 		),
 		'medium'  => array(
@@ -64,7 +63,6 @@ return array(
 				'common'      => 'all',
 				'toys'        => 2,
 				'free_addons' => 0,
-				'max_addons'  => 3,
 			),
 		),
 		'premium' => array(
@@ -76,7 +74,6 @@ return array(
 				'common'      => 'all',
 				'toys'        => 3,
 				'free_addons' => 1,
-				'max_addons'  => 3,
 			),
 		),
 	),

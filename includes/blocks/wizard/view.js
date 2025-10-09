@@ -48,32 +48,6 @@ const { state, actions } = store( 'party-bag-builder', {
 					toys
 			);
 		},
-		get includedAddonsLabel() {
-			const { tier } = getContext();
-			const addons = tier?.includes?.free_addons || 0;
-
-			return wp.i18n.sprintf(
-					wp.i18n._n(
-							'%d FREE addon',
-							'%d FREE addons',
-							addons,
-							'party-bag-builder'
-					),
-					addons
-			);
-		},
-		get totalAddonsLabel() {
-			const { tier } = getContext();
-			const addons = tier?.includes?.max_addons || 0;
-
-			return wp.i18n.sprintf(
-					wp.i18n.__(
-							'Up to %d total addons',
-							'party-bag-builder'
-					),
-					addons
-			);
-		},
 		get isCurrentStep() {
 			const { step } = getContext();
 			return step.id === state.currentStep;
@@ -105,9 +79,6 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { addon } = getContext();
 			return state.selectedAddons.includes( addon.id );
 		},
-		get isAddonInputDisabled() {
-			return !state.isAddonSelected && state.selectedAddons.length >= state.maxAddonsAllowed;
-		},
 		get isAddonFree() {
 			const { addon } = getContext();
 			return state.priceBreakdown.freeAddons.includes( addon.id );
@@ -127,9 +98,6 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 		get freeAddonsCount() {
 			return state.priceBreakdown.freeAddons.length;
-		},
-		get maxAddonsAllowed() {
-			return state.tierConfig?.includes?.max_addons || 0;
 		},
 		get maxToysAllowed() {
 			return state.tierConfig?.includes?.toys || 0;
@@ -220,12 +188,10 @@ const { state, actions } = store( 'party-bag-builder', {
 		toggleAddon: () => {
 			const { addon } = getContext();
 
-			const maxAddons = state.tierConfig?.includes?.max_addons || 0;
-
 			if ( state.selectedAddons.indexOf( addon.id ) > -1 ) {
 				// Remove addon
 				state.selectedAddons = state.selectedAddons.filter( ( id ) => id !== addon.id );
-			} else if ( state.selectedAddons.length < maxAddons ) {
+			} else {
 				// Add addon if under limit
 				state.selectedAddons = [ ...state.selectedAddons, addon.id ];
 			}

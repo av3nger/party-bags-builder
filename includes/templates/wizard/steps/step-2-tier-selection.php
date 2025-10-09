@@ -32,11 +32,13 @@ defined( 'ABSPATH' ) || exit;
 						</div>
 					</div>
 
+					<p class="pbb-tier-subheading"><?php esc_html_e( 'Each bag includes:', 'party-bag-builder' ); ?></p>
+
 					<ul class="pbb-tier-features">
-						<li><?php esc_html_e( 'All base items included', 'party-bag-builder' ); ?></li>
+						<li><?php esc_html_e( 'Lolly, colorful ballon, sticker sheet', 'party-bag-builder' ); ?></li>
 						<li data-wp-text="state.includedToysLabel"></li>
-						<li data-wp-text="state.includedAddonsLabel" data-wp-bind--hidden="!state.freeAddonsAllowed"></li>
-						<li data-wp-text="state.totalAddonsLabel"></li>
+						<li><?php esc_html_e( 'Optional add-ons', 'party-bag-builder' ); ?></li>
+						<li data-wp-bind--hidden="!state.freeAddonsAllowed"><?php esc_html_e( '3D-printed name tag', 'party-bag-builder' ); ?></li>
 					</ul>
 
 					<div class="pbb-tier-total">
