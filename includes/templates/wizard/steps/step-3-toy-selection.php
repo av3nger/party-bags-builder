@@ -13,9 +13,7 @@ defined( 'ABSPATH' ) || exit;
 <div class="pbb-step pbb-step-3" data-wp-context='{"step": {"id": 3}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Select Your Toys', 'party-bag-builder' ); ?></h2>
-		<p class="pbb-step-description">
-			<?php esc_html_e( 'Choose toys for your party bags', 'party-bag-builder' ); ?>
-		</p>
+		<p><?php esc_html_e( 'Choose toys for your party bags', 'party-bag-builder' ); ?></p>
 
 		<div class="pbb-selection-counter">
 			<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>

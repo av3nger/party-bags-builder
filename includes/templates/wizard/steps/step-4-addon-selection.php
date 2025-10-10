@@ -13,9 +13,7 @@ defined( 'ABSPATH' ) || exit;
 <div class="pbb-step pbb-step-4" data-wp-context='{"step": {"id": 4}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Add Extra Goodies (Optional)', 'party-bag-builder' ); ?></h2>
-		<p class="pbb-step-description">
-			<?php esc_html_e( 'Enhance your party bags with premium add-ons', 'party-bag-builder' ); ?>
-		</p>
+		<p><?php esc_html_e( 'Enhance your party bags with premium add-ons', 'party-bag-builder' ); ?></p>
 
 		<div class="pbb-selection-counter">
 			<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>
@@ -73,9 +71,7 @@ defined( 'ABSPATH' ) || exit;
 		<?php if ( ! empty( $context['tag_styles'] ) ) : ?>
 			<div class="pbb-tag-style-section">
 				<h3 class="pbb-subsection-title"><?php esc_html_e( '3D Printed Name Tags', 'party-bag-builder' ); ?></h3>
-				<p class="pbb-subsection-description">
-					<?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?>
-				</p>
+				<p><?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?></p>
 
 				<div class="pbb-tag-style-wrapper">
 					<label data-wp-bind--hidden="state.freeAddonsCount">

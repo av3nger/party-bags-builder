@@ -11,9 +11,7 @@ defined( 'ABSPATH' ) || exit;
 <div class="pbb-step pbb-step-1" data-wp-context='{"step": {"id": 1}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'How many kids are attending?', 'party-bag-builder' ); ?></h2>
-		<p class="pbb-step-description">
-			<?php esc_html_e( 'Select the number of party bags you need', 'party-bag-builder' ); ?>
-		</p>
+		<p><?php esc_html_e( 'Select the number of party bags you need', 'party-bag-builder' ); ?></p>
 
 		<div class="pbb-kid-count-input">
 			<button data-wp-on--click="actions.decrementKidCount">

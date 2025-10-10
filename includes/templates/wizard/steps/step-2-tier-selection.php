@@ -13,9 +13,7 @@ defined( 'ABSPATH' ) || exit;
 <div class="pbb-step pbb-step-2" data-wp-context='{"step": {"id": 2}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Choose Your Tier', 'party-bag-builder' ); ?></h2>
-		<p class="pbb-step-description">
-			<?php esc_html_e( 'Select the party bag tier that best fits your needs', 'party-bag-builder' ); ?>
-		</p>
+		<p><?php esc_html_e( 'Select the party bag tier that best fits your needs', 'party-bag-builder' ); ?></p>
 
 		<div class="pbb-tier-grid">
 			<template data-wp-each--tier="context.tiers">
@@ -42,7 +40,7 @@ defined( 'ABSPATH' ) || exit;
 					</ul>
 
 					<div class="pbb-tier-total">
-						<div class="pbb-total-label"><?php esc_html_e( 'Your total:', 'party-bag-builder' ); ?></div>
+						<?php esc_html_e( 'Your total:', 'party-bag-builder' ); ?>
 						<div class="pbb-total-amount">
 							$<span data-wp-text="state.currentTierPrice">0.00</span>
 						</div>
