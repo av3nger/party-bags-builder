@@ -378,7 +378,7 @@ const { state, actions } = store( 'party-bag-builder', {
 			const context = getContext();
 
 			// Final validation
-			if ( ! state.selectedTier || state.selectedToys.length === 0 || ! state.selectedTagStyle ) {
+			if ( ! state.selectedTier || state.selectedToys.length === 0 ) {
 				state.errors = [ 'Please complete all required steps.' ];
 				return;
 			}

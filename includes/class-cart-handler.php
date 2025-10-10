@@ -87,6 +87,10 @@ final class Cart_Handler {
 
 		// Add to cart.
 		try {
+			if ( ! WC()->cart ) {
+				wc_load_cart();
+			}
+
 			$cart_item_key = WC()->cart->add_to_cart(
 				$builder_product_id,
 				1,
@@ -172,16 +176,16 @@ final class Cart_Handler {
 	 * @return array Price breakdown with base, addons, and total.
 	 */
 	public function calculate_total_price( array $party_bag_data ): array {
-		$kid_count       = absint( $party_bag_data['kid_count'] );
-		$tier_base_price = floatval( $party_bag_data['tier_base_price'] );
-
-		// Calculate base price.
-		$base = $tier_base_price * $kid_count;
-
 		// Get tier configuration for free addon count.
 		$config = require PBB_PLUGIN_DIR . 'includes/config.php';
 		$tiers  = $config['tiers'];
 		$tier   = $party_bag_data['tier'] ?? '';
+
+		$kid_count       = absint( $party_bag_data['kid_count'] );
+		$tier_base_price = floatval( $config['tiers'][ $tier ]['base_price'] );
+
+		// Calculate base price.
+		$base = $tier_base_price * $kid_count;
 
 		$free_addon_count = 0;
 		if ( isset( $tiers[ $tier ]['includes']['free_addons'] ) ) {

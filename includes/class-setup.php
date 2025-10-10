@@ -251,6 +251,7 @@ final class Setup {
 		$product->set_price( $price );
 		$product->set_regular_price( $price );
 		$product->set_manage_stock( true );
+		$product->set_sold_individually( true );
 		if ( $stock > 0 ) {
 			$product->set_stock_quantity( $stock );
 		}
