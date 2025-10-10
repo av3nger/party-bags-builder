@@ -699,6 +699,45 @@ label[for="pbb-kid-count"] {
 	}
 }
 
+// Review Items Grid
+.pbb-review-items-grid {
+	display: grid;
+	gap: 0.5rem;
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+
+	& .pbb-review-item {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+
+		& .pbb-review-item-image {
+			aspect-ratio: 1/1;
+			background-color: var(--pbb--colors--grey-100);
+			border: 1px solid var(--pbb--colors--grey-200);
+			border-radius: 8px;
+			height: 135px;
+			overflow: hidden;
+			width: 135px;
+
+			& img {
+				height: 100%;
+				object-fit: cover;
+				width: 100%;
+			}
+		}
+
+		& .pbb-review-item-name {
+			font-size: 0.75rem;
+			margin-top: 0.5rem;
+			max-width: 100px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}
+
 // Responsive
 @media (max-width: 768px) {
 	.pbb-step-indicator {

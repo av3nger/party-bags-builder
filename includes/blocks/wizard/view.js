@@ -133,6 +133,35 @@ const { state, actions } = store( 'party-bag-builder', {
 		get addToCartButtonText() {
 			return state.isLoading ? 'Adding...' : 'Add to Cart';
 		},
+		get selectedItemsData() {
+			const { toys, addons } = getContext();
+
+			// Get selected toys
+			const selectedToys = ( toys || [] ).filter(
+				( toy ) => state.selectedToys.includes( toy.id )
+			);
+
+			// Get selected addons
+			const selectedAddons = ( addons || [] ).filter(
+				( addon ) => state.selectedAddons.includes( addon.id )
+			);
+
+			// Combine toys and addons into a single array
+			return [ ...selectedToys, ...selectedAddons ];
+		},
+		get selectedTagStyleName() {
+			const { tag_styles } = getContext();
+
+			if ( ! state.selectedTagStyle || ! tag_styles ) {
+				return '';
+			}
+
+			const selectedStyle = tag_styles.find(
+				( style ) => style.id === state.selectedTagStyle
+			);
+
+			return selectedStyle ? selectedStyle.name : '';
+		},
 	},
 	actions: {
 		/**
