@@ -5,7 +5,7 @@
  */
 
 .wp-block-party-bag-builder-wizard {
-	--pbb-color-white: #ffffff;
+	--pbb--colors--white: #ffffff;
 	--pbb--colors--blue: #2563eb;
 	--pbb--colors--teal: #0073aa;
 	--pbb--colors--green : #22c55e;
@@ -13,7 +13,8 @@
 	--pbb--colors--grey-200: #e5e7eb;
 	--pbb--colors--grey-600: #6b7280;
 	--pbb--colors--grey-800: #23282d;
-	--pbb-shadow-md: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+	--pbb--shadow--md: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
+	--pbb--shadow--lg: rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
 
 	margin: 0 auto;
 	max-width: var(--wp--style--global--wide-size);
@@ -48,8 +49,8 @@
 		&.active {
 			.pbb-step-number {
 				background-color: var(--pbb--colors--blue);
-				box-shadow: var(--pbb-color-white) 0 0 0 0, #dbeafe 0 0 0 4px, rgba(0, 0, 0, 0) 0 0 0 0;
-				color: var(--pbb-color-white);
+				box-shadow: #dbeafe 0 0 0 4px;
+				color: var(--pbb--colors--white);
 			}
 
 			.pbb-step-label {
@@ -60,7 +61,7 @@
 		&.completed {
 			.pbb-step-number {
 				background-color: var(--pbb--colors--green);
-				color: var(--pbb-color-white);
+				color: var(--pbb--colors--white);
 			}
 		}
 	}
@@ -69,8 +70,8 @@
 		flex: 1 1 0;
 		height: 0.125rem;
 		margin-bottom: 1.5rem;
-		margin-left: 0.5rem;
-		margin-right: 0.5rem;
+		margin-inline-start: 0.5rem;
+		margin-inline-end: 0.5rem;
 
 		& .pbb-step-connector-inner {
 			background-color: var(--pbb--colors--grey-200);
@@ -148,7 +149,7 @@
 
 	button {
 		align-items: center;
-		background-color: var(--pbb-color-white);
+		background-color: var(--pbb--colors--white);
 		border: 1px solid var(--pbb--colors--grey-200);
 		border-radius: 9999px;
 		cursor: pointer;
@@ -171,7 +172,7 @@
 		&:hover {
 			background-color: var(--pbb--colors--blue);
 			border: none;
-			color: var(--pbb-color-white);
+			color: var(--pbb--colors--white);
 		}
 
 		& svg {
@@ -249,7 +250,7 @@ label[for="pbb-kid-count"] {
 	& .pbb-preview-card {
 		border: 1px solid var(--pbb--colors--grey-100);
 		border-radius: 8px;
-		box-shadow: var(--pbb-shadow-md);
+		box-shadow: var(--pbb--shadow--md);
 		overflow: hidden;
 	}
 
@@ -269,10 +270,10 @@ label[for="pbb-kid-count"] {
 
 .pbb-tier-card {
 	animation-duration: 200ms;
-	background-color: var(--pbb-color-white);
+	background-color: var(--pbb--colors--white);
 	border: 2px solid var(--pbb--colors--grey-200);
 	border-radius: 8px;
-	box-shadow: var(--pbb-shadow-md);
+	box-shadow: var(--pbb--shadow--md);
 	color: var(--pbb--colors--grey-800);
 	cursor: pointer;
 	padding: 2rem;
@@ -282,7 +283,7 @@ label[for="pbb-kid-count"] {
 	&:hover,
 	&.selected {
 		border-color: var(--pbb--colors--blue);
-		box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
+		box-shadow: var(--pbb--shadow--lg);
 	}
 
 	&.selected {
@@ -321,7 +322,7 @@ label[for="pbb-kid-count"] {
 
 	ul.pbb-tier-features {
 		list-style: none;
-		margin-left: -2.25rem;
+		margin-inline-start: -2.25rem;
 		margin-top: 0.5rem;
 
 		li {
@@ -374,7 +375,7 @@ label[for="pbb-kid-count"] {
 	&:hover,
 	&.selected {
 		border-color: var(--pbb--colors--blue);
-		box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
+		box-shadow: var(--pbb--shadow--lg);
 
 		&:not(.selected) img {
 			transform: matrix(1.1, 0, 0, 1.1, 0, 0)
@@ -421,14 +422,14 @@ label[for="pbb-kid-count"] {
 			align-items: center;
 			background-color: var(--pbb--colors--blue);
 			border-radius: 9999px;
-			box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px;
+			box-shadow: var(--pbb--shadow--lg);
 			display: flex;
 			height: 4rem;
 			justify-content: center;
 			width: 4rem;
 
 			& svg {
-				color: var(--pbb-color-white);
+				color: var(--pbb--colors--white);
 				height: 2rem;
 				width: 2rem;
 			}
@@ -441,7 +442,7 @@ label[for="pbb-kid-count"] {
 		& span {
 			background-color: color-mix(in srgb, var(--pbb--colors--grey-800), transparent 20%);
 			border-radius: 8px;
-			color: var(--pbb-color-white);
+			color: var(--pbb--colors--white);
 			font-size: 0.875rem;
 			font-weight: 500;
 			line-height: 1.25rem;
@@ -472,7 +473,7 @@ label[for="pbb-kid-count"] {
 	& .pbb-tag-style-color {
 		align-items: center;
 		border-radius: 8px;
-		color: var(--pbb-color-white);
+		color: var(--pbb--colors--white);
 		display: flex;
 		justify-content: center;
 		padding: 1rem;
@@ -533,7 +534,7 @@ label[for="pbb-kid-count"] {
 	& .pbb-tag-style-wrapper {
 		border: 1px solid var(--pbb--colors--grey-100);
 		border-radius: 8px;
-		box-shadow: var(--pbb-shadow-md);
+		box-shadow: var(--pbb--shadow--md);
 		padding: 1.5rem;
 
 		& label {
@@ -601,7 +602,7 @@ label[for="pbb-kid-count"] {
 
 	&-primary {
 		background-color: var(--pbb--colors--blue);
-		color: var(--pbb-color-white);
+		color: var(--pbb--colors--white);
 
 		&:not(:disabled):hover {
 			opacity: .9;
@@ -624,7 +625,7 @@ label[for="pbb-kid-count"] {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: var(--pbb-color-white);
+	background: var(--pbb--colors--white);
 	border-top: 2px solid var(--pbb--colors--grey-200);
 	box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
 	z-index: 100;
