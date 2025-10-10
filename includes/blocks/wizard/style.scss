@@ -214,7 +214,6 @@ label[for="pbb-kid-count"] {
 		gap: 1rem;
 		grid-template-columns: repeat(2, 1fr);
 		margin-bottom: 0;
-		margin-top: 0;
 
 		@media (min-width: 768px) {
 			grid-template-columns: repeat(3, 1fr);
@@ -231,14 +230,14 @@ label[for="pbb-kid-count"] {
 	max-width: 600px;
 
 	& .pbb-preview-card {
-		border: 1px solid var(--pbb--colors--grey-100);
+		border: 1px solid var(--pbb--colors--grey-200);
 		border-radius: 8px;
 		box-shadow: var(--pbb--shadow--md);
 		overflow: hidden;
 	}
 
 	& img {
-		border-bottom: 1px solid var(--pbb--colors--grey-100);
+		border-bottom: 1px solid var(--pbb--colors--grey-200);
 		width: 100%;
 	}
 
@@ -276,10 +275,6 @@ label[for="pbb-kid-count"] {
 		font-size: 1.5rem;
 		font-weight: 700;
 		margin: 0 0 1rem;
-	}
-
-	.pbb-tier-subheading {
-		margin: 0;
 	}
 
 	.pbb-tier-price {
@@ -421,7 +416,6 @@ label[for="pbb-kid-count"] {
 			color: var(--pbb--colors--white);
 			font-size: 0.875rem;
 			font-weight: 500;
-			line-height: 1.25rem;
 			padding: 0.5rem 1rem;
 		}
 	}
@@ -446,7 +440,7 @@ label[for="pbb-kid-count"] {
 
 	& .pbb-tag-style-color {
 		align-items: center;
-		border-radius: 8px;
+		border-radius: 4px;
 		color: var(--pbb--colors--white);
 		display: flex;
 		justify-content: center;
@@ -486,7 +480,6 @@ label[for="pbb-kid-count"] {
 	& .pbb-tag-style-name {
 		font-size: 0.875rem;
 		font-weight: 500;
-		line-height: 1.25rem;
 		margin: 0.75rem auto 0;
 		text-align: center;
 	}
@@ -502,7 +495,7 @@ label[for="pbb-kid-count"] {
 	}
 
 	& .pbb-tag-style-wrapper {
-		border: 1px solid var(--pbb--colors--grey-100);
+		border: 1px solid var(--pbb--colors--grey-200);
 		border-radius: 8px;
 		box-shadow: var(--pbb--shadow--md);
 		padding: 1.5rem;
@@ -510,7 +503,6 @@ label[for="pbb-kid-count"] {
 		& h4 {
 			font-weight: 500;
 			margin-bottom: 1rem;
-			margin-top: 1.5rem;
 		}
 
 		& p {
@@ -525,10 +517,6 @@ label[for="pbb-kid-count"] {
 			&[hidden] {
 				display: none;
 			}
-		}
-
-		& .pbb-name-label {
-			font-weight: 400;
 		}
 
 		& .pbb-name-input {
@@ -664,10 +652,7 @@ label[for="pbb-kid-count"] {
 				color: var(--pbb--colors--blue);
 				cursor: pointer;
 				display: flex;
-				font-size: 0.875rem;
-				font-weight: 500;
 				gap: 0.25rem;
-				line-height: 1.25rem;
 				-webkit-appearance: button;
 
 				& svg {

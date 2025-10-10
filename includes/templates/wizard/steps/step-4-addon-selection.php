@@ -111,7 +111,7 @@ defined( 'ABSPATH' ) || exit;
 										data-wp-context='{"inputIndex": <?php echo esc_attr( $i ); ?>}'
 										data-wp-bind--hidden="!state.shouldShowInput"
 									>
-										<label class="pbb-name-label" for="pbb-name-<?php echo esc_attr( $i ); ?>">
+										<label for="pbb-name-<?php echo esc_attr( $i ); ?>">
 											<?php esc_html_e( 'Bag #', 'party-bag-builder' ); ?><?php echo esc_html( $i + 1 ); ?>
 										</label>
 										<input

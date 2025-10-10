@@ -22,15 +22,13 @@ defined( 'ABSPATH' ) || exit;
 					data-wp-on--click="actions.selectTier"
 					data-wp-class--selected="state.isTierSelected"
 				>
-					<div class="pbb-tier-header">
-						<h3 class="pbb-tier-name" data-wp-text="context.tier.name"></h3>
-						<div class="pbb-tier-price">
-							$<span data-wp-text="context.tier.base_price"></span>.00
-							<span class="pbb-tier-price-label"><?php esc_html_e( 'per bag', 'party-bag-builder' ); ?></span>
-						</div>
+					<h3 class="pbb-tier-name" data-wp-text="context.tier.name"></h3>
+					<div class="pbb-tier-price">
+						$<span data-wp-text="context.tier.base_price"></span>.00
+						<span class="pbb-tier-price-label"><?php esc_html_e( 'per bag', 'party-bag-builder' ); ?></span>
 					</div>
 
-					<p class="pbb-tier-subheading"><?php esc_html_e( 'Each bag includes:', 'party-bag-builder' ); ?></p>
+					<p><?php esc_html_e( 'Each bag includes:', 'party-bag-builder' ); ?></p>
 
 					<ul class="pbb-tier-features">
 						<li><?php esc_html_e( 'Lolly, colorful ballon, sticker sheet', 'party-bag-builder' ); ?></li>
@@ -51,22 +49,14 @@ defined( 'ABSPATH' ) || exit;
 
 		<!-- Common Items Preview (shown when tier is selected) -->
 		<div class="pbb-common-items-preview" data-wp-bind--hidden="!state.selectedTier">
-			<h3 class="pbb-preview-title"><?php esc_html_e( 'Each party bag includes the following base items:', 'party-bag-builder' ); ?></h3>
+			<h3><?php esc_html_e( 'Each party bag includes the following base items:', 'party-bag-builder' ); ?></h3>
 
 			<?php if ( ! empty( $context['common_items'] ) ) : ?>
 				<div class="pbb-preview-grid">
 					<?php foreach ( $context['common_items'] as $item ) : ?>
 						<div class="pbb-product-card pbb-preview-card">
-							<?php if ( ! empty( $item['image_url'] ) ) : ?>
-								<img src="<?php echo esc_url( $item['image_url'] ); ?>" alt="<?php echo esc_attr( $item['name'] ); ?>" class="pbb-product-image">
-							<?php else : ?>
-								<div class="pbb-product-image pbb-placeholder-image">
-									<span class="pbb-placeholder-icon">📦</span>
-								</div>
-							<?php endif; ?>
-							<div class="pbb-product-info">
-								<h4 class="pbb-product-name"><?php echo esc_html( $item['name'] ); ?></h4>
-							</div>
+							<img src="<?php echo esc_url( $item['image_url'] ); ?>" alt="<?php echo esc_attr( $item['name'] ); ?>">
+							<h4 class="pbb-product-name"><?php echo esc_html( $item['name'] ); ?></h4>
 						</div>
 					<?php endforeach; ?>
 				</div>
