@@ -33,9 +33,11 @@ final class Rest_API {
 
 	/**
 	 * Constructor
+	 *
+	 * @param Cart_Handler $cart_handler Cart Handler instance.
 	 */
-	public function __construct() {
-		$this->cart_handler = new Cart_Handler();
+	public function __construct( Cart_Handler $cart_handler ) {
+		$this->cart_handler = $cart_handler;
 		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
 	}
 

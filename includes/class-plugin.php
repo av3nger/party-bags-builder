@@ -90,8 +90,8 @@ final class Plugin {
 	 */
 	private function init_classes(): void {
 		$this->product_manager = new Product_Manager();
-		$this->rest_api        = new Rest_API();
 		$this->cart_handler    = new Cart_Handler();
+		$this->rest_api        = new Rest_API( $this->cart_handler );
 		$this->order_handler   = new Order_Handler();
 		$this->blocks          = new Blocks();
 	}
