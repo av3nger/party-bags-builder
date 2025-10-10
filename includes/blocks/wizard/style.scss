@@ -498,11 +498,18 @@ label[for="pbb-kid-count"] {
 		border: 1px solid var(--pbb--colors--grey-200);
 		border-radius: 8px;
 		box-shadow: var(--pbb--shadow--md);
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
 		padding: 1.5rem;
 
 		& h4 {
 			font-weight: 500;
 			margin-bottom: 1rem;
+
+			&.pbb-tag-style-header {
+				margin-top: 0;
+			}
 		}
 
 		& p {

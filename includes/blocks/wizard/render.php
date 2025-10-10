@@ -33,7 +33,7 @@ wp_interactivity_state(
 		'selectedTagStyle'    => null,
 		'kidNames'            => array_fill( 0, 5, '' ),
 		'priceBreakdown'      => array(
-			'base'       => $config['tiers']['medium']['base_price'],
+			'base'       => $config['tiers']['medium']['base_price'] * 5,
 			'addons'     => 0,
 			'total'      => $config['tiers']['medium']['base_price'] * 5,
 			'freeAddons' => array(),

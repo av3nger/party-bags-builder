@@ -74,7 +74,7 @@ defined( 'ABSPATH' ) || exit;
 				<p><?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?></p>
 
 				<div class="pbb-tag-style-wrapper">
-					<label data-wp-bind--hidden="state.freeAddonsCount">
+					<label data-wp-bind--hidden="!state.showNameTagToggle">
 						<input
 							type="checkbox"
 							data-wp-bind--checked="state.nameTagAddonEnabled"
@@ -84,7 +84,7 @@ defined( 'ABSPATH' ) || exit;
 					</label>
 
 					<div data-wp-bind--hidden="!state.isNameTagAddonSelected">
-						<h4><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h4>
+						<h4 class="pbb-tag-style-header"><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h4>
 						<div class="pbb-product-grid">
 							<template data-wp-each--style="context.tag_styles">
 								<div

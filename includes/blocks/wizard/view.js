@@ -115,6 +115,9 @@ const { state, actions } = store( 'party-bag-builder', {
 		get isNameTagAddonSelected() {
 			return state.tierConfig?.includes?.free_addons > 0 || state.nameTagAddonEnabled;
 		},
+		get showNameTagToggle() {
+			return state.tierConfig?.includes?.free_addons === 0;
+		},
 		get shouldShowInput() {
 			const { inputIndex } = getContext();
 			return inputIndex < state.kidCount;
