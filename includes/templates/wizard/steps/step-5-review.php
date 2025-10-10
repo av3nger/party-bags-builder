@@ -31,8 +31,8 @@ defined( 'ABSPATH' ) || exit;
 						<button
 							type="button"
 							class="pbb-edit-button"
+							data-wp-context='{"targetStep": 1}'
 							data-wp-on--click="actions.goToStep"
-							data-step="1"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
@@ -72,8 +72,8 @@ defined( 'ABSPATH' ) || exit;
 						<button
 							type="button"
 							class="pbb-edit-button"
+							data-wp-context='{"targetStep": 3}'
 							data-wp-on--click="actions.goToStep"
-							data-step="3"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
@@ -109,8 +109,8 @@ defined( 'ABSPATH' ) || exit;
 						<button
 							type="button"
 							class="pbb-edit-button"
+							data-wp-context='{"targetStep": 4}'
 							data-wp-on--click="actions.goToStep"
-							data-step="4"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>

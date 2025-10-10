@@ -361,9 +361,11 @@ const { state, actions } = store( 'party-bag-builder', {
 		/**
 		 * Navigate to specific step.
 		 */
-		goToStep: ( step ) => {
-			if ( step >= 1 && step <= 5 ) {
-				state.currentStep = step;
+		goToStep: () => {
+			const { targetStep } = getContext();
+
+			if ( targetStep >= 1 && targetStep <= 5 ) {
+				state.currentStep = targetStep;
 				state.errors = [];
 				scrollWizardToTop();
 			}
