@@ -73,7 +73,7 @@ defined( 'ABSPATH' ) || exit;
 				type="button"
 				class="pbb-button pbb-button-primary pbb-button-next"
 				data-wp-on--click="actions.nextStep"
-				data-wp-bind--disabled="state.selectedToys.length !== state.maxToysAllowed"
+				data-wp-bind--disabled="!state.canGoToAddonsStep"
 			>
 				<?php esc_html_e( 'Next Step', 'party-bag-builder' ); ?>
 				<span class="pbb-button-icon">→</span>

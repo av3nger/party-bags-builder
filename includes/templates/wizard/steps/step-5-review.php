@@ -185,12 +185,6 @@ defined( 'ABSPATH' ) || exit;
 			</div>
 		</div>
 
-		<!-- Error Display -->
-		<div class="pbb-validation-message pbb-error-message" data-wp-bind--hidden="state.errors.length === 0">
-			<span class="pbb-error-icon">⚠️</span>
-			<span data-wp-text="state.errors[0]"></span>
-		</div>
-
 		<div class="pbb-step-navigation">
 			<button
 				type="button"

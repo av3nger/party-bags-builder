@@ -75,6 +75,12 @@ const { state, actions } = store( 'party-bag-builder', {
 		get isToyInputDisabled() {
 			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
 		},
+		get canGoToAddonsStep() {
+			return state.selectedToys.length === state.maxToysAllowed;
+		},
+		get canGoToReviewStep() {
+			return ! state.isNameTagAddonSelected || state.selectedTagStyle;
+		},
 		get isAddonSelected() {
 			const { addon } = getContext();
 			return state.selectedAddons.includes( addon.id );
