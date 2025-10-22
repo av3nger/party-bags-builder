@@ -30,10 +30,10 @@ final class Order_Handler {
 	private function init_hooks(): void {
 		add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'save_order_item_meta' ), 10, 3 );
 		add_action( 'woocommerce_order_item_meta_end', array( $this, 'display_order_meta' ), 10, 2 );
-		add_action( 'woocommerce_order_status_processing', array( $this, 'reduce_stock_on_processing' ) );
-		add_action( 'woocommerce_order_status_completed', array( $this, 'reduce_stock_on_completed' ) );
-		add_action( 'woocommerce_order_status_cancelled', array( $this, 'restore_stock_on_cancel' ) );
-		add_action( 'woocommerce_order_status_refunded', array( $this, 'restore_stock_on_refund' ) );
+		add_action( 'woocommerce_order_status_processing', array( $this, 'reduce_component_stock' ) );
+		add_action( 'woocommerce_order_status_completed', array( $this, 'reduce_component_stock' ) );
+		add_action( 'woocommerce_order_status_cancelled', array( $this, 'restore_component_stock' ) );
+		add_action( 'woocommerce_order_status_refunded', array( $this, 'restore_component_stock' ) );
 	}
 
 	/**
@@ -70,47 +70,6 @@ final class Order_Handler {
 		if ( file_exists( $template_path ) ) {
 			include $template_path;
 		}
-	}
-
-	/**
-	 * Reduce stock on processing status.
-	 *
-	 * @param int $order_id Order ID.
-	 */
-	public function reduce_stock_on_processing( int $order_id ): void {
-		$this->reduce_component_stock( $order_id );
-	}
-
-	/**
-	 * Reduce stock on completed status.
-	 *
-	 * @param int $order_id Order ID.
-	 */
-	public function reduce_stock_on_completed( int $order_id ): void {
-		// Only reduce if not already done on processing.
-		$already_reduced = get_post_meta( $order_id, '_pbb_stock_reduced', true );
-
-		if ( ! $already_reduced ) {
-			$this->reduce_component_stock( $order_id );
-		}
-	}
-
-	/**
-	 * Restore stock on cancel.
-	 *
-	 * @param int $order_id Order ID.
-	 */
-	public function restore_stock_on_cancel( int $order_id ): void {
-		$this->restore_component_stock( $order_id );
-	}
-
-	/**
-	 * Restore stock on refund.
-	 *
-	 * @param int $order_id Order ID.
-	 */
-	public function restore_stock_on_refund( int $order_id ): void {
-		$this->restore_component_stock( $order_id );
 	}
 
 	/**

@@ -8,9 +8,8 @@
 	--pbb--colors--primary: #415161;
 
 	--pbb--colors--white: #ffffff;
-	--pbb--colors--blue: #2563eb;
+	--pbb--colors--red: #f2295b;
 	--pbb--colors--teal: #0073aa;
-	--pbb--colors--green : #22c55e;
 	--pbb--colors--grey-100: #f1f1f1;
 	--pbb--colors--grey-200: #e5e7eb;
 	--pbb--shadow--md: rgba(0, 0, 0, 0.05) 0 1px 2px 0;
@@ -49,19 +48,19 @@
 
 		&.active {
 			.pbb-step-number {
-				background-color: var(--pbb--colors--blue);
+				background-color: var(--pbb--colors--red);
 				box-shadow: #dbeafe 0 0 0 4px;
 				color: var(--pbb--colors--white);
 			}
 
 			.pbb-step-label {
-				color: var(--pbb--colors--blue);
+				color: var(--pbb--colors--red);
 			}
 		}
 
 		&.completed {
 			.pbb-step-number {
-				background-color: var(--pbb--colors--green);
+				background-color: var(--pbb--colors--red);
 				color: var(--pbb--colors--white);
 			}
 		}
@@ -83,7 +82,7 @@
 		}
 
 		&.completed .pbb-step-connector-inner {
-			background-color: var(--pbb--colors--green);
+			background-color: var(--pbb--colors--red);
 		}
 	}
 
@@ -156,7 +155,7 @@
 		}
 
 		&:hover {
-			background-color: var(--pbb--colors--blue);
+			background-color: var(--pbb--colors--red);
 			border: none;
 
 			& svg {
@@ -262,12 +261,12 @@ label[for="pbb-kid-count"] {
 
 	&:hover,
 	&.selected {
-		border-color: var(--pbb--colors--blue);
+		border-color: var(--pbb--colors--red);
 		box-shadow: var(--pbb--shadow--lg);
 	}
 
 	&.selected {
-		background-color: color-mix(in srgb, var(--pbb--colors--blue), transparent 95%);
+		background-color: color-mix(in srgb, var(--pbb--colors--red), transparent 95%);
 		transform: scaleX(1.05) scaleY(1.05);
 	}
 
@@ -281,7 +280,7 @@ label[for="pbb-kid-count"] {
 		margin-bottom: 1rem;
 		font-size: 2rem;
 		font-weight: 800;
-		color: var(--pbb--colors--blue);
+		color: var(--pbb--colors--red);
 
 		.pbb-tier-price-label {
 			color: var(--pbb--colors--primary);
@@ -306,7 +305,7 @@ label[for="pbb-kid-count"] {
 			position: relative;
 
 			&::before {
-				color: var(--pbb--colors--green);
+				color: var(--pbb--colors--red);
 				content: '✓';
 				font-weight: 600;
 				left: 0;
@@ -345,7 +344,7 @@ label[for="pbb-kid-count"] {
 
 	&:hover,
 	&.selected {
-		border-color: var(--pbb--colors--blue);
+		border-color: var(--pbb--colors--red);
 		box-shadow: var(--pbb--shadow--lg);
 
 		&:not(.selected) img {
@@ -387,11 +386,11 @@ label[for="pbb-kid-count"] {
 	}
 
 	& .pbb-product-image-cover {
-		background-color: color-mix(in srgb, var(--pbb--colors--blue), transparent 95%);
+		background-color: color-mix(in srgb, var(--pbb--colors--red), transparent 95%);
 
 		& .pbb-product-image-check {
 			align-items: center;
-			background-color: var(--pbb--colors--blue);
+			background-color: var(--pbb--colors--red);
 			border-radius: 9999px;
 			box-shadow: var(--pbb--shadow--lg);
 			display: flex;
@@ -550,7 +549,6 @@ label[for="pbb-kid-count"] {
 	padding: 1rem 2rem;
 	font-size: 1rem;
 	border: none;
-	border-radius: 8px;
 	cursor: pointer;
 	transition: all 0.3s ease;
 
@@ -560,7 +558,7 @@ label[for="pbb-kid-count"] {
 	}
 
 	&-primary {
-		background-color: var(--pbb--colors--blue);
+		background-color: var(--pbb--colors--red);
 		color: var(--pbb--colors--white);
 
 		&:not(:disabled):hover {
@@ -641,7 +639,7 @@ label[for="pbb-kid-count"] {
 				gap: 0.75rem;
 
 				& svg {
-					color: var(--pbb--colors--blue);
+					color: var(--pbb--colors--red);
 					height: 1.5rem;
 					width: 1.5rem;
 				}
@@ -656,7 +654,7 @@ label[for="pbb-kid-count"] {
 				background-color: transparent;
 				background-image: none;
 				border: 0;
-				color: var(--pbb--colors--blue);
+				color: var(--pbb--colors--red);
 				cursor: pointer;
 				display: flex;
 				gap: 0.25rem;

@@ -173,7 +173,7 @@ final class Cart_Handler {
 	 *
 	 * @param array $party_bag_data Party bag configuration data.
 	 *
-	 * @return array Price breakdown with base, addons, and total.
+	 * @return array Price breakdown with base, addons, name tags, and total.
 	 */
 	public function calculate_total_price( array $party_bag_data ): array {
 		// Get tier configuration for free addon count.
@@ -192,11 +192,29 @@ final class Cart_Handler {
 			$free_addon_count = absint( $tiers[ $tier ]['includes']['free_addons'] );
 		}
 
+		// Check if name tags are selected.
+		$tag_style     = $party_bag_data['tag_style'] ?? null;
+		$has_name_tags = ! empty( $tag_style );
+
 		// Calculate addon pricing.
 		$addon_total     = 0;
+		$name_tag_total  = 0;
 		$free_addons     = array();
 		$paid_addons     = array();
 		$selected_addons = $party_bag_data['selected_addons'] ?? array();
+
+		// If name tags are selected and tier has free addons, they count as one free addon.
+		// Otherwise, name tags cost $2.50 per kid.
+		if ( $has_name_tags ) {
+			if ( $free_addon_count > 0 ) {
+				// Name tags count as one of the free addons.
+				--$free_addon_count;
+				$free_addons[] = 'name_tags';
+			} else {
+				// Name tags cost $2.50 per kid for non-premium tiers.
+				$name_tag_total = 2.50 * $kid_count;
+			}
+		}
 
 		if ( ! empty( $selected_addons ) ) {
 			// Sort addons by price (ascending) - cheapest marked free first.
@@ -225,7 +243,8 @@ final class Cart_Handler {
 		return array(
 			'base'        => $base,
 			'addons'      => $addon_total,
-			'total'       => $base + $addon_total,
+			'name_tags'   => $name_tag_total,
+			'total'       => $base + $addon_total + $name_tag_total,
 			'free_addons' => $free_addons,
 			'paid_addons' => $paid_addons,
 		);
@@ -290,6 +309,35 @@ final class Cart_Handler {
 			$item_data[] = array(
 				'key'   => __( 'Add-ons', 'party-bag-builder' ),
 				'value' => implode( ', ', $addon_items ),
+			);
+		}
+
+		// Add name tags if selected.
+		if ( ! empty( $party_bag_data['tag_style'] ) ) {
+			$config         = require PBB_PLUGIN_DIR . 'includes/config.php';
+			$tag_styles     = $config['tag_styles'] ?? array();
+			$tag_style      = $party_bag_data['tag_style'];
+			$tag_style_name = '';
+
+			// Find the tag style name.
+			foreach ( $tag_styles as $style ) {
+				if ( $style['id'] === $tag_style ) {
+					$tag_style_name = $style['name'];
+					break;
+				}
+			}
+
+			$free_addons = $party_bag_data['price_breakdown']['free_addons'] ?? array();
+			$is_free     = in_array( 'name_tags', $free_addons, true );
+			$tag_display = $tag_style_name;
+
+			if ( $is_free ) {
+				$tag_display .= ' ' . __( '(FREE)', 'party-bag-builder' );
+			}
+
+			$item_data[] = array(
+				'key'   => __( 'Name Tags', 'party-bag-builder' ),
+				'value' => $tag_display,
 			);
 		}
 
@@ -373,6 +421,14 @@ final class Cart_Handler {
 				/* translators: %s: addon price */
 				esc_html__( 'Add-ons: %s', 'party-bag-builder' ),
 				wc_price( $breakdown['addons'] )
+			) . '<br>';
+		}
+
+		if ( isset( $breakdown['name_tags'] ) && $breakdown['name_tags'] > 0 ) {
+			$tooltip .= sprintf(
+				/* translators: %s: name tag price */
+				esc_html__( 'Name Tags: %s', 'party-bag-builder' ),
+				wc_price( $breakdown['name_tags'] )
 			) . '<br>';
 		}
 

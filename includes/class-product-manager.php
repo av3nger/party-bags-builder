@@ -105,8 +105,16 @@ final class Product_Manager {
 				continue;
 			}
 
-			$available  = $product->get_stock_quantity() ?? 0;
-			$sufficient = $available >= $required;
+			// Check if product manages stock.
+			if ( ! $product->managing_stock() ) {
+				// Product doesn't manage stock - check if it's in stock.
+				$sufficient = $product->is_in_stock();
+				$available  = $sufficient ? 999999 : 0; // Use high number for display.
+			} else {
+				// Product manages stock - check actual quantity.
+				$available  = $product->get_stock_quantity() ?? 0;
+				$sufficient = $available >= $required;
+			}
 
 			$result['items'][] = array(
 				'id'         => $product_id,

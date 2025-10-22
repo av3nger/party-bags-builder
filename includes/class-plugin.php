@@ -91,7 +91,7 @@ final class Plugin {
 	private function init_classes(): void {
 		$this->product_manager = new Product_Manager();
 		$this->cart_handler    = new Cart_Handler();
-		$this->rest_api        = new Rest_API( $this->cart_handler );
+		$this->rest_api        = new Rest_API( $this->cart_handler, $this->product_manager );
 		$this->order_handler   = new Order_Handler();
 		$this->blocks          = new Blocks();
 	}
