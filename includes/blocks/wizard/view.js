@@ -102,9 +102,6 @@ const { state, actions } = store( 'party-bag-builder', {
 		get breakdownTotalPrice() {
 			return state.priceBreakdown.total.toFixed( 2 );
 		},
-		get freeAddonsCount() {
-			return state.priceBreakdown.freeAddons.length;
-		},
 		get maxToysAllowed() {
 			return state.tierConfig?.includes?.toys || 0;
 		},
@@ -409,13 +406,6 @@ const { state, actions } = store( 'party-bag-builder', {
 			} finally {
 				state.isLoading = false;
 			}
-		},
-
-		/**
-		 * Toggle price breakdown visibility.
-		 */
-		togglePriceBreakdown: () => {
-			state.showPriceBreakdown = ! state.showPriceBreakdown;
 		},
 	},
 } );

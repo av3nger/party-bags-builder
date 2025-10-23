@@ -39,7 +39,6 @@ wp_interactivity_state(
 			'freeAddons' => array(),
 			'paidAddons' => array(),
 		),
-		'showPriceBreakdown'  => false,
 		'isLoading'           => false,
 		'errors'              => array(),
 	)
