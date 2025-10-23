@@ -1,6 +1,6 @@
 <?php
 /**
- * Step 3 - Toy Selection
+ * Step 4 - Toy Selection
  *
  * @package PartyBagBuilder
  *
@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-3" data-wp-context='{"step": {"id": 3}}' data-wp-bind--hidden="!state.isCurrentStep">
+<div class="pbb-step pbb-step-4" data-wp-context='{"step": {"id": 4}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Select Your Toys', 'party-bag-builder' ); ?></h2>
 		<p><?php esc_html_e( 'Choose toys for your party bags', 'party-bag-builder' ); ?></p>

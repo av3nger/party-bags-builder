@@ -155,7 +155,7 @@ final class Setup {
 			),
 		);
 
-		$category_id = self::get_category_id( 'bag-common' );
+		$category_id = self::get_category_id( 'common' );
 
 		foreach ( $common_items as $item ) {
 			self::create_sample_product( $item['name'], $item['price'], $category_id, $item['stock'] );
@@ -196,7 +196,7 @@ final class Setup {
 			),
 		);
 
-		$category_id = self::get_category_id( 'bag-toys' );
+		$category_id = self::get_category_id( 'toys' );
 
 		foreach ( $toys as $toy ) {
 			self::create_sample_product( $toy['name'], $toy['price'], $category_id, $toy['stock'] );
@@ -226,7 +226,7 @@ final class Setup {
 			),
 		);
 
-		$category_id = self::get_category_id( 'bag-addons' );
+		$category_id = self::get_category_id( 'addons' );
 
 		foreach ( $addons as $addon ) {
 			self::create_sample_product( $addon['name'], $addon['price'], $category_id, $addon['stock'] ?? 0 );

@@ -247,6 +247,14 @@ final class Cart_Handler {
 			'value' => absint( $party_bag_data['kid_count'] ),
 		);
 
+		// Add selected bag.
+		if ( ! empty( $party_bag_data['selected_bag'] ) ) {
+			$item_data[] = array(
+				'key'   => __( 'Bag', 'party-bag-builder' ),
+				'value' => esc_html( $party_bag_data['selected_bag']['name'] ),
+			);
+		}
+
 		// Add selected toys.
 		if ( ! empty( $party_bag_data['selected_toys'] ) ) {
 			$toy_names = array_map(

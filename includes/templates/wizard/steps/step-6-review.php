@@ -1,6 +1,6 @@
 <?php
 /**
- * Step 5 - Review & Summary
+ * Step 6 - Review & Summary
  *
  * @package PartyBagBuilder
  */
@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<div class="pbb-step pbb-step-5" data-wp-context='{"step": {"id": 5}}' data-wp-bind--hidden="!state.isCurrentStep">
+<div class="pbb-step pbb-step-6" data-wp-context='{"step": {"id": 6}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
 		<h2 class="pbb-step-title"><?php esc_html_e( 'Review Your Order', 'party-bag-builder' ); ?></h2>
 		<p><?php esc_html_e( 'Please review your selections before adding to cart', 'party-bag-builder' ); ?></p>
@@ -56,6 +56,42 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 				</div>
 
+				<!-- Selected Bag Summary -->
+				<div class="pbb-review-section" data-wp-bind--hidden="!state.selectedBagData">
+					<div class="pbb-review-header">
+						<div class="pbb-review-header-title">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+								<line x1="3" x2="21" y1="6" y2="6"></line>
+								<path d="M16 10a4 4 0 0 1-8 0"></path>
+							</svg>
+							<h3 class="pbb-review-label"><?php esc_html_e( 'Party Bag', 'party-bag-builder' ); ?></h3>
+						</div>
+
+						<button
+							type="button"
+							class="pbb-edit-button"
+							data-wp-context='{"targetStep": 3}'
+							data-wp-on--click="actions.goToStep"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+							</svg>
+							<?php esc_html_e( 'Edit', 'party-bag-builder' ); ?>
+						</button>
+					</div>
+					<div class="pbb-review-value">
+						<div class="pbb-review-items-grid">
+							<div class="pbb-review-item">
+								<div class="pbb-review-item-image">
+									<img data-wp-bind--src="state.selectedBagData.image_url" data-wp-bind--alt="state.selectedBagData.name" />
+								</div>
+								<div class="pbb-review-item-name" data-wp-text="state.selectedBagData.name"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<!-- Selected Items Summary -->
 				<div class="pbb-review-section">
 					<div class="pbb-review-header">
@@ -72,7 +108,7 @@ defined( 'ABSPATH' ) || exit;
 						<button
 							type="button"
 							class="pbb-edit-button"
-							data-wp-context='{"targetStep": 3}'
+							data-wp-context='{"targetStep": 4}'
 							data-wp-on--click="actions.goToStep"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -109,7 +145,7 @@ defined( 'ABSPATH' ) || exit;
 						<button
 							type="button"
 							class="pbb-edit-button"
-							data-wp-context='{"targetStep": 4}'
+							data-wp-context='{"targetStep": 5}'
 							data-wp-on--click="actions.goToStep"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

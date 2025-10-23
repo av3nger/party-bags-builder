@@ -119,7 +119,7 @@ final class Rest_API {
 	private function transform_party_bag_data( array $data ): array {
 		// Get common items (automatically included in all bags).
 		// Strip down to minimal format for cart storage.
-		$common_items_full = $this->product_manager->get_products_by_category( 'bag-common' );
+		$common_items_full = $this->product_manager->get_products_by_category( 'common' );
 		$common_items      = array_map(
 			fn( $item ) => array(
 				'id'   => $item['id'],

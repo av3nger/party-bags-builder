@@ -27,6 +27,7 @@ wp_interactivity_state(
 		'kidCount'            => 5,
 		'selectedTier'        => 'medium',
 		'tierConfig'          => $config['tiers']['medium'],
+		'selectedBag'         => null,
 		'selectedToys'        => array(),
 		'selectedAddons'      => array(),
 		'nameTagAddonEnabled' => false,
@@ -46,9 +47,10 @@ wp_interactivity_state(
 $context = array(
 	'tiers'        => array_values( $config['tiers'] ),
 	'tag_styles'   => array_values( $config['tag_styles'] ),
-	'common_items' => $product_manager->get_products_by_category( 'bag-common' ),
-	'toys'         => $product_manager->get_products_by_category( 'bag-toys' ),
-	'addons'       => $product_manager->get_products_by_category( 'bag-addons' ),
+	'common_items' => $product_manager->get_products_by_category( 'common' ),
+	'bags'         => $product_manager->get_products_by_category( 'bags' ),
+	'toys'         => $product_manager->get_products_by_category( 'toys' ),
+	'addons'       => $product_manager->get_products_by_category( 'addons' ),
 	'rest_url'     => rest_url( 'bag-builder/v1/add-to-cart' ),
 	'nonce'        => wp_create_nonce( 'wp_rest' ),
 );
@@ -69,9 +71,10 @@ $context = array(
 			// Include all step templates.
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-1-kid-count.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-2-tier-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-3-toy-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-4-addon-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-review.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-3-bag-selection.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-4-toy-selection.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-addon-selection.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-6-review.php';
 			?>
 		</div>
 

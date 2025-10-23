@@ -20,14 +20,18 @@ $steps = array(
 	),
 	array(
 		'id'    => 3,
-		'value' => __( 'Toys', 'party-bag-builder' ),
+		'value' => __( 'Bag', 'party-bag-builder' ),
 	),
 	array(
 		'id'    => 4,
-		'value' => __( 'Add-ons', 'party-bag-builder' ),
+		'value' => __( 'Toys', 'party-bag-builder' ),
 	),
 	array(
 		'id'    => 5,
+		'value' => __( 'Add-ons', 'party-bag-builder' ),
+	),
+	array(
+		'id'    => 6,
 		'value' => __( 'Review', 'party-bag-builder' ),
 	),
 );

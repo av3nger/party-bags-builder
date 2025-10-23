@@ -32,7 +32,7 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 		get isLastStep() {
 			const { step } = getContext();
-			return step.id === 5;
+			return step.id === 6;
 		},
 		get includedToysLabel() {
 			const { tier } = getContext();
@@ -68,12 +68,19 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { style } = getContext();
 			return state.selectedTagStyle === style.id;
 		},
+		get isBagSelected() {
+			const { bag } = getContext();
+			return state.selectedBag === bag.id;
+		},
 		get isToySelected() {
 			const { toy } = getContext();
 			return state.selectedToys.includes( toy.id );
 		},
 		get isToyInputDisabled() {
 			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
+		},
+		get canGoToToysStep() {
+			return null !== state.selectedBag;
 		},
 		get canGoToAddonsStep() {
 			return state.selectedToys.length === state.maxToysAllowed;
@@ -150,6 +157,19 @@ const { state, actions } = store( 'party-bag-builder', {
 			);
 
 			return selectedStyle ? selectedStyle.name : '';
+		},
+		get selectedBagData() {
+			const { bags } = getContext();
+
+			if ( ! state.selectedBag || ! bags ) {
+				return null;
+			}
+
+			const selectedBag = bags.find(
+				( bag ) => bag.id === state.selectedBag
+			);
+
+			return selectedBag || null;
 		},
 	},
 	actions: {
@@ -263,6 +283,17 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
+		 * Select a bag (single selection).
+		 */
+		selectBag: () => {
+			const { bag } = getContext();
+
+			if ( bag && bag.id ) {
+				state.selectedBag = bag.id;
+			}
+		},
+
+		/**
 		 * Handle kid name input using event delegation.
 		 */
 		handleKidNameInput: ( event ) => {
@@ -314,7 +345,12 @@ const { state, actions } = store( 'party-bag-builder', {
 				return;
 			}
 
-			if ( state.currentStep === 3 ) {
+			if ( state.currentStep === 3 && ! state.selectedBag ) {
+				state.errors = [ 'Please select a bag.' ];
+				return;
+			}
+
+			if ( state.currentStep === 4 ) {
 				const maxToys = state.tierConfig?.includes?.toys || 0;
 				if ( state.selectedToys.length !== maxToys ) {
 					state.errors = [ `Please select exactly ${ maxToys } toy(s).` ];
@@ -322,14 +358,14 @@ const { state, actions } = store( 'party-bag-builder', {
 				}
 			}
 
-			if ( state.currentStep === 4 && state.isNameTagAddonSelected && ! state.selectedTagStyle ) {
+			if ( state.currentStep === 5 && state.isNameTagAddonSelected && ! state.selectedTagStyle ) {
 				state.errors = [ 'Please select a tag style.' ];
 				return;
 			}
 
 			// Clear errors and advance
 			state.errors = [];
-			if ( state.currentStep < 5 ) {
+			if ( state.currentStep < 6 ) {
 				state.currentStep += 1;
 				scrollWizardToTop();
 			}
@@ -353,7 +389,7 @@ const { state, actions } = store( 'party-bag-builder', {
 		goToStep: () => {
 			const { targetStep } = getContext();
 
-			if ( targetStep >= 1 && targetStep <= 5 ) {
+			if ( targetStep >= 1 && targetStep <= 6 ) {
 				state.currentStep = targetStep;
 				state.errors = [];
 				scrollWizardToTop();
@@ -379,6 +415,7 @@ const { state, actions } = store( 'party-bag-builder', {
 				const partyBagData = {
 					kid_count: state.kidCount,
 					tier: state.selectedTier,
+					bag: state.selectedBag,
 					toys: state.selectedToys,
 					addons: state.selectedAddons,
 					tag_style: state.selectedTagStyle,
