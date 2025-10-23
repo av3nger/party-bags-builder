@@ -16,22 +16,24 @@ if ( empty( $party_bag_data ) ) {
 ?>
 
 <div class="pbb-order-meta">
-	<h4><?php esc_html_e( 'Party Bag Details', 'party-bag-builder' ); ?></h4>
+	<h4><?php esc_html_e( 'Party Bag Details:', 'party-bag-builder' ); ?></h4>
 
 	<!-- Summary -->
-	<div class="pbb-summary">
-		<span class="pbb-badge"><?php echo esc_html( ucfirst( $party_bag_data['tier'] ?? '' ) ); ?></span>
-		<span class="pbb-badge">
-			<?php
-			echo esc_html(
-				sprintf(
-					/* translators: %d: number of kids */
-					_n( '%d kid', '%d kids', absint( $party_bag_data['kid_count'] ), 'party-bag-builder' ),
-					absint( $party_bag_data['kid_count'] )
-				)
-			);
-			?>
-		</span>
+	<div class="pbb-section">
+		<div class="pbb-badges">
+			<span class="pbb-badge"><?php echo esc_html( ucfirst( $party_bag_data['tier'] ?? '' ) ); ?></span>
+			<span class="pbb-badge">
+				<?php
+				echo esc_html(
+					sprintf(
+						/* translators: %d: number of kids */
+						_n( '%d kid', '%d kids', absint( $party_bag_data['kid_count'] ), 'party-bag-builder' ),
+						absint( $party_bag_data['kid_count'] )
+					)
+				);
+				?>
+			</span>
+		</div>
 	</div>
 
 	<!-- Items Section -->
@@ -39,7 +41,7 @@ if ( empty( $party_bag_data ) ) {
 		<div class="pbb-section">
 			<?php if ( ! empty( $party_bag_data['common_items'] ) ) : ?>
 				<div class="pbb-section-item">
-					<strong><?php esc_html_e( 'Common Items:', 'party-bag-builder' ); ?></strong>
+					<h4><?php esc_html_e( 'Common Items:', 'party-bag-builder' ); ?></h4>
 					<div class="pbb-badges">
 						<?php foreach ( $party_bag_data['common_items'] as $item ) : ?>
 							<span class="pbb-badge"><?php echo esc_html( $item['name'] ); ?></span>
@@ -50,7 +52,7 @@ if ( empty( $party_bag_data ) ) {
 
 			<?php if ( ! empty( $party_bag_data['selected_toys'] ) ) : ?>
 				<div class="pbb-section-item">
-					<strong><?php esc_html_e( 'Toys:', 'party-bag-builder' ); ?></strong>
+					<h4><?php esc_html_e( 'Toys:', 'party-bag-builder' ); ?></h4>
 					<div class="pbb-badges">
 						<?php foreach ( $party_bag_data['selected_toys'] as $item ) : ?>
 							<span class="pbb-badge"><?php echo esc_html( $item['name'] ); ?></span>
@@ -61,7 +63,7 @@ if ( empty( $party_bag_data ) ) {
 
 			<?php if ( ! empty( $party_bag_data['selected_addons'] ) ) : ?>
 				<div class="pbb-section-item">
-					<strong><?php esc_html_e( 'Add-ons:', 'party-bag-builder' ); ?></strong>
+					<h4><?php esc_html_e( 'Add-ons:', 'party-bag-builder' ); ?></h4>
 					<div class="pbb-badges">
 						<?php
 						$free_addons = $party_bag_data['price_breakdown']['free_addons'] ?? array();
@@ -86,7 +88,7 @@ if ( empty( $party_bag_data ) ) {
 	<?php if ( ! empty( $party_bag_data['kid_names'] ) ) : ?>
 		<div class="pbb-section">
 			<div class="pbb-section-item">
-				<strong><?php esc_html_e( 'Names:', 'party-bag-builder' ); ?></strong>
+				<h4><?php esc_html_e( 'Names:', 'party-bag-builder' ); ?></h4>
 				<div class="pbb-badges">
 					<?php foreach ( $party_bag_data['kid_names'] as $name ) : ?>
 						<span class="pbb-badge"><?php echo esc_html( $name ); ?></span>
@@ -130,19 +132,7 @@ if ( empty( $party_bag_data ) ) {
 
 .pbb-order-meta h4 {
 	margin-top: 0;
-	margin-bottom: 0.75em;
-	border-bottom: 1px solid #ddd;
-	padding-bottom: 0.5em;
-}
-
-/* Summary Section */
-.pbb-summary {
-	display: flex;
-	align-items: center;
-	gap: 0.75em;
-	margin-bottom: 1em;
-	padding-bottom: 0.75em;
-	border-bottom: 1px solid #e0e0e0;
+	margin-bottom: 0.5em;
 }
 
 /* Section Containers */
@@ -156,12 +146,6 @@ if ( empty( $party_bag_data ) ) {
 
 .pbb-section-item:last-child {
 	margin-bottom: 0;
-}
-
-.pbb-section-item strong {
-	display: block;
-	margin-bottom: 0.4em;
-	font-size: 1.15rem;
 }
 
 /* Badge System */
