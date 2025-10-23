@@ -97,32 +97,6 @@ if ( empty( $party_bag_data ) ) {
 			</div>
 		</div>
 	<?php endif; ?>
-
-	<!-- Price Section -->
-	<?php if ( ! empty( $party_bag_data['price_breakdown'] ) ) : ?>
-		<div class="pbb-price-section">
-			<div class="pbb-price-row">
-				<span>
-					<?php
-					echo esc_html(
-						sprintf(
-							/* translators: 1: kid count */
-							__( 'Party bags × %d', 'party-bag-builder' ),
-							absint( $party_bag_data['kid_count'] )
-						)
-					);
-					?>
-				</span>
-				<span><?php echo wp_kses_post( wc_price( $party_bag_data['price_breakdown']['base'] ) ); ?></span>
-			</div>
-			<?php if ( $party_bag_data['price_breakdown']['addons'] > 0 ) : ?>
-				<div class="pbb-price-row">
-					<span><?php esc_html_e( 'Add-ons', 'party-bag-builder' ); ?></span>
-					<span><?php echo wp_kses_post( wc_price( $party_bag_data['price_breakdown']['addons'] ) ); ?></span>
-				</div>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
 </div>
 
 <style>
@@ -177,23 +151,5 @@ if ( empty( $party_bag_data ) ) {
 	font-size: 0.8em;
 	font-weight: 600;
 	border-radius: 2px;
-}
-
-/* Price Section */
-.pbb-price-section {
-	padding: 0.75em;
-	border-radius: 3px;
-	border: 1px solid #c3c4c7;
-}
-
-.pbb-price-row {
-	display: flex;
-	justify-content: space-between;
-	padding: 0.4em 0;
-	font-size: 0.9em;
-}
-
-.pbb-price-row:not(:last-child) {
-	border-bottom: 1px solid #f0f0f1;
 }
 </style>
