@@ -85,16 +85,33 @@ if ( empty( $party_bag_data ) ) {
 	<?php endif; ?>
 
 	<!-- Personalization Section -->
-	<?php if ( ! empty( $party_bag_data['kid_names'] ) ) : ?>
+	<?php if ( ! empty( $party_bag_data['tag_style'] ) || ! empty( $party_bag_data['kid_names'] ) ) : ?>
 		<div class="pbb-section">
-			<div class="pbb-section-item">
-				<h4><?php esc_html_e( 'Names:', 'party-bag-builder' ); ?></h4>
-				<div class="pbb-badges">
-					<?php foreach ( $party_bag_data['kid_names'] as $name ) : ?>
-						<span class="pbb-badge"><?php echo esc_html( $name ); ?></span>
-					<?php endforeach; ?>
+			<?php if ( ! empty( $party_bag_data['tag_style'] ) ) : ?>
+				<?php
+				$config     = require PBB_PLUGIN_DIR . 'includes/config.php';
+				$tag_styles = $config['tag_styles'] ?? array();
+				$tag_style  = $party_bag_data['tag_style'];
+				$tag_name   = $tag_styles[ $tag_style ]['name'] ?? ucfirst( str_replace( '-', ' & ', $tag_style ) );
+				?>
+				<div class="pbb-section-item">
+					<h4><?php esc_html_e( 'Tag Style:', 'party-bag-builder' ); ?></h4>
+					<div class="pbb-badges">
+						<span class="pbb-badge"><?php echo esc_html( $tag_name ); ?></span>
+					</div>
 				</div>
-			</div>
+			<?php endif; ?>
+
+			<?php if ( ! empty( $party_bag_data['kid_names'] ) ) : ?>
+				<div class="pbb-section-item">
+					<h4><?php esc_html_e( 'Names:', 'party-bag-builder' ); ?></h4>
+					<div class="pbb-badges">
+						<?php foreach ( $party_bag_data['kid_names'] as $name ) : ?>
+							<span class="pbb-badge"><?php echo esc_html( $name ); ?></span>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 </div>

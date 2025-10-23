@@ -31,6 +31,7 @@ final class Order_Handler {
 	private function init_hooks(): void {
 		add_filter( 'woocommerce_order_item_quantity_html', array( $this, 'hide_custom_bag_quantity' ), 10, 2 );
 		add_action( 'woocommerce_order_item_meta_end', array( $this, 'display_order_meta' ), 10, 2 );
+		add_action( 'woocommerce_after_order_itemmeta', array( $this, 'display_order_meta_admin' ), 10, 2 );
 		add_action( 'woocommerce_order_status_processing', array( $this, 'reduce_component_stock' ) );
 		add_action( 'woocommerce_order_status_completed', array( $this, 'reduce_component_stock' ) );
 		add_action( 'woocommerce_order_status_cancelled', array( $this, 'restore_component_stock' ) );
@@ -65,6 +66,27 @@ final class Order_Handler {
 	 * @param WC_Order_Item_Product $item    Order item.
 	 */
 	public function display_order_meta( int $item_id, WC_Order_Item_Product $item ): void {
+		$party_bag_data = $item->get_meta( '_party_bag_data' );
+
+		if ( empty( $party_bag_data ) ) {
+			return;
+		}
+
+		// Load template.
+		$template_path = PBB_PLUGIN_DIR . 'includes/templates/admin/order-meta-display.php';
+
+		if ( file_exists( $template_path ) ) {
+			include $template_path;
+		}
+	}
+
+	/**
+	 * Display order meta in admin.
+	 *
+	 * @param int                   $item_id Order item ID.
+	 * @param WC_Order_Item_Product $item    Order item.
+	 */
+	public function display_order_meta_admin( int $item_id, WC_Order_Item_Product $item ): void {
 		$party_bag_data = $item->get_meta( '_party_bag_data' );
 
 		if ( empty( $party_bag_data ) ) {
