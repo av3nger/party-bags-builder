@@ -85,10 +85,6 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { addon } = getContext();
 			return state.selectedAddons.includes( addon.id );
 		},
-		get isAddonFree() {
-			const { addon } = getContext();
-			return state.priceBreakdown.freeAddons.includes( addon.id );
-		},
 		// Formatted prices (reused across templates)
 		get tierBasePrice() {
 			return ( state.tierConfig?.base_price || 0 ).toFixed( 2 );
@@ -105,15 +101,11 @@ const { state, actions } = store( 'party-bag-builder', {
 		get maxToysAllowed() {
 			return state.tierConfig?.includes?.toys || 0;
 		},
-		get freeAddonsAllowed() {
-			const { tier } = getContext();
-			return (tier?.includes?.free_addons || 0) > 0;
+		get hasFreeNameTag() {
+			return state.selectedTier === 'premium';
 		},
 		get isNameTagAddonSelected() {
-			return state.tierConfig?.includes?.free_addons > 0 || state.nameTagAddonEnabled;
-		},
-		get showNameTagToggle() {
-			return state.tierConfig?.includes?.free_addons === 0;
+			return state.selectedTier === 'premium' || state.nameTagAddonEnabled;
 		},
 		get shouldShowInput() {
 			const { inputIndex } = getContext();

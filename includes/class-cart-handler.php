@@ -187,66 +187,33 @@ final class Cart_Handler {
 		// Calculate base price.
 		$base = $tier_base_price * $kid_count;
 
-		$free_addon_count = 0;
-		if ( isset( $tiers[ $tier ]['includes']['free_addons'] ) ) {
-			$free_addon_count = absint( $tiers[ $tier ]['includes']['free_addons'] );
-		}
-
 		// Check if name tags are selected.
 		$tag_style     = $party_bag_data['tag_style'] ?? null;
 		$has_name_tags = ! empty( $tag_style );
 
 		// Calculate addon pricing.
-		$addon_total     = 0;
-		$name_tag_total  = 0;
-		$free_addons     = array();
-		$paid_addons     = array();
-		$selected_addons = $party_bag_data['selected_addons'] ?? array();
+		$addon_total    = 0;
+		$name_tag_total = 0;
 
-		// If name tags are selected and tier has free addons, they count as one free addon.
-		// Otherwise, name tags cost $2.50 per kid.
-		if ( $has_name_tags ) {
-			if ( $free_addon_count > 0 ) {
-				// Name tags count as one of the free addons.
-				--$free_addon_count;
-				$free_addons[] = 'name_tags';
-			} else {
-				// Name tags cost $2.50 per kid for non-premium tiers.
-				$name_tag_total = 2.50 * $kid_count;
-			}
+		// Name tags are free on premium tier, $2.50 per kid on basic/medium.
+		if ( $has_name_tags && 'premium' !== $tier ) {
+			$name_tag_total = 2.50 * $kid_count;
 		}
 
+		// All addons are paid - no free addon slots.
+		$selected_addons = $party_bag_data['selected_addons'] ?? array();
 		if ( ! empty( $selected_addons ) ) {
-			// Sort addons by price (ascending) - cheapest marked free first.
-			usort(
-				$selected_addons,
-				function ( $a, $b ) {
-					return floatval( $a['price'] ) <=> floatval( $b['price'] );
-				}
-			);
-
-			foreach ( $selected_addons as $index => $addon ) {
-				$addon_id    = absint( $addon['id'] );
-				$addon_price = floatval( $addon['price'] );
-
-				if ( $index < $free_addon_count ) {
-					// This addon is free.
-					$free_addons[] = $addon_id;
-				} else {
-					// This addon is paid.
-					$addon_total  += $addon_price * $kid_count;
-					$paid_addons[] = $addon_id;
-				}
+			foreach ( $selected_addons as $addon ) {
+				$addon_price  = floatval( $addon['price'] );
+				$addon_total += $addon_price * $kid_count;
 			}
 		}
 
 		return array(
-			'base'        => $base,
-			'addons'      => $addon_total,
-			'name_tags'   => $name_tag_total,
-			'total'       => $base + $addon_total + $name_tag_total,
-			'free_addons' => $free_addons,
-			'paid_addons' => $paid_addons,
+			'base'      => $base,
+			'addons'    => $addon_total,
+			'name_tags' => $name_tag_total,
+			'total'     => $base + $addon_total + $name_tag_total,
 		);
 	}
 
@@ -292,23 +259,14 @@ final class Cart_Handler {
 
 		// Add selected addons.
 		if ( ! empty( $party_bag_data['selected_addons'] ) ) {
-			$addon_items = array();
-			$free_addons = $party_bag_data['price_breakdown']['free_addons'] ?? array();
-
-			foreach ( $party_bag_data['selected_addons'] as $addon ) {
-				$addon_id   = absint( $addon['id'] );
-				$addon_name = esc_html( $addon['name'] );
-
-				if ( in_array( $addon_id, $free_addons, true ) ) {
-					$addon_items[] = $addon_name . ' ' . __( '(FREE)', 'party-bag-builder' );
-				} else {
-					$addon_items[] = $addon_name;
-				}
-			}
+			$addon_names = array_map(
+				fn( $addon ) => esc_html( $addon['name'] ),
+				$party_bag_data['selected_addons']
+			);
 
 			$item_data[] = array(
 				'key'   => __( 'Add-ons', 'party-bag-builder' ),
-				'value' => implode( ', ', $addon_items ),
+				'value' => implode( ', ', $addon_names ),
 			);
 		}
 
@@ -327,9 +285,10 @@ final class Cart_Handler {
 				}
 			}
 
-			$free_addons = $party_bag_data['price_breakdown']['free_addons'] ?? array();
-			$is_free     = in_array( 'name_tags', $free_addons, true );
-			$tag_display = $tag_style_name;
+			// Name tags are free on premium tier (when name_tag_total is 0).
+			$name_tag_cost = $party_bag_data['price_breakdown']['name_tags'] ?? 0;
+			$is_free       = 0.0 === floatval( $name_tag_cost );
+			$tag_display   = $tag_style_name;
 
 			if ( $is_free ) {
 				$tag_display .= ' ' . __( '(FREE)', 'party-bag-builder' );

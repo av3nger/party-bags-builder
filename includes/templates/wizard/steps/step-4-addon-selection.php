@@ -21,10 +21,6 @@ defined( 'ABSPATH' ) || exit;
 				<span data-wp-text="state.selectedAddons.length">0</span>
 				<?php esc_html_e( ' addons', 'party-bag-builder' ); ?>
 			</span>
-			<span class="pbb-free-addons" data-wp-bind--hidden="!state.freeAddonsAllowed">
-				(<span data-wp-text="state.freeAddonsAllowed">0</span>
-				<?php esc_html_e( ' FREE', 'party-bag-builder' ); ?>)
-			</span>
 		</div>
 
 		<?php if ( ! empty( $context['addons'] ) ) : ?>
@@ -53,9 +49,6 @@ defined( 'ABSPATH' ) || exit;
 								<span class="pbb-price-amount">
 									+$<span data-wp-text="context.addon.price"></span> <?php esc_html_e( 'per bag', 'party-bag-builder' ); ?>
 								</span>
-								<span class="pbb-free-indicator" data-wp-bind--hidden="!state.isAddonFree">
-									<?php esc_html_e( 'FREE (included)', 'party-bag-builder' ); ?>
-								</span>
 							</div>
 						</div>
 					</div>
@@ -74,7 +67,7 @@ defined( 'ABSPATH' ) || exit;
 				<p><?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?></p>
 
 				<div class="pbb-tag-style-wrapper">
-					<label data-wp-bind--hidden="!state.showNameTagToggle">
+					<label data-wp-bind--hidden="state.hasFreeNameTag">
 						<input
 							type="checkbox"
 							data-wp-bind--checked="state.nameTagAddonEnabled"

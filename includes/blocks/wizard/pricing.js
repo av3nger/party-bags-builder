@@ -26,16 +26,11 @@ export function calculatePriceBreakdown( state ) {
 			base: 0,
 			addons: 0,
 			total: 0,
-			freeAddons: [],
-			paidAddons: [],
 		};
 	}
 
 	// Base price: tier base price × number of kids
 	const base = tierConfig.base_price * kidCount;
-
-	// Get number of free addons from tier config
-	const freeAddonCount = tierConfig.includes?.free_addons || 0;
 
 	// Get full addon objects from selected addon IDs
 	const selectedAddonObjects = ( selectedAddons || [] )
@@ -44,30 +39,16 @@ export function calculatePriceBreakdown( state ) {
 		} )
 		.filter( ( addon ) => addon !== undefined );
 
-	// Sort addons by price (ascending) - cheapest marked free first
-	const sortedAddons = [ ...selectedAddonObjects ].sort(
-		( a, b ) => parseFloat( a.price ) - parseFloat( b.price )
-	);
-
 	let addonTotal = 0;
-	const freeAddonIds = [];
-	const paidAddonIds = [];
-
-	sortedAddons.forEach( ( addon, index ) => {
-		if ( index < freeAddonCount ) {
-			// This addon is free (within tier's free addon allowance)
-			freeAddonIds.push( addon.id );
-		} else {
-			// This addon is paid
-			const addonPrice = parseFloat( addon.price ) || 0;
-			addonTotal += addonPrice * kidCount;
-			paidAddonIds.push( addon.id );
-		}
+	selectedAddonObjects.forEach( ( addon ) => {
+		const addonPrice = parseFloat( addon.price ) || 0;
+		addonTotal += addonPrice * kidCount;
 	} );
 
-	// Add name tag addon cost if enabled on non-premium tiers
+	// Name tags are free on premium tier, $2.50 per kid on basic/medium
 	const NAME_TAG_PRICE = 2.50;
-	if ( nameTagAddonEnabled && freeAddonCount === 0 ) {
+	const isPremiumTier = tierConfig.id === 'premium';
+	if ( nameTagAddonEnabled && ! isPremiumTier ) {
 		addonTotal += NAME_TAG_PRICE * kidCount;
 	}
 
@@ -75,8 +56,6 @@ export function calculatePriceBreakdown( state ) {
 		base,
 		addons: addonTotal,
 		total: base + addonTotal,
-		freeAddons: freeAddonIds,
-		paidAddons: paidAddonIds,
 	};
 }
 

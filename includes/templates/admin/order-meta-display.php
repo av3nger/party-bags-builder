@@ -65,18 +65,8 @@ if ( empty( $party_bag_data ) ) {
 				<div class="pbb-section-item">
 					<h4><?php esc_html_e( 'Add-ons:', 'party-bag-builder' ); ?></h4>
 					<div class="pbb-badges">
-						<?php
-						$free_addons = $party_bag_data['price_breakdown']['free_addons'] ?? array();
-						foreach ( $party_bag_data['selected_addons'] as $item ) :
-							$addon_id = absint( $item['id'] );
-							$is_free  = in_array( $addon_id, $free_addons, true );
-							?>
-							<span class="pbb-badge <?php echo $is_free ? 'pbb-badge-free' : ''; ?>">
-								<?php echo esc_html( $item['name'] ); ?>
-								<?php if ( $is_free ) : ?>
-									<span class="pbb-free-label"><?php esc_html_e( 'FREE', 'party-bag-builder' ); ?></span>
-								<?php endif; ?>
-							</span>
+						<?php foreach ( $party_bag_data['selected_addons'] as $item ) : ?>
+							<span class="pbb-badge"><?php echo esc_html( $item['name'] ); ?></span>
 						<?php endforeach; ?>
 					</div>
 				</div>
@@ -152,21 +142,5 @@ if ( empty( $party_bag_data ) ) {
 	border: 1px solid #c3c4c7;
 	border-radius: 3px;
 	font-size: 1rem;
-}
-
-.pbb-badge-free {
-	background: #edfaed;
-	border-color: #68de7c;
-}
-
-.pbb-free-label {
-	display: inline-block;
-	margin-left: 0.4em;
-	padding: 0.1em 0.4em;
-	background: #46b450;
-	color: #fff;
-	font-size: 0.8em;
-	font-weight: 600;
-	border-radius: 2px;
 }
 </style>
