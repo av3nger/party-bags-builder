@@ -176,7 +176,6 @@ defined( 'ABSPATH' ) || exit;
 				<span data-wp-text="state.addToCartButtonText">
 					<?php esc_html_e( 'Add to Cart', 'party-bag-builder' ); ?>
 				</span>
-				<span class="pbb-button-icon" data-wp-bind--hidden="state.isLoading">🛒</span>
 				<span class="pbb-button-spinner" data-wp-bind--hidden="!state.isLoading">⏳</span>
 			</button>
 		</div>

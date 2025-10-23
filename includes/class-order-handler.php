@@ -9,6 +9,7 @@
 
 namespace PBB;
 
+use WC_Order_Item;
 use WC_Order_Item_Product;
 
 defined( 'ABSPATH' ) || exit;
@@ -28,7 +29,7 @@ final class Order_Handler {
 	 * Initialize hooks.
 	 */
 	private function init_hooks(): void {
-		add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'save_order_item_meta' ), 10, 3 );
+		add_filter( 'woocommerce_order_item_quantity_html', array( $this, 'hide_custom_bag_quantity' ), 10, 2 );
 		add_action( 'woocommerce_order_item_meta_end', array( $this, 'display_order_meta' ), 10, 2 );
 		add_action( 'woocommerce_order_status_processing', array( $this, 'reduce_component_stock' ) );
 		add_action( 'woocommerce_order_status_completed', array( $this, 'reduce_component_stock' ) );
@@ -36,19 +37,25 @@ final class Order_Handler {
 		add_action( 'woocommerce_order_status_refunded', array( $this, 'restore_component_stock' ) );
 	}
 
+
 	/**
-	 * Save order item meta.
+	 * Hide quantity on "order received" template for the custom party bags.
 	 *
-	 * @param WC_Order_Item_Product $item          Order item.
-	 * @param string                $cart_item_key Cart item key.
-	 * @param array                 $values        Cart item values.
+	 * @param string        $value Quantity value.
+	 * @param WC_Order_Item $item  Item object.
+	 *
+	 * @return string
 	 */
-	public function save_order_item_meta( WC_Order_Item_Product $item, string $cart_item_key, array $values ): void {
-		if ( empty( $values['party_bag_data'] ) ) {
-			return;
+	public function hide_custom_bag_quantity( string $value, WC_Order_Item $item ): string {
+		$custom_bag_product_id = get_option( 'pbb_builder_product_id', 0 );
+
+		$product = $item->get_data();
+
+		if ( isset( $product['product_id'] ) && $product['product_id'] === (int) $custom_bag_product_id ) {
+			return '';
 		}
 
-		$item->add_meta_data( '_party_bag_data', $values['party_bag_data'], true );
+		return $value;
 	}
 
 	/**
@@ -77,7 +84,7 @@ final class Order_Handler {
 	 *
 	 * @param int $order_id Order ID.
 	 */
-	private function reduce_component_stock( int $order_id ): void {
+	public function reduce_component_stock( int $order_id ): void {
 		// Check if stock already reduced.
 		$already_reduced = get_post_meta( $order_id, '_pbb_stock_reduced', true );
 
@@ -137,7 +144,7 @@ final class Order_Handler {
 	 *
 	 * @param int $order_id Order ID.
 	 */
-	private function restore_component_stock( int $order_id ): void {
+	public function restore_component_stock( int $order_id ): void {
 		// Check if stock was reduced.
 		$stock_reduced = get_post_meta( $order_id, '_pbb_stock_reduced', true );
 
