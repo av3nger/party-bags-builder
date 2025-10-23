@@ -29,6 +29,7 @@ final class Order_Handler {
 	 * Initialize hooks.
 	 */
 	private function init_hooks(): void {
+		add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'save_party_bag_data_to_order' ), 10, 3 );
 		add_filter( 'woocommerce_order_item_quantity_html', array( $this, 'hide_custom_bag_quantity' ), 10, 2 );
 		add_action( 'woocommerce_order_item_meta_end', array( $this, 'display_order_meta' ), 10, 2 );
 		add_action( 'woocommerce_after_order_itemmeta', array( $this, 'display_order_meta_admin' ), 10, 2 );
@@ -38,6 +39,19 @@ final class Order_Handler {
 		add_action( 'woocommerce_order_status_refunded', array( $this, 'restore_component_stock' ) );
 	}
 
+
+	/**
+	 * Save party bag data to order item meta.
+	 *
+	 * @param WC_Order_Item_Product $item          Order item object.
+	 * @param string                $cart_item_key Cart item key.
+	 * @param array                 $values        Cart item values.
+	 */
+	public function save_party_bag_data_to_order( WC_Order_Item_Product $item, string $cart_item_key, array $values ): void {
+		if ( ! empty( $values['party_bag_data'] ) ) {
+			$item->add_meta_data( '_party_bag_data', $values['party_bag_data'], true );
+		}
+	}
 
 	/**
 	 * Hide quantity on "order received" template for the custom party bags.

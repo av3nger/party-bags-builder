@@ -204,8 +204,11 @@ final class Cart_Handler {
 		$selected_addons = $party_bag_data['selected_addons'] ?? array();
 		if ( ! empty( $selected_addons ) ) {
 			foreach ( $selected_addons as $addon ) {
-				$addon_price  = floatval( $addon['price'] );
-				$addon_total += $addon_price * $kid_count;
+				$product = wc_get_product( absint( $addon['id'] ) );
+				if ( $product ) {
+					$addon_price  = floatval( $product->get_price() );
+					$addon_total += $addon_price * $kid_count;
+				}
 			}
 		}
 

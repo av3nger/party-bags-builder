@@ -73,6 +73,23 @@ final class Product_Manager {
 	}
 
 	/**
+	 * Format product data for cart/order storage (minimal data).
+	 *
+	 * Returns only the essential fields needed for cart and order storage.
+	 * Stores ID for stock management and name for historical accuracy.
+	 *
+	 * @param WC_Product $product Product object.
+	 *
+	 * @return array Minimal product data with only id and name.
+	 */
+	public function format_product_for_cart( WC_Product $product ): array {
+		return array(
+			'id'   => $product->get_id(),
+			'name' => $product->get_name(),
+		);
+	}
+
+	/**
 	 * Validate stock for multiple items.
 	 *
 	 * @param array $items Array of items with 'id' and 'qty' keys.

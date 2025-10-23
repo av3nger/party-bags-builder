@@ -118,26 +118,34 @@ final class Rest_API {
 	 */
 	private function transform_party_bag_data( array $data ): array {
 		// Get common items (automatically included in all bags).
-		$common_items = $this->product_manager->get_products_by_category( 'bag-common' );
+		// Strip down to minimal format for cart storage.
+		$common_items_full = $this->product_manager->get_products_by_category( 'bag-common' );
+		$common_items      = array_map(
+			fn( $item ) => array(
+				'id'   => $item['id'],
+				'name' => $item['name'],
+			),
+			$common_items_full
+		);
 
-		// Transform toy IDs to product objects.
+		// Transform toy IDs to product objects (minimal format).
 		$selected_toys = array();
 		if ( ! empty( $data['toys'] ) && is_array( $data['toys'] ) ) {
 			foreach ( $data['toys'] as $toy_id ) {
 				$product = wc_get_product( absint( $toy_id ) );
 				if ( $product ) {
-					$selected_toys[] = $this->product_manager->format_product_for_api( $product );
+					$selected_toys[] = $this->product_manager->format_product_for_cart( $product );
 				}
 			}
 		}
 
-		// Transform addon IDs to product objects.
+		// Transform addon IDs to product objects (minimal format).
 		$selected_addons = array();
 		if ( ! empty( $data['addons'] ) && is_array( $data['addons'] ) ) {
 			foreach ( $data['addons'] as $addon_id ) {
 				$product = wc_get_product( absint( $addon_id ) );
 				if ( $product ) {
-					$selected_addons[] = $this->product_manager->format_product_for_api( $product );
+					$selected_addons[] = $this->product_manager->format_product_for_cart( $product );
 				}
 			}
 		}
