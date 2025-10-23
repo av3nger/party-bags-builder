@@ -11,6 +11,9 @@ namespace PBB;
 
 use Exception;
 use WC_Cart;
+use WP_Error;
+use WP_HTTP_Response;
+use WP_REST_Response;
 use function WC;
 
 defined( 'ABSPATH' ) || exit;
@@ -41,6 +44,7 @@ final class Cart_Handler {
 		add_filter( 'woocommerce_get_item_data', array( $this, 'display_cart_item_data' ), 10, 2 );
 		add_action( 'woocommerce_before_calculate_totals', array( $this, 'override_cart_price' ) );
 		add_filter( 'woocommerce_cart_item_price', array( $this, 'display_cart_item_price' ), 10, 2 );
+		add_filter( 'woocommerce_hydration_request_after_callbacks', array( $this, 'override_cart_item_thumbnail' ) );
 	}
 
 	/**
@@ -178,7 +182,6 @@ final class Cart_Handler {
 	public function calculate_total_price( array $party_bag_data ): array {
 		// Get tier configuration for free addon count.
 		$config = require PBB_PLUGIN_DIR . 'includes/config.php';
-		$tiers  = $config['tiers'];
 		$tier   = $party_bag_data['tier'] ?? '';
 
 		$kid_count       = absint( $party_bag_data['kid_count'] );
@@ -405,5 +408,84 @@ final class Cart_Handler {
 		$tooltip .= '</div>';
 
 		return $price . ' <span class="pbb-price-info" title="' . esc_attr( wp_strip_all_tags( $tooltip ) ) . '">ℹ️</span>';
+	}
+
+	/**
+	 * Similar to WP core's `rest_request_after_callbacks` filter, this allows to modify the response after it has been generated.
+	 * Allows backward compatibility with the `rest_request_after_callbacks` filter by providing the same arguments.
+	 *
+	 * @param WP_REST_Response|WP_HTTP_Response|WP_Error|mixed $response Result to send to the client.
+	 *                                                                   Usually a WP_REST_Response or WP_Error.
+	 */
+	public function override_cart_item_thumbnail( mixed $response ) {
+		$data = $response->get_data();
+
+		if ( ! isset( $data['items']['0']['id'] ) ) {
+			return $response;
+		}
+
+		// Check if this is a custom party bag.
+		$builder_product_id = get_option( 'pbb_builder_product_id', 0 );
+
+		if ( $data['items']['0']['id'] !== (int) $builder_product_id ) {
+			return $response;
+		}
+
+		// Access cart and get party bag data.
+		if ( ! WC()->cart ) {
+			return $response;
+		}
+
+		$party_bag_data = null;
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			if ( ! empty( $cart_item['party_bag_data'] ) ) {
+				$party_bag_data = $cart_item['party_bag_data'];
+				break;
+			}
+		}
+
+		if ( ! $party_bag_data || empty( $party_bag_data['selected_bag']['id'] ) ) {
+			return $response;
+		}
+
+		// Get the selected bag product.
+		$bag_id      = absint( $party_bag_data['selected_bag']['id'] );
+		$bag_product = wc_get_product( $bag_id );
+
+		if ( ! $bag_product ) {
+			return $response;
+		}
+
+		// Get the bag's featured image.
+		$image_id = $bag_product->get_image_id();
+
+		if ( ! $image_id ) {
+			return $response;
+		}
+
+		// Get image URLs.
+		$image_src     = wp_get_attachment_image_src( $image_id, 'full' );
+		$thumbnail_src = wp_get_attachment_image_src( $image_id, 'woocommerce_thumbnail' );
+
+		if ( ! $image_src ) {
+			return $response;
+		}
+
+		// Build the image data array.
+		$data['items'][0]['images'] = array(
+			array(
+				'id'        => $image_id,
+				'src'       => $image_src[0],
+				'thumbnail' => $thumbnail_src ? $thumbnail_src[0] : $image_src[0],
+				'srcset'    => wp_get_attachment_image_srcset( $image_id, 'full' ),
+				'sizes'     => wp_get_attachment_image_sizes( $image_id, 'full' ),
+				'name'      => $bag_product->get_name(),
+				'alt'       => get_post_meta( $image_id, '_wp_attachment_image_alt', true ),
+			),
+		);
+
+		$response->set_data( $data );
+
+		return $response;
 	}
 }

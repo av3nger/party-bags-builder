@@ -90,6 +90,27 @@ final class Product_Manager {
 	}
 
 	/**
+	 * Format product data for cart/order storage with image.
+	 *
+	 * Returns essential fields needed for cart and order storage, including image URL.
+	 * Used for products that need to display their image (e.g., selected bags).
+	 *
+	 * @param WC_Product $product Product object.
+	 *
+	 * @return array Product data with id, name, and image_url.
+	 */
+	public function format_product_for_cart_with_image( WC_Product $product ): array {
+		$image_id  = $product->get_image_id();
+		$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' ) : wc_placeholder_img_src( 'woocommerce_thumbnail' );
+
+		return array(
+			'id'        => $product->get_id(),
+			'name'      => $product->get_name(),
+			'image_url' => $image_url,
+		);
+	}
+
+	/**
 	 * Validate stock for multiple items.
 	 *
 	 * @param array $items Array of items with 'id' and 'qty' keys.

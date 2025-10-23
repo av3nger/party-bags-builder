@@ -21,6 +21,9 @@ if ( empty( $party_bag_data ) ) {
 	<!-- Summary -->
 	<div class="pbb-section">
 		<div class="pbb-badges">
+			<?php if ( ! empty( $party_bag_data['selected_bag']['name'] ) ) : ?>
+				<span class="pbb-badge"><?php echo esc_html( $party_bag_data['selected_bag']['name'] ); ?></span>
+			<?php endif; ?>
 			<span class="pbb-badge"><?php echo esc_html( ucfirst( $party_bag_data['tier'] ?? '' ) ); ?></span>
 			<span class="pbb-badge">
 				<?php

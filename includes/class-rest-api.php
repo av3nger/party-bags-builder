@@ -128,6 +128,15 @@ final class Rest_API {
 			$common_items_full
 		);
 
+		// Transform bag ID to product object (with image for cart display).
+		$selected_bag = null;
+		if ( ! empty( $data['bag'] ) ) {
+			$product = wc_get_product( absint( $data['bag'] ) );
+			if ( $product ) {
+				$selected_bag = $this->product_manager->format_product_for_cart_with_image( $product );
+			}
+		}
+
 		// Transform toy IDs to product objects (minimal format).
 		$selected_toys = array();
 		if ( ! empty( $data['toys'] ) && is_array( $data['toys'] ) ) {
@@ -155,6 +164,7 @@ final class Rest_API {
 			'kid_count'       => $data['kid_count'] ?? 1,
 			'tier'            => $data['tier'] ?? '',
 			'common_items'    => $common_items,
+			'selected_bag'    => $selected_bag,
 			'selected_toys'   => $selected_toys,
 			'selected_addons' => $selected_addons,
 			'tag_style'       => $data['tag_style'] ?? null,
