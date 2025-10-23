@@ -38,15 +38,11 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { tier } = getContext();
 			const toys = tier?.includes?.toys || 0;
 
-			return wp.i18n.sprintf(
-					wp.i18n._n(
-							'%d toy of your choice',
-							'%d toys of your choice',
-							toys,
-							'party-bag-builder'
-					),
-					toys
-			);
+			if (toys === 1) {
+				return '1 toy of your choice';
+			}
+
+			return `${toys} toys of your choice`;
 		},
 		get isCurrentStep() {
 			const { step } = getContext();
@@ -107,6 +103,10 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 		get maxToysAllowed() {
 			return state.tierConfig?.includes?.toys || 0;
+		},
+		get tierHasFreeNameTag() {
+			const { tier } = getContext();
+			return tier.id === 'premium';
 		},
 		get hasFreeNameTag() {
 			return state.selectedTier === 'premium';

@@ -34,7 +34,7 @@ defined( 'ABSPATH' ) || exit;
 						<li><?php esc_html_e( 'Lolly, colorful ballon, sticker sheet', 'party-bag-builder' ); ?></li>
 						<li data-wp-text="state.includedToysLabel"></li>
 						<li><?php esc_html_e( 'Optional add-ons', 'party-bag-builder' ); ?></li>
-						<li data-wp-bind--hidden="!state.hasFreeNameTag"><?php esc_html_e( '3D-printed name tag', 'party-bag-builder' ); ?></li>
+						<li data-wp-bind--hidden="!state.tierHasFreeNameTag"><?php esc_html_e( '3D-printed name tag', 'party-bag-builder' ); ?></li>
 					</ul>
 
 					<div class="pbb-tier-total">
