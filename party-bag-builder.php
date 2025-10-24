@@ -10,7 +10,7 @@
  * Plugin Name:          Party Bag Builder
  * Plugin URI:           https://github.com/vanyukov/party-bag-builder
  * Description:          Custom party bag builder for WooCommerce with multistep wizard
- * Version:              1.0.0
+ * Version:              1.0.1
  * Author:               vCore Digital
  * Author URI:           https://vcore.digital
  * Requires at least:    6.8

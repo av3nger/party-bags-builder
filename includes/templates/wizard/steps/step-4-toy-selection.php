@@ -49,7 +49,6 @@ defined( 'ABSPATH' ) || exit;
 
 						<div class="pbb-product-info">
 							<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
-							<p class="pbb-product-description" data-wp-text="context.toy.description"></p>
 						</div>
 					</div>
 				</template>

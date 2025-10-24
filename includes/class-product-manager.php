@@ -58,14 +58,12 @@ final class Product_Manager {
 	 * @return array Formatted product data.
 	 */
 	public function format_product_for_api( WC_Product $product ): array {
-		$image_id          = $product->get_image_id();
-		$image_url         = $image_id ? wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' ) : wc_placeholder_img_src();
-		$short_description = $product->get_short_description();
+		$image_id  = $product->get_image_id();
+		$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' ) : wc_placeholder_img_src();
 
 		return array(
 			'id'          => $product->get_id(),
 			'name'        => $product->get_name(),
-			'description' => $short_description ? $short_description : $product->get_description(),
 			'image_url'   => $image_url,
 			'price'       => (float) $product->get_price(),
 			'is_in_stock' => $product->is_in_stock(),

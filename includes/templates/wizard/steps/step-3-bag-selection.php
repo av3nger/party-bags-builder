@@ -36,7 +36,6 @@ defined( 'ABSPATH' ) || exit;
 
 						<div class="pbb-product-info">
 							<h4 class="pbb-product-name" data-wp-text="context.bag.name"></h4>
-							<p class="pbb-product-description" data-wp-text="context.bag.description"></p>
 							<div class="pbb-price-badge pbb-price-badge-included">
 								<span class="pbb-price-amount">
 									<?php esc_html_e( 'Included', 'party-bag-builder' ); ?>
