@@ -51,6 +51,39 @@ final class Product_Manager {
 	}
 
 	/**
+	 * Get products by tag.
+	 *
+	 * @param string $tag_slug      Tag slug to query.
+	 * @param bool   $in_stock_only Whether to filter by stock status.
+	 *
+	 * @return array Array of formatted product data.
+	 */
+	public function get_products_by_tag( string $tag_slug, bool $in_stock_only = true ): array {
+		$args = array(
+			'status'  => 'publish',
+			'limit'   => -1,
+			'tag'     => array( $tag_slug ),
+			'orderby' => 'menu_order',
+			'order'   => 'ASC',
+		);
+
+		if ( $in_stock_only ) {
+			$args['stock_status'] = 'instock';
+		}
+
+		$products = wc_get_products( $args );
+
+		if ( empty( $products ) ) {
+			return array();
+		}
+
+		return array_map(
+			fn( WC_Product $product ) => $this->format_product_for_api( $product ),
+			$products
+		);
+	}
+
+	/**
 	 * Format product data for API response.
 	 *
 	 * @param WC_Product $product Product object.

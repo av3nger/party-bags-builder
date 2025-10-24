@@ -47,10 +47,10 @@ wp_interactivity_state(
 $context = array(
 	'tiers'        => array_values( $config['tiers'] ),
 	'tag_styles'   => array_values( $config['tag_styles'] ),
-	'common_items' => $product_manager->get_products_by_category( 'common' ),
+	'common_items' => $product_manager->get_products_by_tag( 'common' ),
 	'bags'         => $product_manager->get_products_by_category( 'bags' ),
-	'toys'         => $product_manager->get_products_by_category( 'toys' ),
-	'addons'       => $product_manager->get_products_by_category( 'addons' ),
+	'toys'         => $product_manager->get_products_by_tag( 'toys' ),
+	'addons'       => $product_manager->get_products_by_tag( 'addons' ),
 	'rest_url'     => rest_url( 'bag-builder/v1/add-to-cart' ),
 	'nonce'        => wp_create_nonce( 'wp_rest' ),
 );

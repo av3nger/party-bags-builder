@@ -16,17 +16,31 @@ return array(
 	 * Defines the WooCommerce product categories used by the party bag builder.
 	 */
 	'categories' => array(
+		'bags' => array(
+			'slug'           => 'bags',
+			'name'           => __( 'Party Bags', 'party-bag-builder' ),
+			'description'    => __( 'Party bag designs - select one bag style for your party', 'party-bag-builder' ),
+			'selection_type' => 'user_select',
+		),
+		'toys' => array(
+			'slug'           => 'toys',
+			'name'           => __( 'Toys', 'party-bag-builder' ),
+			'description'    => __( 'Standard selectable toys for party bags', 'party-bag-builder' ),
+			'selection_type' => 'user_select',
+		),
+	),
+
+	/**
+	 * Product Tags
+	 *
+	 * Defines the WooCommerce product tags used by the party bag builder.
+	 */
+	'tags'       => array(
 		'common' => array(
 			'slug'           => 'common',
 			'name'           => __( 'Party Bag - Common Items', 'party-bag-builder' ),
 			'description'    => __( 'Items automatically included in every party bag (lollies, balloons, stickers)', 'party-bag-builder' ),
 			'selection_type' => 'auto_include',
-		),
-		'bags'   => array(
-			'slug'           => 'bags',
-			'name'           => __( 'Party Bags', 'party-bag-builder' ),
-			'description'    => __( 'Party bag designs - select one bag style for your party', 'party-bag-builder' ),
-			'selection_type' => 'user_select',
 		),
 		'toys'   => array(
 			'slug'           => 'toys',
