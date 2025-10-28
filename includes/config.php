@@ -67,7 +67,7 @@ return array(
 			'id'          => 'basic',
 			'name'        => __( 'Basic', 'party-bag-builder' ),
 			'base_price'  => 6.00,
-			'description' => __( 'Perfect for small celebrations', 'party-bag-builder' ),
+			'description' => __( 'Simple, fun, and budget-friendly.', 'party-bag-builder' ),
 			'includes'    => array(
 				'common' => 'all',
 				'toys'   => 1,
@@ -77,7 +77,7 @@ return array(
 			'id'          => 'medium',
 			'name'        => __( 'Medium', 'party-bag-builder' ),
 			'base_price'  => 10.00,
-			'description' => __( 'Great value bundle', 'party-bag-builder' ),
+			'description' => __( 'Most popular tier - more variety, great value.', 'party-bag-builder' ),
 			'includes'    => array(
 				'common' => 'all',
 				'toys'   => 2,
@@ -87,7 +87,7 @@ return array(
 			'id'          => 'premium',
 			'name'        => __( 'Premium', 'party-bag-builder' ),
 			'base_price'  => 15.00,
-			'description' => __( 'Ultimate party experience', 'party-bag-builder' ),
+			'description' => __( 'For parties that deserve the ultimate "wow".', 'party-bag-builder' ),
 			'includes'    => array(
 				'common' => 'all',
 				'toys'   => 3,
