@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="pbb-step pbb-step-3" data-wp-context='{"step": {"id": 3}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
-		<h2 class="pbb-step-title"><?php esc_html_e( 'Choose Your Party Bag', 'party-bag-builder' ); ?></h2>
+		<h2 class="pbb-step-title"><?php esc_html_e( 'Choose Your Theme', 'party-bag-builder' ); ?></h2>
 		<p class="pbb-step-subheading"><?php esc_html_e( 'Pick one design to match your party theme. Each bag is included in the price - no extra cost for choosing your favourite look.', 'party-bag-builder' ); ?></p>
 
 		<?php if ( ! empty( $context['bags'] ) ) : ?>

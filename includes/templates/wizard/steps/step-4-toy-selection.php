@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( ! empty( $context['toys'] ) ) : ?>
 			<div class="pbb-product-grid">
-				<template data-wp-each--toy="context.toys">
+				<template data-wp-each--toy="state.filteredToys">
 					<div
 						class="pbb-product-card pbb-selectable-card"
 						data-wp-class--selected="state.isToySelected"

@@ -58,6 +58,28 @@ return array(
 	),
 
 	/**
+	 * Theme Tags
+	 *
+	 * Defines theme tags used for filtering bags and toys.
+	 * Bags and toys should be tagged with these themes.
+	 * Only bags with at least one theme tag will appear in the wizard.
+	 */
+	'themes'     => array(
+		'animals' => array(
+			'slug' => 'animals',
+			'name' => __( 'Animals', 'party-bag-builder' ),
+		),
+		'space'   => array(
+			'slug' => 'space',
+			'name' => __( 'Space', 'party-bag-builder' ),
+		),
+		'unicorn' => array(
+			'slug' => 'unicorn',
+			'name' => __( 'Unicorn', 'party-bag-builder' ),
+		),
+	),
+
+	/**
 	 * Pricing Tiers
 	 *
 	 * Defines the pricing tiers for party bags.

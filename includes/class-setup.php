@@ -88,6 +88,23 @@ final class Setup {
 				);
 			}
 		}
+
+		// Also create theme tags.
+		$themes = $config['themes'];
+
+		foreach ( $themes as $theme ) {
+			$existing_term = term_exists( $theme['slug'], 'product_tag' );
+
+			if ( ! $existing_term ) {
+				wp_insert_term(
+					$theme['name'],
+					'product_tag',
+					array(
+						'slug' => $theme['slug'],
+					)
+				);
+			}
+		}
 	}
 
 	/**
@@ -149,6 +166,7 @@ final class Setup {
 		}
 
 		self::create_sample_common_items();
+		self::create_sample_bags();
 		self::create_sample_toys();
 		self::create_sample_addons();
 
@@ -187,6 +205,41 @@ final class Setup {
 	}
 
 	/**
+	 * Create sample bags.
+	 *
+	 * @throws WC_Data_Exception Throws exception when invalid data is found.
+	 */
+	private static function create_sample_bags(): void {
+		$bags = array(
+			array(
+				'name'  => 'Animals Party Bag',
+				'price' => 0,
+				'stock' => 100,
+				'theme' => 'animals',
+			),
+			array(
+				'name'  => 'Space Party Bag',
+				'price' => 0,
+				'stock' => 100,
+				'theme' => 'space',
+			),
+			array(
+				'name'  => 'Unicorn Party Bag',
+				'price' => 0,
+				'stock' => 100,
+				'theme' => 'unicorn',
+			),
+		);
+
+		$category_id = self::get_category_id( 'bags' );
+
+		foreach ( $bags as $bag ) {
+			$theme_tag_id = self::get_tag_id( $bag['theme'] );
+			self::create_sample_product( $bag['name'], $bag['price'], $category_id, $bag['stock'], array( $theme_tag_id ) );
+		}
+	}
+
+	/**
 	 * Create sample toys.
 	 *
 	 * @throws WC_Data_Exception Throws exception when invalid data is found.
@@ -194,37 +247,43 @@ final class Setup {
 	private static function create_sample_toys(): void {
 		$toys = array(
 			array(
-				'name'  => 'Mini Toy Car',
+				'name'  => 'Mini Toy Car - Animals',
 				'price' => 1.50,
 				'stock' => 50,
+				'theme' => 'animals',
 			),
 			array(
-				'name'  => 'Puzzle Cube',
+				'name'  => 'Puzzle Cube - Space',
 				'price' => 2.00,
 				'stock' => 40,
+				'theme' => 'space',
 			),
 			array(
-				'name'  => 'Bouncy Ball',
+				'name'  => 'Bouncy Ball - Unicorn',
 				'price' => 1.00,
 				'stock' => 75,
+				'theme' => 'unicorn',
 			),
 			array(
-				'name'  => 'Plastic Whistle',
+				'name'  => 'Plastic Whistle - Animals',
 				'price' => 0.75,
 				'stock' => 60,
+				'theme' => 'animals',
 			),
 			array(
-				'name'  => 'Mini Yo-Yo',
+				'name'  => 'Mini Yo-Yo - Space',
 				'price' => 1.25,
 				'stock' => 45,
+				'theme' => 'space',
 			),
 		);
 
 		$category_id = self::get_category_id( 'toys' );
-		$tag_id      = self::get_tag_id( 'toys' );
+		$toys_tag_id = self::get_tag_id( 'toys' );
 
 		foreach ( $toys as $toy ) {
-			self::create_sample_product( $toy['name'], $toy['price'], $category_id, $toy['stock'], array( $tag_id ) );
+			$theme_tag_id = self::get_tag_id( $toy['theme'] );
+			self::create_sample_product( $toy['name'], $toy['price'], $category_id, $toy['stock'], array( $toys_tag_id, $theme_tag_id ) );
 		}
 	}
 

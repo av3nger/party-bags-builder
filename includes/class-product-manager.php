@@ -38,6 +38,12 @@ final class Product_Manager {
 			$args['stock_status'] = 'instock';
 		}
 
+		// For bags category, only get products with theme tags.
+		if ( 'bags' === $category_slug ) {
+			$config      = require PBB_PLUGIN_DIR . 'includes/config.php';
+			$args['tag'] = array_column( $config['themes'], 'slug' );
+		}
+
 		$products = wc_get_products( $args );
 
 		if ( empty( $products ) ) {
@@ -92,7 +98,20 @@ final class Product_Manager {
 	 */
 	public function format_product_for_api( WC_Product $product ): array {
 		$image_id  = $product->get_image_id();
-		$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'woocommerce_thumbnail' ) : wc_placeholder_img_src();
+		$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'large' ) : wc_placeholder_img_src();
+
+		// Get the first theme tag if product has one.
+		$theme        = null;
+		$config       = require PBB_PLUGIN_DIR . 'includes/config.php';
+		$theme_slugs  = array_column( $config['themes'], 'slug' );
+		$product_tags = wp_get_post_terms( $product->get_id(), 'product_tag', array( 'fields' => 'slugs' ) );
+
+		if ( ! is_wp_error( $product_tags ) && ! empty( $product_tags ) ) {
+			$matching_themes = array_intersect( $product_tags, $theme_slugs );
+			if ( ! empty( $matching_themes ) ) {
+				$theme = reset( $matching_themes ); // Get first matching theme.
+			}
+		}
 
 		return array(
 			'id'          => $product->get_id(),
@@ -100,6 +119,7 @@ final class Product_Manager {
 			'image_url'   => $image_url,
 			'price'       => (float) $product->get_price(),
 			'is_in_stock' => $product->is_in_stock(),
+			'theme'       => $theme,
 		);
 	}
 

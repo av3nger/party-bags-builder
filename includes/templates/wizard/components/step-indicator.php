@@ -20,7 +20,7 @@ $steps = array(
 	),
 	array(
 		'id'    => 3,
-		'value' => __( 'Bag', 'party-bag-builder' ),
+		'value' => __( 'Theme', 'party-bag-builder' ),
 	),
 	array(
 		'id'    => 4,

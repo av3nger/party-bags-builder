@@ -171,6 +171,21 @@ const { state, actions } = store( 'party-bag-builder', {
 
 			return selectedBag || null;
 		},
+		get selectedBagTheme() {
+			const selectedBag = state.selectedBagData;
+			return selectedBag?.theme || null;
+		},
+		get filteredToys() {
+			const { toys } = getContext();
+			const theme = state.selectedBagTheme;
+			console.log(toys, theme);
+
+			if ( ! theme || ! toys ) {
+				return toys || [];
+			}
+
+			return toys.filter( ( toy ) => toy.theme === theme );
+		},
 	},
 	actions: {
 		/**
