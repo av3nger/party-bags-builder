@@ -214,6 +214,13 @@ const { state, actions } = store( 'party-bag-builder', {
 			if ( ! toy ) return false;
 			return ! toy.categories || toy.categories.length === 0;
 		},
+		get isToyThemedForBag() {
+			const { toy } = getContext();
+			const theme = state.selectedBagData?.theme || null;
+
+			if ( ! toy || ! theme ) return false;
+			return toy.theme === theme;
+		},
 		get hasCategoryToys() {
 			const { category, toysGeneric } = getContext();
 			if ( ! category || ! toysGeneric ) return false;

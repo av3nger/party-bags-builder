@@ -36,6 +36,7 @@ defined( 'ABSPATH' ) || exit;
 							data-wp-class--selected="state.isToySelected"
 							data-wp-class--disabled="state.isThemedToyDisabled"
 							data-wp-on--click="actions.toggleToy"
+							data-wp-bind--hidden="!state.isToyThemedForBag"
 						>
 							<div class="pbb-product-image">
 								<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
