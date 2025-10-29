@@ -35,9 +35,10 @@ defined( 'ABSPATH' ) || exit;
 
 					<ul class="pbb-tier-features">
 						<li><?php esc_html_e( 'Lolly, colourful ballon, sticker sheet', 'party-bag-builder' ); ?></li>
-						<li data-wp-text="state.includedToysLabel"></li>
+						<template data-wp-each--label="context.tier.label">
+							<li data-wp-text="context.label"></li>
+						</template>
 						<li><?php esc_html_e( 'Optional add-ons available', 'party-bag-builder' ); ?></li>
-						<li data-wp-bind--hidden="!state.tierHasFreeNameTag"><?php esc_html_e( '3D-printed name tag', 'party-bag-builder' ); ?></li>
 					</ul>
 
 					<div class="pbb-tier-total">

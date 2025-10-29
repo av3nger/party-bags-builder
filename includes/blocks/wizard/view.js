@@ -34,16 +34,6 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { step } = getContext();
 			return step.id === 6;
 		},
-		get includedToysLabel() {
-			const { tier } = getContext();
-			const toys = tier?.includes?.toys || 0;
-
-			if (toys === 1) {
-				return '1 toy of your choice';
-			}
-
-			return `${toys} toys of your choice`;
-		},
 		get isCurrentStep() {
 			const { step } = getContext();
 			return step.id === state.currentStep;
@@ -82,7 +72,7 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.selectedToys.length === state.maxToysAllowed;
 		},
 		get canGoToReviewStep() {
-			return ! state.isNameTagAddonSelected || state.selectedTagStyle;
+			return ! state.hasFreeNameTag || state.selectedTagStyle;
 		},
 		get isAddonSelected() {
 			const { addon } = getContext();
@@ -102,17 +92,18 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.priceBreakdown.total.toFixed( 2 );
 		},
 		get maxToysAllowed() {
-			return state.tierConfig?.includes?.toys || 0;
+			const themed = state.tierConfig?.includes?.themed || 0;
+			const generic = state.tierConfig?.includes?.generic || 0;
+			return themed + generic;
 		},
-		get tierHasFreeNameTag() {
-			const { tier } = getContext();
-			return tier.id === 'premium';
+		get maxThemedToys() {
+			return state.tierConfig?.includes?.themed || 0;
+		},
+		get maxGenericToys() {
+			return state.tierConfig?.includes?.generic || 0;
 		},
 		get hasFreeNameTag() {
 			return state.selectedTier === 'premium';
-		},
-		get isNameTagAddonSelected() {
-			return state.selectedTier === 'premium' || state.nameTagAddonEnabled;
 		},
 		get shouldShowInput() {
 			const { inputIndex } = getContext();
@@ -178,7 +169,6 @@ const { state, actions } = store( 'party-bag-builder', {
 		get filteredToys() {
 			const { toys } = getContext();
 			const theme = state.selectedBagTheme;
-			console.log(toys, theme);
 
 			if ( ! theme || ! toys ) {
 				return toys || [];
@@ -244,12 +234,10 @@ const { state, actions } = store( 'party-bag-builder', {
 		toggleToy: () => {
 			const { toy } = getContext();
 
-			const maxToys = state.tierConfig?.includes?.toys || 0;
-
 			if ( state.selectedToys.indexOf( toy.id ) > -1 ) {
 				// Remove toy
 				state.selectedToys = state.selectedToys.filter( ( id ) => id !== toy.id );
-			} else if ( state.selectedToys.length < maxToys ) {
+			} else if ( state.selectedToys.length < state.maxToysAllowed ) {
 				// Add toy if under limit
 				state.selectedToys = [ ...state.selectedToys, toy.id ];
 			}
@@ -267,20 +255,6 @@ const { state, actions } = store( 'party-bag-builder', {
 			} else {
 				// Add addon if under limit
 				state.selectedAddons = [ ...state.selectedAddons, addon.id ];
-			}
-
-			state.priceBreakdown = calculatePriceBreakdown( state );
-		},
-
-		/**
-		 * Toggle name tag addon (for non-premium tiers).
-		 */
-		toggleNameTagAddon: () => {
-			state.nameTagAddonEnabled = ! state.nameTagAddonEnabled;
-
-			// Reset tag style and names if unchecked
-			if ( ! state.nameTagAddonEnabled ) {
-				state.selectedTagStyle = null;
 			}
 
 			state.priceBreakdown = calculatePriceBreakdown( state );
@@ -366,14 +340,13 @@ const { state, actions } = store( 'party-bag-builder', {
 			}
 
 			if ( state.currentStep === 4 ) {
-				const maxToys = state.tierConfig?.includes?.toys || 0;
-				if ( state.selectedToys.length !== maxToys ) {
-					state.errors = [ `Please select exactly ${ maxToys } toy(s).` ];
+				if ( state.selectedToys.length !== state.maxToysAllowed ) {
+					state.errors = [ `Please select exactly ${ state.maxToysAllowed } toy(s).` ];
 					return;
 				}
 			}
 
-			if ( state.currentStep === 5 && state.isNameTagAddonSelected && ! state.selectedTagStyle ) {
+			if ( state.currentStep === 5 && state.hasFreeNameTag && ! state.selectedTagStyle ) {
 				state.errors = [ 'Please select a tag style.' ];
 				return;
 			}

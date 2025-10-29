@@ -316,10 +316,6 @@ label[for="pbb-kid-count"] {
 				left: 0;
 				position: absolute;
 			}
-
-			&:last-of-type::before {
-				content: '+';
-			}
 		}
 	}
 

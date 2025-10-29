@@ -90,9 +90,13 @@ return array(
 			'name'        => __( 'Basic', 'party-bag-builder' ),
 			'base_price'  => 6.00,
 			'description' => __( 'Simple, fun, and budget-friendly.', 'party-bag-builder' ),
+			'label'       => array(
+				esc_html__( '1 themed toy of your choice', 'party-bag-builder' ),
+			),
 			'includes'    => array(
-				'common' => 'all',
-				'toys'   => 1,
+				'themed'   => 1,
+				'generic'  => 0,
+				'name_tag' => false,
 			),
 		),
 		'medium'  => array(
@@ -100,9 +104,13 @@ return array(
 			'name'        => __( 'Medium', 'party-bag-builder' ),
 			'base_price'  => 10.00,
 			'description' => __( 'Most popular tier - more variety, great value.', 'party-bag-builder' ),
+			'label'       => array(
+				esc_html__( '1 themed toy + 1 generic toy', 'party-bag-builder' ),
+			),
 			'includes'    => array(
-				'common' => 'all',
-				'toys'   => 2,
+				'themed'   => 1,
+				'generic'  => 1,
+				'name_tag' => false,
 			),
 		),
 		'premium' => array(
@@ -110,9 +118,14 @@ return array(
 			'name'        => __( 'Premium', 'party-bag-builder' ),
 			'base_price'  => 15.00,
 			'description' => __( 'For parties that deserve the ultimate "wow".', 'party-bag-builder' ),
+			'label'       => array(
+				esc_html__( '1 themed toy + 1 generic toy', 'party-bag-builder' ),
+				esc_html__( '3D-printed personalized name tag', 'party-bag-builder' ),
+			),
 			'includes'    => array(
-				'common' => 'all',
-				'toys'   => 3,
+				'themed'   => 1,
+				'generic'  => 1,
+				'name_tag' => true,
 			),
 		),
 	),

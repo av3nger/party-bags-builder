@@ -23,23 +23,22 @@ $config = require PBB_PLUGIN_DIR . 'includes/config.php';
 wp_interactivity_state(
 	'party-bag-builder',
 	array(
-		'currentStep'         => 1,
-		'kidCount'            => 5,
-		'selectedTier'        => 'medium',
-		'tierConfig'          => $config['tiers']['medium'],
-		'selectedBag'         => null,
-		'selectedToys'        => array(),
-		'selectedAddons'      => array(),
-		'nameTagAddonEnabled' => false,
-		'selectedTagStyle'    => null,
-		'kidNames'            => array_fill( 0, 5, '' ),
-		'priceBreakdown'      => array(
+		'currentStep'      => 1,
+		'kidCount'         => 5,
+		'selectedTier'     => 'medium',
+		'tierConfig'       => $config['tiers']['medium'],
+		'selectedBag'      => null,
+		'selectedToys'     => array(),
+		'selectedAddons'   => array(),
+		'selectedTagStyle' => null,
+		'kidNames'         => array_fill( 0, 5, '' ),
+		'priceBreakdown'   => array(
 			'base'   => $config['tiers']['medium']['base_price'] * 5,
 			'addons' => 0,
 			'total'  => $config['tiers']['medium']['base_price'] * 5,
 		),
-		'isLoading'           => false,
-		'errors'              => array(),
+		'isLoading'        => false,
+		'errors'           => array(),
 	)
 );
 

@@ -61,64 +61,53 @@ defined( 'ABSPATH' ) || exit;
 
 		<!-- Tag Style Selection -->
 		<?php if ( ! empty( $context['tag_styles'] ) ) : ?>
-			<div class="pbb-tag-style-section">
+			<div class="pbb-tag-style-section" data-wp-bind--hidden="!state.hasFreeNameTag">
 				<h3 class="pbb-subsection-title"><?php esc_html_e( '3D Printed Name Tags', 'party-bag-builder' ); ?></h3>
 				<p><?php esc_html_e( 'Personalize each bag with a custom name tag', 'party-bag-builder' ); ?></p>
 
 				<div class="pbb-tag-style-wrapper">
-					<label data-wp-bind--hidden="state.hasFreeNameTag">
-						<input
-							type="checkbox"
-							data-wp-bind--checked="state.nameTagAddonEnabled"
-							data-wp-on--change="actions.toggleNameTagAddon"
-						/>
-						<?php esc_html_e( 'Add personalized 3D printed name tags (+$2.50 per bag)', 'party-bag-builder' ); ?>
-					</label>
-
-					<div data-wp-bind--hidden="!state.isNameTagAddonSelected">
-						<h4 class="pbb-tag-style-header"><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h4>
-						<div class="pbb-product-grid">
-							<template data-wp-each--style="context.tag_styles">
-								<div
-									class="pbb-product-card pbb-selectable-card"
-									data-wp-on--click="actions.setTagStyle"
-									data-wp-class--selected="state.isTagStyleSelected"
-								>
-									<div class="pbb-tag-style-color" data-wp-bind--data-color="context.style.id">
-										<span><?php esc_html_e( 'Name', 'party-bag-builder' ); ?></span>
-									</div>
-									<p class="pbb-tag-style-name" data-wp-text="context.style.name"></p>
+					<h4 class="pbb-tag-style-header"><?php esc_html_e( 'Choose Your Tag Style', 'party-bag-builder' ); ?></h4>
+					<div class="pbb-product-grid">
+						<template data-wp-each--style="context.tag_styles">
+							<div
+								class="pbb-product-card pbb-selectable-card"
+								data-wp-on--click="actions.setTagStyle"
+								data-wp-class--selected="state.isTagStyleSelected"
+							>
+								<div class="pbb-tag-style-color" data-wp-bind--data-color="context.style.id">
+									<span><?php esc_html_e( 'Name', 'party-bag-builder' ); ?></span>
 								</div>
-							</template>
-						</div>
-						<p>*<?php esc_html_e( 'Note: Colors are for reference only and may vary slightly from the actual product.', 'party-bag-builder' ); ?></p>
-
-						<div class="pbb-names-section" data-wp-bind--hidden="!state.selectedTagStyle">
-							<h4><?php esc_html_e( 'Enter Names for Each Bag', 'party-bag-builder' ); ?></h4>
-
-							<div class="pbb-names-grid" data-wp-on--input="actions.handleKidNameInput">
-								<?php for ( $i = 0; $i < 50; $i++ ) : ?>
-									<div
-										class="pbb-name-input-wrapper"
-										data-wp-context='{"inputIndex": <?php echo esc_attr( $i ); ?>}'
-										data-wp-bind--hidden="!state.shouldShowInput"
-									>
-										<label for="pbb-name-<?php echo esc_attr( $i ); ?>">
-											<?php esc_html_e( 'Bag #', 'party-bag-builder' ); ?><?php echo esc_html( $i + 1 ); ?>
-										</label>
-										<input
-											id="pbb-name-<?php echo esc_attr( $i ); ?>"
-											type="text"
-											class="pbb-name-input"
-											maxlength="20"
-											pattern="[A-Za-z0-9 ]+"
-											data-index="<?php echo esc_attr( $i ); ?>"
-											data-wp-bind--value="state.getKidNameByIndex"
-											placeholder="<?php esc_attr_e( 'Enter name...', 'party-bag-builder' ); ?>"
-										/>
-									</div>
-								<?php endfor; ?>
+								<p class="pbb-tag-style-name" data-wp-text="context.style.name"></p>
 							</div>
+						</template>
+					</div>
+					<p>*<?php esc_html_e( 'Note: Colors are for reference only and may vary slightly from the actual product.', 'party-bag-builder' ); ?></p>
+
+					<div class="pbb-names-section" data-wp-bind--hidden="!state.selectedTagStyle">
+						<h4><?php esc_html_e( 'Enter Names for Each Bag', 'party-bag-builder' ); ?></h4>
+
+						<div class="pbb-names-grid" data-wp-on--input="actions.handleKidNameInput">
+							<?php for ( $i = 0; $i < 50; $i++ ) : ?>
+								<div
+									class="pbb-name-input-wrapper"
+									data-wp-context='{"inputIndex": <?php echo esc_attr( $i ); ?>}'
+									data-wp-bind--hidden="!state.shouldShowInput"
+								>
+									<label for="pbb-name-<?php echo esc_attr( $i ); ?>">
+										<?php esc_html_e( 'Bag #', 'party-bag-builder' ); ?><?php echo esc_html( $i + 1 ); ?>
+									</label>
+									<input
+										id="pbb-name-<?php echo esc_attr( $i ); ?>"
+										type="text"
+										class="pbb-name-input"
+										maxlength="20"
+										pattern="[A-Za-z0-9 ]+"
+										data-index="<?php echo esc_attr( $i ); ?>"
+										data-wp-bind--value="state.getKidNameByIndex"
+										placeholder="<?php esc_attr_e( 'Enter name...', 'party-bag-builder' ); ?>"
+									/>
+								</div>
+							<?php endfor; ?>
 						</div>
 					</div>
 				</div>
