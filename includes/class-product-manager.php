@@ -101,16 +101,23 @@ final class Product_Manager {
 		$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'large' ) : wc_placeholder_img_src();
 
 		// Get the first theme tag if product has one.
-		$theme        = null;
-		$config       = require PBB_PLUGIN_DIR . 'includes/config.php';
-		$theme_slugs  = array_column( $config['themes'], 'slug' );
-		$product_tags = wp_get_post_terms( $product->get_id(), 'product_tag', array( 'fields' => 'slugs' ) );
+		$theme          = null;
+		$config         = require PBB_PLUGIN_DIR . 'includes/config.php';
+		$theme_slugs    = array_column( $config['themes'], 'slug' );
+		$toy_categories = array_column( $config['toy_categories'], 'slug' );
+		$product_tags   = wp_get_post_terms( $product->get_id(), 'product_tag', array( 'fields' => 'slugs' ) );
 
 		if ( ! is_wp_error( $product_tags ) && ! empty( $product_tags ) ) {
 			$matching_themes = array_intersect( $product_tags, $theme_slugs );
 			if ( ! empty( $matching_themes ) ) {
 				$theme = reset( $matching_themes ); // Get first matching theme.
 			}
+		}
+
+		// Get toy category tags (exclude 'toys' tag, theme tags).
+		$categories = array();
+		if ( ! is_wp_error( $product_tags ) && ! empty( $product_tags ) ) {
+			$categories = array_values( array_intersect( $product_tags, $toy_categories ) );
 		}
 
 		return array(
@@ -120,6 +127,7 @@ final class Product_Manager {
 			'price'       => (float) $product->get_price(),
 			'is_in_stock' => $product->is_in_stock(),
 			'theme'       => $theme,
+			'categories'  => $categories,
 		);
 	}
 

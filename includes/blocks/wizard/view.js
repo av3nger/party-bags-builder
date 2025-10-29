@@ -202,6 +202,20 @@ const { state, actions } = store( 'party-bag-builder', {
 		get showGenericToys() {
 			return state.maxGenericToys > 0;
 		},
+		get isCategoryOpen() {
+			const { category } = getContext();
+			return state.openCategory === category?.slug;
+		},
+		get isToyInCategory() {
+			const { toy, category } = getContext();
+			if ( ! toy || ! category ) return false;
+			return toy.categories && toy.categories.includes( category.slug );
+		},
+		get isToyUncategorized() {
+			const { toy } = getContext();
+			if ( ! toy ) return false;
+			return ! toy.categories || toy.categories.length === 0;
+		},
 	},
 	actions: {
 		/**
@@ -422,6 +436,18 @@ const { state, actions } = store( 'party-bag-builder', {
 				state.currentStep = step.id;
 				state.errors = [];
 				scrollWizardToTop();
+			}
+		},
+
+		/**
+		 * Toggle accordion category.
+		 */
+		toggleCategory: () => {
+			const { category } = getContext();
+
+			if ( category && category.slug ) {
+				// Toggle: if already open, close it; otherwise open the clicked one
+				state.openCategory = state.openCategory === category.slug ? null : category.slug;
 			}
 		},
 

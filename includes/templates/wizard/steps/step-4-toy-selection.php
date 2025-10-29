@@ -76,33 +76,98 @@ defined( 'ABSPATH' ) || exit;
 					</span>
 				</div>
 
-				<div class="pbb-product-grid">
-					<template data-wp-each--toy="context.toysGeneric">
+				<div class="pbb-accordion">
+					<template data-wp-each--category="context.toyCategories">
 						<div
-								class="pbb-product-card pbb-selectable-card"
-								data-wp-class--selected="state.isToySelected"
-								data-wp-class--disabled="state.isGenericToyDisabled"
-								data-wp-on--click="actions.toggleToy"
+							class="pbb-accordion-item"
+							data-wp-class--open="state.isCategoryOpen"
 						>
-							<div class="pbb-product-image">
-								<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
-								<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isToySelected">
-									<div class="pbb-product-image-check">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-											<path d="M20 6 9 17l-5-5"></path>
-										</svg>
-									</div>
-								</div>
-								<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isGenericToyDisabled">
-									<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
-								</div>
+							<div
+								class="pbb-accordion-header"
+								data-wp-on--click="actions.toggleCategory"
+							>
+								<span data-wp-text="context.category.name"></span>
+								<span class="pbb-accordion-icon">▼</span>
 							</div>
+							<div class="pbb-accordion-content" data-wp-bind--hidden="!state.isCategoryOpen">
+								<div class="pbb-product-grid">
+									<template data-wp-each--toy="context.toysGeneric">
+										<div
+											class="pbb-product-card pbb-selectable-card"
+											data-wp-class--selected="state.isToySelected"
+											data-wp-class--disabled="state.isGenericToyDisabled"
+											data-wp-on--click="actions.toggleToy"
+											data-wp-bind--hidden="!state.isToyInCategory"
+										>
+											<div class="pbb-product-image">
+												<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
+												<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isToySelected">
+													<div class="pbb-product-image-check">
+														<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+															<path d="M20 6 9 17l-5-5"></path>
+														</svg>
+													</div>
+												</div>
+												<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isGenericToyDisabled">
+													<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
+												</div>
+											</div>
 
-							<div class="pbb-product-info">
-								<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
+											<div class="pbb-product-info">
+												<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
+											</div>
+										</div>
+									</template>
+								</div>
 							</div>
 						</div>
 					</template>
+
+					<!-- Miscellaneous category for uncategorized toys -->
+					<div
+						class="pbb-accordion-item"
+						data-wp-context='{"category": {"slug": "misc", "name": "<?php echo esc_js( __( 'Miscellaneous', 'party-bag-builder' ) ); ?>"}}'
+						data-wp-class--open="state.isCategoryOpen"
+					>
+						<div
+							class="pbb-accordion-header"
+							data-wp-on--click="actions.toggleCategory"
+						>
+							<span><?php esc_html_e( 'Miscellaneous', 'party-bag-builder' ); ?></span>
+							<span class="pbb-accordion-icon">▼</span>
+						</div>
+						<div class="pbb-accordion-content" data-wp-bind--hidden="!state.isCategoryOpen">
+							<div class="pbb-product-grid">
+								<template data-wp-each--toy="context.toysGeneric">
+									<div
+										class="pbb-product-card pbb-selectable-card"
+										data-wp-class--selected="state.isToySelected"
+										data-wp-class--disabled="state.isGenericToyDisabled"
+										data-wp-on--click="actions.toggleToy"
+										data-wp-bind--hidden="!state.isToyUncategorized"
+									>
+										<div class="pbb-product-image">
+											<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
+											<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isToySelected">
+												<div class="pbb-product-image-check">
+													<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+														<path d="M20 6 9 17l-5-5"></path>
+													</svg>
+												</div>
+											</div>
+											<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isGenericToyDisabled">
+												<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
+											</div>
+										</div>
+
+										<div class="pbb-product-info">
+											<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
+										</div>
+									</div>
+								</template>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		<?php endif; ?>

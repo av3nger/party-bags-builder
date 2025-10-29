@@ -58,6 +58,28 @@ return array(
 	),
 
 	/**
+	 * Toy Categories
+	 *
+	 * Defines categories for organizing generic toys in accordion sections.
+	 * Generic toys tagged with these category slugs will be grouped together.
+	 * Toys without any category tags will appear in 'Miscellaneous'.
+	 */
+	'toy_categories' => array(
+		'fidgets'  => array(
+			'slug' => 'fidgets',
+			'name' => __( 'Fidgets', 'party-bag-builder' ),
+		),
+		'puzzles'  => array(
+			'slug' => 'puzzles',
+			'name' => __( 'Puzzles', 'party-bag-builder' ),
+		),
+		'stickers' => array(
+			'slug' => 'stickers',
+			'name' => __( 'Stickers', 'party-bag-builder' ),
+		),
+	),
+
+	/**
 	 * Theme Tags
 	 *
 	 * Defines theme tags used for filtering bags and toys.
