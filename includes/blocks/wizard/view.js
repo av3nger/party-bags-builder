@@ -32,7 +32,7 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 		get isLastStep() {
 			const { step } = getContext();
-			return step.id === 6;
+			return step.id === 5;
 		},
 		get isCurrentStep() {
 			const { step } = getContext();
@@ -62,14 +62,8 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { toy } = getContext();
 			return state.selectedToys.includes( toy.id );
 		},
-		get isToyInputDisabled() {
-			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
-		},
 		get canGoToToysStep() {
 			return null !== state.selectedBag;
-		},
-		get canGoToAddonsStep() {
-			return state.selectedToys.length === state.maxToysAllowed;
 		},
 		get canGoToReviewStep() {
 			return ! state.hasFreeNameTag || state.selectedTagStyle;
@@ -165,13 +159,9 @@ const { state, actions } = store( 'party-bag-builder', {
 
 			return selectedBag || null;
 		},
-		get selectedBagTheme() {
-			const selectedBag = state.selectedBagData;
-			return selectedBag?.theme || null;
-		},
 		get filteredToys() {
 			const { toysThemed } = getContext();
-			const theme = state.selectedBagTheme;
+			const theme = state.selectedBagData?.theme || null;
 
 			if ( ! theme || ! toysThemed ) {
 				return toysThemed || [];
@@ -279,7 +269,8 @@ const { state, actions } = store( 'party-bag-builder', {
 				state.selectedToys = state.selectedToys.filter( ( id ) => id !== toy.id );
 			} else {
 				// Check if this is a themed or generic toy and enforce the correct limit
-				const isThemed = toy.theme === state.selectedBagTheme;
+				const theme = state.selectedBagData?.theme || null;
+				const isThemed = toy.theme === theme;
 				const canAdd = isThemed
 					? state.selectedThemedCount < state.maxThemedToys
 					: state.selectedGenericCount < state.maxGenericToys;
@@ -348,21 +339,6 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
-		 * Update kid name at specific index (legacy, kept for compatibility).
-		 */
-		updateKidName: ( event ) => {
-			const index = parseInt( event.target.dataset.index, 10 );
-			const name = event.target.value;
-
-			if ( index >= 0 && index < state.kidNames.length ) {
-				// Create new array to trigger reactivity
-				const updatedNames = [ ...state.kidNames ];
-				updatedNames[ index ] = name;
-				state.kidNames = updatedNames;
-			}
-		},
-
-		/**
 		 * Navigate to next step.
 		 */
 		nextStep: () => {
@@ -398,16 +374,17 @@ const { state, actions } = store( 'party-bag-builder', {
 					state.errors = [ `Please select exactly ${ state.maxGenericToys } generic toy(s).` ];
 					return;
 				}
-			}
 
-			if ( state.currentStep === 5 && state.hasFreeNameTag && ! state.selectedTagStyle ) {
-				state.errors = [ 'Please select a tag style.' ];
-				return;
+				// Validate tag style for premium tier
+				if ( state.hasFreeNameTag && ! state.selectedTagStyle ) {
+					state.errors = [ 'Please select a tag style.' ];
+					return;
+				}
 			}
 
 			// Clear errors and advance
 			state.errors = [];
-			if ( state.currentStep < 6 ) {
+			if ( state.currentStep < 5 ) {
 				state.currentStep += 1;
 				scrollWizardToTop();
 			}
@@ -432,7 +409,7 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { step } = getContext();
 
 			// Only allow navigation to completed steps (backward navigation)
-			if ( step.id >= 1 && step.id <= 6 && step.id < state.currentStep ) {
+			if ( step.id >= 1 && step.id <= 5 && step.id < state.currentStep ) {
 				state.currentStep = step.id;
 				state.errors = [];
 				scrollWizardToTop();

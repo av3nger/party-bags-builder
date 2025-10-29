@@ -24,14 +24,10 @@ $steps = array(
 	),
 	array(
 		'id'    => 4,
-		'value' => __( 'Toys', 'party-bag-builder' ),
+		'value' => __( 'Customise', 'party-bag-builder' ),
 	),
 	array(
 		'id'    => 5,
-		'value' => __( 'Add-ons', 'party-bag-builder' ),
-	),
-	array(
-		'id'    => 6,
 		'value' => __( 'Review', 'party-bag-builder' ),
 	),
 );

@@ -77,8 +77,7 @@ $context = array(
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-2-tier-selection.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-3-bag-selection.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-4-toy-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-addon-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-6-review.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-review.php';
 			?>
 		</div>
 
