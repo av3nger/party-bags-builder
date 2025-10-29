@@ -212,6 +212,10 @@ label[for="pbb-kid-count"] {
 	grid-template-columns: repeat(3, 1fr);
 }
 
+.pbb-product-grid {
+	grid-template-columns: repeat(4, 1fr);
+}
+
 .pbb-tier-grid {
 	margin: 3rem auto;
 }
