@@ -260,6 +260,40 @@ final class Cart_Handler {
 			);
 		}
 
+		// Add toy print colors.
+		if ( ! empty( $party_bag_data['toy_color'] ) && ! empty( $party_bag_data['selected_toys'] ) ) {
+			$config      = require PBB_PLUGIN_DIR . 'includes/config.php';
+			$all_colors  = $config['print_colors'] ?? array();
+			$toy_colors  = $party_bag_data['toy_color'];
+			$color_lines = array();
+
+			// Build array of toy name => color name.
+			foreach ( $party_bag_data['selected_toys'] as $toy ) {
+				$toy_id = $toy['id'];
+				if ( isset( $toy_colors[ $toy_id ] ) ) {
+					$color_id = $toy_colors[ $toy_id ];
+					// Find the color name.
+					foreach ( $all_colors as $color ) {
+						if ( $color['id'] === $color_id ) {
+							$color_lines[] = sprintf(
+								'%s: %s',
+								esc_html( $toy['name'] ),
+								esc_html( $color['name'] )
+							);
+							break;
+						}
+					}
+				}
+			}
+
+			if ( ! empty( $color_lines ) ) {
+				$item_data[] = array(
+					'key'   => __( 'Print Colors', 'party-bag-builder' ),
+					'value' => implode( ', ', $color_lines ),
+				);
+			}
+		}
+
 		// Add selected addons.
 		if ( ! empty( $party_bag_data['selected_addons'] ) ) {
 			$addon_names = array_map(

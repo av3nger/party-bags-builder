@@ -31,29 +31,48 @@ defined( 'ABSPATH' ) || exit;
 
 				<div class="pbb-product-grid">
 					<template data-wp-each--toy="context.toysThemed">
-						<div
-							class="pbb-product-card pbb-selectable-card"
-							data-wp-class--selected="state.isToySelected"
-							data-wp-class--disabled="state.isThemedToyDisabled"
-							data-wp-on--click="actions.toggleToy"
-							data-wp-bind--hidden="!state.isToyThemedForBag"
-						>
-							<div class="pbb-product-image">
-								<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
-								<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isToySelected">
-									<div class="pbb-product-image-check">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-											<path d="M20 6 9 17l-5-5"></path>
-										</svg>
+						<div class="pbb-themed-toy-item" data-wp-bind--hidden="!state.isToyThemedForBag">
+							<div
+								class="pbb-product-card pbb-selectable-card"
+								data-wp-class--selected="state.isToySelected"
+								data-wp-class--disabled="state.isThemedToyDisabled"
+								data-wp-on--click="actions.toggleToy"
+							>
+								<div class="pbb-product-image">
+									<img data-wp-bind--src="context.toy.image_url" data-wp-bind--alt="context.toy.name" />
+									<div class="pbb-product-image-cover" data-wp-bind--hidden="!state.isToySelected">
+										<div class="pbb-product-image-check">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+												<path d="M20 6 9 17l-5-5"></path>
+											</svg>
+										</div>
+									</div>
+									<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isThemedToyDisabled">
+										<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
 									</div>
 								</div>
-								<div class="pbb-product-image-disabled" data-wp-bind--hidden="!state.isThemedToyDisabled">
-									<span><?php esc_html_e( 'Max selected', 'party-bag-builder' ); ?></span>
+
+								<div class="pbb-product-info">
+									<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
 								</div>
 							</div>
 
-							<div class="pbb-product-info">
-								<h4 class="pbb-product-name" data-wp-text="context.toy.name"></h4>
+							<!-- Color Picker -->
+							<div class="pbb-color-picker" data-wp-bind--hidden="!state.isToySelected">
+								<p class="pbb-color-picker-label"><?php esc_html_e( 'Print Color:', 'party-bag-builder' ); ?></p>
+								<div class="pbb-color-grid">
+									<template data-wp-each--color="context.colors">
+										<button
+											type="button"
+											class="pbb-color-swatch"
+											data-wp-class--selected="state.isToyColorSelected"
+											data-wp-style--background-color="context.color.color"
+											data-wp-bind--title="context.color.name"
+											data-wp-bind--aria-label="context.color.name"
+											data-wp-on--click="actions.selectToyColor"
+										></button>
+									</template>
+								</div>
 							</div>
 						</div>
 					</template>

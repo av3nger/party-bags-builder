@@ -30,6 +30,7 @@ wp_interactivity_state(
 		'selectedBag'      => null,
 		'selectedToys'     => array(),
 		'selectedAddons'   => array(),
+		'selectedToyColor' => array(),
 		'selectedTagStyle' => null,
 		'kidNames'         => array_fill( 0, 5, '' ),
 		'priceBreakdown'   => array(
@@ -49,6 +50,7 @@ $all_toys = $product_manager->get_products_by_tag( 'toys' );
 $context = array(
 	'tiers'         => array_values( $config['tiers'] ),
 	'tag_styles'    => array_values( $config['tag_styles'] ),
+	'colors'        => array_values( $config['print_colors'] ),
 	'toyCategories' => array_values( $config['toy_categories'] ),
 	'common_items'  => $product_manager->get_products_by_tag( 'common' ),
 	'bags'          => $product_manager->get_products_by_category( 'bags' ),

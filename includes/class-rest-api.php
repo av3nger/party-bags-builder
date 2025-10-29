@@ -167,6 +167,7 @@ final class Rest_API {
 			'selected_bag'    => $selected_bag,
 			'selected_toys'   => $selected_toys,
 			'selected_addons' => $selected_addons,
+			'toy_color'       => $data['toy_color'] ?? array(),
 			'tag_style'       => $data['tag_style'] ?? null,
 			'kid_names'       => $data['kid_names'] ?? array(),
 		);

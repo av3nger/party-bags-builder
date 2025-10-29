@@ -235,6 +235,16 @@ const { state, actions } = store( 'party-bag-builder', {
 				! toy.categories || toy.categories.length === 0
 			);
 		},
+		get isToyColorSelected() {
+			const { toy, color } = getContext();
+			if ( ! toy || ! color ) return false;
+			return state.selectedToyColor[ toy.id ] === color.id;
+		},
+		get hasToyColorSelected() {
+			const { toy } = getContext();
+			if ( ! toy ) return false;
+			return !! state.selectedToyColor[ toy.id ];
+		},
 	},
 	actions: {
 		/**
@@ -339,6 +349,20 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
+		 * Select a print color for a toy.
+		 */
+		selectToyColor: () => {
+			const { toy, color } = getContext();
+
+			if ( toy && color ) {
+				state.selectedToyColor = {
+					...state.selectedToyColor,
+					[ toy.id ]: color.id,
+				};
+			}
+		},
+
+		/**
 		 * Select a bag (single selection).
 		 */
 		selectBag: () => {
@@ -401,6 +425,16 @@ const { state, actions } = store( 'party-bag-builder', {
 				// Validate generic toys
 				if ( state.maxGenericToys > 0 && state.selectedGenericCount !== state.maxGenericToys ) {
 					state.errors = [ `Please select exactly ${ state.maxGenericToys } generic toy(s).` ];
+					return;
+				}
+
+				// Validate that all selected themed toys have a color selected
+				const themedToyIds = state.filteredToys.map( ( toy ) => toy.id );
+				const selectedThemedToyIds = state.selectedToys.filter( ( toyId ) => themedToyIds.includes( toyId ) );
+				const missingColors = selectedThemedToyIds.filter( ( toyId ) => ! state.selectedToyColor[ toyId ] );
+
+				if ( missingColors.length > 0 ) {
+					state.errors = [ 'Please select a print color for all themed toys.' ];
 					return;
 				}
 
@@ -479,6 +513,7 @@ const { state, actions } = store( 'party-bag-builder', {
 					bag: state.selectedBag,
 					toys: state.selectedToys,
 					addons: state.selectedAddons,
+					toy_color: state.selectedToyColor,
 					tag_style: state.selectedTagStyle,
 					kid_names: state.kidNames.filter( ( name ) => name.trim() !== '' ),
 				};

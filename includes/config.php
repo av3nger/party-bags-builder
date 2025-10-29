@@ -183,4 +183,63 @@ return array(
 			'name' => __( 'Red & White', 'party-bag-builder' ),
 		),
 	),
+
+	/**
+	 * Print Colors
+	 *
+	 * Defines the available print colors for themed toys.
+	 * Colors are shown as swatches in the toy selection wizard.
+	 */
+	'print_colors' => array(
+		'red'    => array(
+			'id'    => 'red',
+			'name'  => __( 'Red', 'party-bag-builder' ),
+			'color' => 'rgb(239, 68, 68)',
+		),
+		'blue'   => array(
+			'id'    => 'blue',
+			'name'  => __( 'Blue', 'party-bag-builder' ),
+			'color' => 'rgb(59, 130, 246)',
+		),
+		'green'  => array(
+			'id'    => 'green',
+			'name'  => __( 'Green', 'party-bag-builder' ),
+			'color' => 'rgb(16, 185, 129)',
+		),
+		'yellow' => array(
+			'id'    => 'yellow',
+			'name'  => __( 'Yellow', 'party-bag-builder' ),
+			'color' => 'rgb(245, 158, 11)',
+		),
+		'purple' => array(
+			'id'    => 'purple',
+			'name'  => __( 'Purple', 'party-bag-builder' ),
+			'color' => 'rgb(168, 85, 247)',
+		),
+		'pink'   => array(
+			'id'    => 'pink',
+			'name'  => __( 'Pink', 'party-bag-builder' ),
+			'color' => 'rgb(236, 72, 153)',
+		),
+		'orange' => array(
+			'id'    => 'orange',
+			'name'  => __( 'Orange', 'party-bag-builder' ),
+			'color' => 'rgb(249, 115, 22)',
+		),
+		'teal'   => array(
+			'id'    => 'teal',
+			'name'  => __( 'Teal', 'party-bag-builder' ),
+			'color' => 'rgb(20, 184, 166)',
+		),
+		'indigo' => array(
+			'id'    => 'indigo',
+			'name'  => __( 'Indigo', 'party-bag-builder' ),
+			'color' => 'rgb(99, 102, 241)',
+		),
+		'lime'   => array(
+			'id'    => 'lime',
+			'name'  => __( 'Lime', 'party-bag-builder' ),
+			'color' => 'rgb(132, 204, 22)',
+		),
+	),
 );
