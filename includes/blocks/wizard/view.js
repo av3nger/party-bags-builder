@@ -121,10 +121,13 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.isLoading ? 'Adding...' : 'Add to Cart';
 		},
 		get selectedItemsData() {
-			const { toys, addons } = getContext();
+			const { toysThemed, toysGeneric, addons } = getContext();
+
+			// Combine all toys
+			const allToys = [ ...( toysThemed || [] ), ...( toysGeneric || [] ) ];
 
 			// Get selected toys
-			const selectedToys = ( toys || [] ).filter(
+			const selectedToys = allToys.filter(
 				( toy ) => state.selectedToys.includes( toy.id )
 			);
 
@@ -167,14 +170,31 @@ const { state, actions } = store( 'party-bag-builder', {
 			return selectedBag?.theme || null;
 		},
 		get filteredToys() {
-			const { toys } = getContext();
+			const { toysThemed } = getContext();
 			const theme = state.selectedBagTheme;
 
-			if ( ! theme || ! toys ) {
-				return toys || [];
+			if ( ! theme || ! toysThemed ) {
+				return toysThemed || [];
 			}
 
-			return toys.filter( ( toy ) => toy.theme === theme );
+			return toysThemed.filter( ( toy ) => toy.theme === theme );
+		},
+		get selectedThemedCount() {
+			const themedToyIds = state.filteredToys.map( ( toy ) => toy.id );
+			return state.selectedToys.filter( ( toyId ) => themedToyIds.includes( toyId ) ).length;
+		},
+		get selectedGenericCount() {
+			const { toysGeneric } = getContext();
+			if ( ! toysGeneric ) return 0;
+
+			const genericToyIds = toysGeneric.map( ( toy ) => toy.id );
+			return state.selectedToys.filter( ( toyId ) => genericToyIds.includes( toyId ) ).length;
+		},
+		get isThemedToyDisabled() {
+			return !state.isToySelected && state.selectedThemedCount >= state.maxThemedToys;
+		},
+		get isGenericToyDisabled() {
+			return !state.isToySelected && state.selectedGenericCount >= state.maxGenericToys;
 		},
 	},
 	actions: {
@@ -237,9 +257,16 @@ const { state, actions } = store( 'party-bag-builder', {
 			if ( state.selectedToys.indexOf( toy.id ) > -1 ) {
 				// Remove toy
 				state.selectedToys = state.selectedToys.filter( ( id ) => id !== toy.id );
-			} else if ( state.selectedToys.length < state.maxToysAllowed ) {
-				// Add toy if under limit
-				state.selectedToys = [ ...state.selectedToys, toy.id ];
+			} else {
+				// Check if this is a themed or generic toy and enforce the correct limit
+				const isThemed = toy.theme === state.selectedBagTheme;
+				const canAdd = isThemed
+					? state.selectedThemedCount < state.maxThemedToys
+					: state.selectedGenericCount < state.maxGenericToys;
+
+				if ( canAdd ) {
+					state.selectedToys = [ ...state.selectedToys, toy.id ];
+				}
 			}
 		},
 
@@ -340,8 +367,15 @@ const { state, actions } = store( 'party-bag-builder', {
 			}
 
 			if ( state.currentStep === 4 ) {
-				if ( state.selectedToys.length !== state.maxToysAllowed ) {
-					state.errors = [ `Please select exactly ${ state.maxToysAllowed } toy(s).` ];
+				// Validate themed toys
+				if ( state.maxThemedToys > 0 && state.selectedThemedCount !== state.maxThemedToys ) {
+					state.errors = [ `Please select exactly ${ state.maxThemedToys } themed toy(s).` ];
+					return;
+				}
+
+				// Validate generic toys
+				if ( state.maxGenericToys > 0 && state.selectedGenericCount !== state.maxGenericToys ) {
+					state.errors = [ `Please select exactly ${ state.maxGenericToys } generic toy(s).` ];
 					return;
 				}
 			}

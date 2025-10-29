@@ -43,12 +43,15 @@ wp_interactivity_state(
 );
 
 // Prepare context data (non-reactive, instance-specific).
+$all_toys = $product_manager->get_products_by_tag( 'toys' );
+
 $context = array(
 	'tiers'        => array_values( $config['tiers'] ),
 	'tag_styles'   => array_values( $config['tag_styles'] ),
 	'common_items' => $product_manager->get_products_by_tag( 'common' ),
 	'bags'         => $product_manager->get_products_by_category( 'bags' ),
-	'toys'         => $product_manager->get_products_by_tag( 'toys' ),
+	'toysThemed'   => array_values( array_filter( $all_toys, fn( $toy ) => ! empty( $toy['theme'] ) ) ),
+	'toysGeneric'  => array_values( array_filter( $all_toys, fn( $toy ) => empty( $toy['theme'] ) ) ),
 	'addons'       => $product_manager->get_products_by_tag( 'addons' ),
 	'rest_url'     => rest_url( 'bag-builder/v1/add-to-cart' ),
 	'nonce'        => wp_create_nonce( 'wp_rest' ),
