@@ -58,9 +58,15 @@
 		}
 
 		&.completed {
+			cursor: pointer;
+
 			.pbb-step-number {
 				background-color: var(--pbb--colors--red);
 				color: var(--pbb--colors--white);
+			}
+
+			&:hover .pbb-step-number {
+				transform: scale(1.1);
 			}
 		}
 	}

@@ -43,6 +43,7 @@ $steps = array(
 			class="pbb-step-indicator-item"
 			data-wp-class--active="state.isCurrentStep"
 			data-wp-class--completed="state.isStepCompleted"
+			data-wp-on--click="actions.goToStep"
 		>
 			<span class="pbb-step-number">
 				<span data-wp-bind--hidden="!state.isStepCompleted">

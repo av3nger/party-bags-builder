@@ -415,10 +415,11 @@ const { state, actions } = store( 'party-bag-builder', {
 		 * Navigate to specific step.
 		 */
 		goToStep: () => {
-			const { targetStep } = getContext();
+			const { step } = getContext();
 
-			if ( targetStep >= 1 && targetStep <= 6 ) {
-				state.currentStep = targetStep;
+			// Only allow navigation to completed steps (backward navigation)
+			if ( step.id >= 1 && step.id <= 6 && step.id < state.currentStep ) {
+				state.currentStep = step.id;
 				state.errors = [];
 				scrollWizardToTop();
 			}
