@@ -214,6 +214,20 @@ const { state, actions } = store( 'party-bag-builder', {
 			if ( ! toy ) return false;
 			return ! toy.categories || toy.categories.length === 0;
 		},
+		get hasCategoryToys() {
+			const { category, toysGeneric } = getContext();
+			if ( ! category || ! toysGeneric ) return false;
+			return toysGeneric.some( toy =>
+				toy.categories && toy.categories.includes( category.slug )
+			);
+		},
+		get hasUncategorizedToys() {
+			const { toysGeneric } = getContext();
+			if ( ! toysGeneric ) return false;
+			return toysGeneric.some( toy =>
+				! toy.categories || toy.categories.length === 0
+			);
+		},
 	},
 	actions: {
 		/**

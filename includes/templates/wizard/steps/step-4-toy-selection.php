@@ -79,6 +79,7 @@ defined( 'ABSPATH' ) || exit;
 						<div
 							class="pbb-accordion-item"
 							data-wp-class--open="state.isCategoryOpen"
+							data-wp-bind--hidden="!state.hasCategoryToys"
 						>
 							<div
 								class="pbb-accordion-header"
@@ -126,6 +127,7 @@ defined( 'ABSPATH' ) || exit;
 						class="pbb-accordion-item"
 						data-wp-context='{"category": {"slug": "misc", "name": "<?php echo esc_js( __( 'Miscellaneous', 'party-bag-builder' ) ); ?>"}}'
 						data-wp-class--open="state.isCategoryOpen"
+						data-wp-bind--hidden="!state.hasUncategorizedToys"
 					>
 						<div
 							class="pbb-accordion-header"
