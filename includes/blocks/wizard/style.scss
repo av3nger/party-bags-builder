@@ -491,6 +491,32 @@ label[for="pbb-kid-count"] {
 	}
 }
 
+.pbb-toy-section {
+
+	& ~ :not([hidden]) {
+		margin-top: 3rem;
+	}
+
+	& .pbb-section-header {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin-top: 2rem;
+
+		& .pbb-subsection-title {
+			margin: 0;
+		}
+	}
+
+	& .pbb-selection-counter {
+		border: 1px solid var(--pbb--colors--grey-200);
+		border-radius: 16px;
+		font-size: 0.85rem;
+		font-weight: 500;
+		padding: 4px 16px;
+	}
+}
+
 .pbb-tag-style-section {
 	border-top: 1px solid var(--pbb--colors--grey-100);
 	padding-top: 1rem;

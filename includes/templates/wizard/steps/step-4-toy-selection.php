@@ -18,16 +18,15 @@ defined( 'ABSPATH' ) || exit;
 		<?php if ( ! empty( $context['toysThemed'] ) ) : ?>
 			<!-- Themed Toys Section -->
 			<div class="pbb-toy-section" data-wp-bind--hidden="!state.showThemedToys">
-				<h3 class="pbb-subsection-title"><?php esc_html_e( 'Themed Toys', 'party-bag-builder' ); ?></h3>
-				<p><?php esc_html_e( 'Select toys matching your party theme', 'party-bag-builder' ); ?></p>
+				<div class="pbb-section-header">
+					<h3 class="pbb-subsection-title"><?php esc_html_e( 'Themed Toys', 'party-bag-builder' ); ?></h3>
 
-				<div class="pbb-selection-counter">
-					<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>
-					<span class="pbb-counter-value">
+					<div class="pbb-selection-counter">
 						<span data-wp-text="state.selectedThemedCount">0</span>
-						<?php esc_html_e( ' of ', 'party-bag-builder' ); ?>
+						/
 						<span data-wp-text="state.maxThemedToys">0</span>
-					</span>
+						<?php esc_html_e( 'selected', 'party-bag-builder' ); ?>
+					</div>
 				</div>
 
 				<div class="pbb-product-grid">
@@ -64,16 +63,15 @@ defined( 'ABSPATH' ) || exit;
 		<?php if ( ! empty( $context['toysGeneric'] ) ) : ?>
 			<!-- Generic Toys Section -->
 			<div class="pbb-toy-section" data-wp-bind--hidden="!state.showGenericToys">
-				<h3 class="pbb-subsection-title"><?php esc_html_e( 'Generic Toys', 'party-bag-builder' ); ?></h3>
-				<p><?php esc_html_e( 'Select from our variety of fun toys', 'party-bag-builder' ); ?></p>
+				<div class="pbb-section-header">
+					<h3 class="pbb-subsection-title"><?php esc_html_e( 'Generic Toys', 'party-bag-builder' ); ?></h3>
 
-				<div class="pbb-selection-counter">
-					<span class="pbb-counter-label"><?php esc_html_e( 'Selected:', 'party-bag-builder' ); ?></span>
-					<span class="pbb-counter-value">
+					<div class="pbb-selection-counter">
 						<span data-wp-text="state.selectedGenericCount">0</span>
-						<?php esc_html_e( ' of ', 'party-bag-builder' ); ?>
+						/
 						<span data-wp-text="state.maxGenericToys">0</span>
-					</span>
+						<?php esc_html_e( 'selected', 'party-bag-builder' ); ?>
+					</div>
 				</div>
 
 				<div class="pbb-accordion">
