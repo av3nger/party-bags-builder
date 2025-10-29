@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( ! empty( $context['toysThemed'] ) ) : ?>
 			<!-- Themed Toys Section -->
-			<div class="pbb-toy-section">
+			<div class="pbb-toy-section" data-wp-bind--hidden="!state.showThemedToys">
 				<h3 class="pbb-subsection-title"><?php esc_html_e( 'Themed Toys', 'party-bag-builder' ); ?></h3>
 				<p><?php esc_html_e( 'Select toys matching your party theme', 'party-bag-builder' ); ?></p>
 
@@ -63,7 +63,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<?php if ( ! empty( $context['toysGeneric'] ) ) : ?>
 			<!-- Generic Toys Section -->
-			<div class="pbb-toy-section">
+			<div class="pbb-toy-section" data-wp-bind--hidden="!state.showGenericToys">
 				<h3 class="pbb-subsection-title"><?php esc_html_e( 'Generic Toys', 'party-bag-builder' ); ?></h3>
 				<p><?php esc_html_e( 'Select from our variety of fun toys', 'party-bag-builder' ); ?></p>
 

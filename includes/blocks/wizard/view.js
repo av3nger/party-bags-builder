@@ -196,6 +196,12 @@ const { state, actions } = store( 'party-bag-builder', {
 		get isGenericToyDisabled() {
 			return !state.isToySelected && state.selectedGenericCount >= state.maxGenericToys;
 		},
+		get showThemedToys() {
+			return state.maxThemedToys > 0;
+		},
+		get showGenericToys() {
+			return state.maxGenericToys > 0;
+		},
 	},
 	actions: {
 		/**
