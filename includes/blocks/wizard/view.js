@@ -66,7 +66,15 @@ const { state, actions } = store( 'party-bag-builder', {
 			return null !== state.selectedBag;
 		},
 		get canGoToReviewStep() {
-			return ! state.hasFreeNameTag || state.selectedTagStyle;
+			// Check if all required toys are selected
+			const themedValid = state.maxThemedToys === 0 || state.selectedThemedCount === state.maxThemedToys;
+			const genericValid = state.maxGenericToys === 0 || state.selectedGenericCount === state.maxGenericToys;
+			const toysValid = themedValid && genericValid;
+
+			// Check if tag style is selected (for premium tier only)
+			const tagStyleValid = ! state.hasFreeNameTag || state.selectedTagStyle;
+
+			return toysValid && tagStyleValid;
 		},
 		get isAddonSelected() {
 			const { addon } = getContext();

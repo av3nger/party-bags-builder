@@ -294,7 +294,7 @@ defined( 'ABSPATH' ) || exit;
 				data-wp-on--click="actions.nextStep"
 				data-wp-bind--disabled="!state.canGoToReviewStep"
 			>
-				<?php esc_html_e( 'Review & Add to Cart', 'party-bag-builder' ); ?>
+				<?php esc_html_e( 'Review', 'party-bag-builder' ); ?>
 				<span class="pbb-button-icon">→</span>
 			</button>
 		</div>
