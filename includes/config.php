@@ -15,7 +15,7 @@ return array(
 	 *
 	 * Defines the WooCommerce product categories used by the party bag builder.
 	 */
-	'categories' => array(
+	'categories'     => array(
 		'bags' => array(
 			'slug'           => 'bags',
 			'name'           => __( 'Party Bags', 'party-bag-builder' ),
@@ -35,7 +35,7 @@ return array(
 	 *
 	 * Defines the WooCommerce product tags used by the party bag builder.
 	 */
-	'tags'       => array(
+	'tags'           => array(
 		'common' => array(
 			'slug'           => 'common',
 			'name'           => __( 'Party Bag - Common Items', 'party-bag-builder' ),
@@ -86,7 +86,7 @@ return array(
 	 * Bags and toys should be tagged with these themes.
 	 * Only bags with at least one theme tag will appear in the wizard.
 	 */
-	'themes'     => array(
+	'themes'         => array(
 		'animals' => array(
 			'slug' => 'animals',
 			'name' => __( 'Animals', 'party-bag-builder' ),
@@ -106,7 +106,7 @@ return array(
 	 *
 	 * Defines the pricing tiers for party bags.
 	 */
-	'tiers'      => array(
+	'tiers'          => array(
 		'basic'   => array(
 			'id'          => 'basic',
 			'name'        => __( 'Basic', 'party-bag-builder' ),
@@ -157,7 +157,7 @@ return array(
 	 *
 	 * Defines the name tag color combinations available for selection.
 	 */
-	'tag_styles' => array(
+	'tag_styles'     => array(
 		'pink-white'   => array(
 			'id'   => 'pink-white',
 			'name' => __( 'Pink & White', 'party-bag-builder' ),
@@ -190,56 +190,96 @@ return array(
 	 * Defines the available print colors for themed toys.
 	 * Colors are shown as swatches in the toy selection wizard.
 	 */
-	'print_colors' => array(
-		'red'    => array(
-			'id'    => 'red',
-			'name'  => __( 'Red', 'party-bag-builder' ),
-			'color' => 'rgb(239, 68, 68)',
+	'print_colors'   => array(
+		array(
+			'id'    => 'white',
+			'name'  => __( 'White', 'party-bag-builder' ),
+			'color' => 'rgb(255, 255, 255)',
 		),
-		'blue'   => array(
-			'id'    => 'blue',
-			'name'  => __( 'Blue', 'party-bag-builder' ),
-			'color' => 'rgb(59, 130, 246)',
+		array(
+			'id'    => 'bone-white',
+			'name'  => __( 'Bone White', 'party-bag-builder' ),
+			'color' => 'rgb(203, 198, 184)',
 		),
-		'green'  => array(
-			'id'    => 'green',
-			'name'  => __( 'Green', 'party-bag-builder' ),
-			'color' => 'rgb(16, 185, 129)',
-		),
-		'yellow' => array(
+		array(
 			'id'    => 'yellow',
 			'name'  => __( 'Yellow', 'party-bag-builder' ),
-			'color' => 'rgb(245, 158, 11)',
+			'color' => 'rgb(247, 217, 89)',
 		),
-		'purple' => array(
-			'id'    => 'purple',
-			'name'  => __( 'Purple', 'party-bag-builder' ),
-			'color' => 'rgb(168, 85, 247)',
-		),
-		'pink'   => array(
-			'id'    => 'pink',
-			'name'  => __( 'Pink', 'party-bag-builder' ),
-			'color' => 'rgb(236, 72, 153)',
-		),
-		'orange' => array(
+		array(
 			'id'    => 'orange',
 			'name'  => __( 'Orange', 'party-bag-builder' ),
-			'color' => 'rgb(249, 115, 22)',
+			'color' => 'rgb(249, 153, 99)',
 		),
-		'teal'   => array(
-			'id'    => 'teal',
-			'name'  => __( 'Teal', 'party-bag-builder' ),
-			'color' => 'rgb(20, 184, 166)',
+		array(
+			'id'    => 'pink',
+			'name'  => __( 'Pink', 'party-bag-builder' ),
+			'color' => 'rgb(232, 175, 207)',
 		),
-		'indigo' => array(
-			'id'    => 'indigo',
-			'name'  => __( 'Indigo', 'party-bag-builder' ),
-			'color' => 'rgb(99, 102, 241)',
+		array(
+			'id'    => 'purple',
+			'name'  => __( 'Purple', 'party-bag-builder' ),
+			'color' => 'rgb(174, 150, 212)',
 		),
-		'lime'   => array(
-			'id'    => 'lime',
-			'name'  => __( 'Lime', 'party-bag-builder' ),
-			'color' => 'rgb(132, 204, 22)',
+		array(
+			'id'    => 'plum',
+			'name'  => __( 'Plum', 'party-bag-builder' ),
+			'color' => 'rgb(149, 0, 81)',
+		),
+		array(
+			'id'    => 'scarlet-red',
+			'name'  => __( 'Scarlet Red', 'party-bag-builder' ),
+			'color' => 'rgb(222, 67, 67)',
+		),
+		array(
+			'id'    => 'dark-red',
+			'name'  => __( 'Dark Red', 'party-bag-builder' ),
+			'color' => 'rgb(187, 61, 67)',
+		),
+		array(
+			'id'    => 'apple-green',
+			'name'  => __( 'Apple Green', 'party-bag-builder' ),
+			'color' => 'rgb(194, 225, 137)',
+		),
+		array(
+			'id'    => 'grass-green',
+			'name'  => __( 'Grass Green', 'party-bag-builder' ),
+			'color' => 'rgb(97, 198, 128)',
+		),
+		array(
+			'id'    => 'turquoise',
+			'name'  => __( 'Turquoise', 'party-bag-builder' ),
+			'color' => 'rgb(0, 177, 183)',
+		),
+		array(
+			'id'    => 'sky-blue',
+			'name'  => __( 'Sky Blue', 'party-bag-builder' ),
+			'color' => 'rgb(86, 183, 230)',
+		),
+		array(
+			'id'    => 'marine-blue',
+			'name'  => __( 'Marine Blue', 'party-bag-builder' ),
+			'color' => 'rgb(0, 120, 191)',
+		),
+		array(
+			'id'    => 'caramel',
+			'name'  => __( 'Caramel', 'party-bag-builder' ),
+			'color' => 'rgb(174, 131, 91)',
+		),
+		array(
+			'id'    => 'terracotta',
+			'name'  => __( 'Terracotta', 'party-bag-builder' ),
+			'color' => 'rgb(177, 85, 51)',
+		),
+		array(
+			'id'    => 'ash-gray',
+			'name'  => __( 'Ash Gray', 'party-bag-builder' ),
+			'color' => 'rgb(155, 158, 160)',
+		),
+		array(
+			'id'    => 'black',
+			'name'  => __( 'Black', 'party-bag-builder' ),
+			'color' => 'rgb(0, 0, 0)',
 		),
 	),
 );
