@@ -209,11 +209,28 @@ label[for="pbb-kid-count"] {
 .pbb-names-grid {
 	display: grid;
 	gap: 1.5rem;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: 1fr;
+
+	@media (min-width: 560px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (min-width: 768px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
 .pbb-product-grid {
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(2, 1fr);
+	margin-top: 1rem;
+
+	@media (min-width: 768px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media (min-width: 1024px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }
 
 .pbb-tier-grid {
@@ -258,10 +275,6 @@ label[for="pbb-kid-count"] {
 	& .pbb-product-name {
 		margin: 0.5rem 0.5rem 0.9rem;
 	}
-}
-
-.pbb-product-grid {
-	margin-top: 1rem;
 }
 
 .pbb-tier-card {
@@ -518,8 +531,20 @@ label[for="pbb-kid-count"] {
 	& .pbb-color-grid {
 		display: grid;
 		gap: 0.25rem;
-		grid-template-columns: repeat(6, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		padding: 0;
+
+		@media (min-width: 468px) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+
+		@media (min-width: 540px) {
+			grid-template-columns: repeat(5, 1fr);
+		}
+
+		@media (min-width: 1024px) {
+			grid-template-columns: repeat(6, 1fr);
+		}
 	}
 
 	& .pbb-color-swatch {
