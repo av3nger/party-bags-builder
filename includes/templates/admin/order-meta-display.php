@@ -40,19 +40,8 @@ if ( empty( $party_bag_data ) ) {
 	</div>
 
 	<!-- Items Section -->
-	<?php if ( ! empty( $party_bag_data['common_items'] ) || ! empty( $party_bag_data['selected_toys'] ) || ! empty( $party_bag_data['selected_addons'] ) ) : ?>
+	<?php if ( ! empty( $party_bag_data['selected_toys'] ) || ! empty( $party_bag_data['selected_addons'] ) ) : ?>
 		<div class="pbb-section">
-			<?php if ( ! empty( $party_bag_data['common_items'] ) ) : ?>
-				<div class="pbb-section-item">
-					<h4><?php esc_html_e( 'Common Items:', 'party-bag-builder' ); ?></h4>
-					<div class="pbb-badges">
-						<?php foreach ( $party_bag_data['common_items'] as $item ) : ?>
-							<span class="pbb-badge"><?php echo esc_html( $item['name'] ); ?></span>
-						<?php endforeach; ?>
-					</div>
-				</div>
-			<?php endif; ?>
-
 			<?php if ( ! empty( $party_bag_data['selected_toys'] ) ) : ?>
 				<div class="pbb-section-item">
 					<h4><?php esc_html_e( 'Toys:', 'party-bag-builder' ); ?></h4>

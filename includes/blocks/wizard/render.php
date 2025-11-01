@@ -52,7 +52,6 @@ $context = array(
 	'tag_styles'    => array_values( $config['tag_styles'] ),
 	'colors'        => array_values( $config['print_colors'] ),
 	'toyCategories' => array_values( $config['toy_categories'] ),
-	'common_items'  => $product_manager->get_products_by_tag( 'common' ),
 	'bags'          => $product_manager->get_products_by_category( 'bags' ),
 	'toysThemed'    => array_values( array_filter( $all_toys, fn( $toy ) => ! empty( $toy['theme'] ) ) ),
 	'toysGeneric'   => array_values( array_filter( $all_toys, fn( $toy ) => empty( $toy['theme'] ) ) ),

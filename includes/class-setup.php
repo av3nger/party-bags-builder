@@ -165,43 +165,11 @@ final class Setup {
 			return;
 		}
 
-		self::create_sample_common_items();
 		self::create_sample_bags();
 		self::create_sample_toys();
 		self::create_sample_addons();
 
 		update_option( 'pbb_sample_products_created', true );
-	}
-
-	/**
-	 * Create sample common items.
-	 *
-	 * @throws WC_Data_Exception Throws exception when invalid data is found.
-	 */
-	private static function create_sample_common_items(): void {
-		$common_items = array(
-			array(
-				'name'  => 'Rainbow Lollipop',
-				'price' => 0.50,
-				'stock' => 100,
-			),
-			array(
-				'name'  => 'Colorful Balloon',
-				'price' => 0.75,
-				'stock' => 150,
-			),
-			array(
-				'name'  => 'Sticker Sheet',
-				'price' => 0.25,
-				'stock' => 200,
-			),
-		);
-
-		$tag_id = self::get_tag_id( 'common' );
-
-		foreach ( $common_items as $item ) {
-			self::create_sample_product( $item['name'], $item['price'], 0, $item['stock'], array( $tag_id ) );
-		}
 	}
 
 	/**

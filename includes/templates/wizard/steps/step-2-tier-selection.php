@@ -51,26 +51,6 @@ defined( 'ABSPATH' ) || exit;
 			</template>
 		</div>
 
-		<!-- Common Items Preview (shown when tier is selected) -->
-		<div class="pbb-common-items-preview" data-wp-bind--hidden="!state.selectedTier">
-			<h3><?php esc_html_e( 'Each party bag includes the following essentials for instant smiles:', 'party-bag-builder' ); ?></h3>
-
-			<?php if ( ! empty( $context['common_items'] ) ) : ?>
-				<div class="pbb-preview-grid">
-					<?php foreach ( $context['common_items'] as $item ) : ?>
-						<div class="pbb-product-card pbb-preview-card">
-							<img src="<?php echo esc_url( $item['image_url'] ); ?>" alt="<?php echo esc_attr( $item['name'] ); ?>">
-							<h4 class="pbb-product-name"><?php echo esc_html( $item['name'] ); ?></h4>
-						</div>
-					<?php endforeach; ?>
-				</div>
-			<?php else : ?>
-				<p class="pbb-empty-message">
-					<?php esc_html_e( 'No common items available at the moment.', 'party-bag-builder' ); ?>
-				</p>
-			<?php endif; ?>
-		</div>
-
 		<div class="pbb-step-navigation">
 			<button
 				type="button"

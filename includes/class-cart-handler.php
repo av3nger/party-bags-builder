@@ -139,16 +139,6 @@ final class Cart_Handler {
 		$items     = array();
 		$kid_count = absint( $party_bag_data['kid_count'] );
 
-		// Flatten common items.
-		if ( ! empty( $party_bag_data['common_items'] ) ) {
-			foreach ( $party_bag_data['common_items'] as $item ) {
-				$items[] = array(
-					'id'  => absint( $item['id'] ),
-					'qty' => $kid_count,
-				);
-			}
-		}
-
 		// Flatten selected toys.
 		if ( ! empty( $party_bag_data['selected_toys'] ) ) {
 			foreach ( $party_bag_data['selected_toys'] as $item ) {

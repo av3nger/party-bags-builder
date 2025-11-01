@@ -124,13 +124,6 @@ final class Order_Handler {
 
 			$kid_count = absint( $party_bag_data['kid_count'] );
 
-			// Reduce stock for common items.
-			if ( ! empty( $party_bag_data['common_items'] ) ) {
-				foreach ( $party_bag_data['common_items'] as $product_data ) {
-					wc_update_product_stock( absint( $product_data['id'] ), $kid_count, 'decrease' );
-				}
-			}
-
 			// Reduce stock for selected toys.
 			if ( ! empty( $party_bag_data['selected_toys'] ) ) {
 				foreach ( $party_bag_data['selected_toys'] as $product_data ) {
@@ -183,13 +176,6 @@ final class Order_Handler {
 			}
 
 			$kid_count = absint( $party_bag_data['kid_count'] );
-
-			// Restore stock for common items.
-			if ( ! empty( $party_bag_data['common_items'] ) ) {
-				foreach ( $party_bag_data['common_items'] as $product_data ) {
-					wc_update_product_stock( absint( $product_data['id'] ), $kid_count, 'increase' );
-				}
-			}
 
 			// Restore stock for selected toys.
 			if ( ! empty( $party_bag_data['selected_toys'] ) ) {

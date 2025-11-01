@@ -17,16 +17,14 @@ return array(
 	 */
 	'categories'     => array(
 		'bags' => array(
-			'slug'           => 'bags',
-			'name'           => __( 'Party Bags', 'party-bag-builder' ),
-			'description'    => __( 'Party bag designs - select one bag style for your party', 'party-bag-builder' ),
-			'selection_type' => 'user_select',
+			'slug'        => 'bags',
+			'name'        => __( 'Party Bags', 'party-bag-builder' ),
+			'description' => __( 'Party bag designs - select one bag style for your party', 'party-bag-builder' ),
 		),
 		'toys' => array(
-			'slug'           => 'toys',
-			'name'           => __( 'Toys', 'party-bag-builder' ),
-			'description'    => __( 'Standard selectable toys for party bags', 'party-bag-builder' ),
-			'selection_type' => 'user_select',
+			'slug'        => 'toys',
+			'name'        => __( 'Toys', 'party-bag-builder' ),
+			'description' => __( 'Standard selectable toys for party bags', 'party-bag-builder' ),
 		),
 	),
 
@@ -36,24 +34,15 @@ return array(
 	 * Defines the WooCommerce product tags used by the party bag builder.
 	 */
 	'tags'           => array(
-		'common' => array(
-			'slug'           => 'common',
-			'name'           => __( 'Party Bag - Common Items', 'party-bag-builder' ),
-			'description'    => __( 'Items automatically included in every party bag (lollies, balloons, stickers)', 'party-bag-builder' ),
-			'selection_type' => 'auto_include',
-		),
 		'toys'   => array(
-			'slug'           => 'toys',
-			'name'           => __( 'Party Bag - Toys', 'party-bag-builder' ),
-			'description'    => __( 'Standard selectable toys for party bags', 'party-bag-builder' ),
-			'selection_type' => 'user_select',
+			'slug'        => 'toys',
+			'name'        => __( 'Party Bag - Toys', 'party-bag-builder' ),
+			'description' => __( 'Standard selectable toys for party bags', 'party-bag-builder' ),
 		),
 		'addons' => array(
-			'slug'           => 'addons',
-			'name'           => __( 'Party Bag - Add-ons', 'party-bag-builder' ),
-			'description'    => __( 'Premium add-ons (name tags, premium toys)', 'party-bag-builder' ),
-			'selection_type' => 'user_select',
-			'pricing'        => 'additional',
+			'slug'        => 'addons',
+			'name'        => __( 'Party Bag - Add-ons', 'party-bag-builder' ),
+			'description' => __( 'Premium add-ons (name tags, premium toys)', 'party-bag-builder' ),
 		),
 	),
 
