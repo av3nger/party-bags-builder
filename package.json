@@ -1,6 +1,6 @@
 {
   "name": "party-bag-builder",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "party-bag-builder.php",
   "scripts": {
     "build": "wp-scripts build --webpack-src-dir=includes/blocks --experimental-modules --blocks-manifest",
