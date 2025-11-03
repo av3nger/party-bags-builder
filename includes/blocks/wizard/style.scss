@@ -137,6 +137,10 @@
 
 .pbb-step-content {
 	text-align: center;
+
+	.pbb-step-1 & {
+		padding-top: 2rem;
+	}
 }
 
 // Kid Count Input
@@ -201,6 +205,7 @@
 label[for="pbb-kid-count"] {
 	display: block;
 	font-size: 0.875rem;
+	padding-bottom: 2rem;
 }
 
 .pbb-tier-grid,
