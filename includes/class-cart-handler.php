@@ -355,6 +355,7 @@ final class Cart_Handler {
 			// Get total price from price breakdown.
 			if ( isset( $party_bag_data['price_breakdown']['total'] ) ) {
 				$total = floatval( $party_bag_data['price_breakdown']['total'] );
+				$cart_item['data']->set_regular_price( $total );
 				$cart_item['data']->set_price( $total );
 			}
 		}
