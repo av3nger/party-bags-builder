@@ -44,6 +44,24 @@ defined( 'ABSPATH' ) || exit;
 						</div>
 					</div>
 				</template>
+
+				<!-- Custom tile for contact form -->
+				<a href="/contact-us" class="pbb-product-card pbb-selectable-card pbb-custom-tile">
+					<div class="pbb-product-image pbb-custom-image">
+						<div class="pbb-custom-content">
+							<span class="pbb-custom-text"><?php esc_html_e( 'Custom', 'party-bag-builder' ); ?></span>
+						</div>
+					</div>
+
+					<div class="pbb-product-info">
+						<h4 class="pbb-product-name"><?php esc_html_e( 'Need Something Unique?', 'party-bag-builder' ); ?></h4>
+						<div class="pbb-price-badge">
+							<span class="pbb-price-amount">
+								<?php esc_html_e( 'Contact Us', 'party-bag-builder' ); ?>
+							</span>
+						</div>
+					</div>
+				</a>
 			</div>
 		<?php else : ?>
 			<p class="pbb-info-message">

@@ -504,6 +504,60 @@ label[for="pbb-kid-count"] {
 	}
 }
 
+// Custom tile for contact form
+.pbb-custom-tile {
+	text-decoration: none;
+	display: block;
+
+	// Remove the image cover checkmark for custom tile
+	.pbb-product-image-cover {
+		display: none !important;
+	}
+
+	// Gradient background for the custom tile
+	.pbb-custom-image {
+		aspect-ratio: 1/1;
+		background: linear-gradient(135deg, var(--pbb--colors--red) 0%, var(--pbb--colors--primary) 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		position: relative;
+
+		// Second gradient layer for smooth transition
+		&::before {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(135deg, var(--pbb--colors--primary) 0%, var(--pbb--colors--red) 100%);
+			opacity: 0;
+			transition: opacity 300ms ease-in-out;
+		}
+	}
+
+	.pbb-custom-content {
+		text-align: center;
+		z-index: 1;
+		position: relative;
+	}
+
+	.pbb-custom-text {
+		color: var(--pbb--colors--white);
+		font-size: 2rem;
+		font-weight: 700;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	// Hover effects for custom tile
+	&:hover {
+		.pbb-custom-image::before {
+			opacity: 1;
+		}
+	}
+}
+
 // Themed Toy Item (includes toy card + color picker)
 .pbb-themed-toy-item {
 	display: flex;
