@@ -139,16 +139,6 @@ final class Cart_Handler {
 		$items     = array();
 		$kid_count = absint( $party_bag_data['kid_count'] );
 
-		// Flatten common items.
-		if ( ! empty( $party_bag_data['common_items'] ) ) {
-			foreach ( $party_bag_data['common_items'] as $item ) {
-				$items[] = array(
-					'id'  => absint( $item['id'] ),
-					'qty' => $kid_count,
-				);
-			}
-		}
-
 		// Flatten selected toys.
 		if ( ! empty( $party_bag_data['selected_toys'] ) ) {
 			foreach ( $party_bag_data['selected_toys'] as $item ) {
@@ -190,18 +180,8 @@ final class Cart_Handler {
 		// Calculate base price.
 		$base = $tier_base_price * $kid_count;
 
-		// Check if name tags are selected.
-		$tag_style     = $party_bag_data['tag_style'] ?? null;
-		$has_name_tags = ! empty( $tag_style );
-
 		// Calculate addon pricing.
-		$addon_total    = 0;
-		$name_tag_total = 0;
-
-		// Name tags are free on premium tier, $2.50 per kid on basic/medium.
-		if ( $has_name_tags && 'premium' !== $tier ) {
-			$name_tag_total = 2.50 * $kid_count;
-		}
+		$addon_total = 0;
 
 		// All addons are paid - no free addon slots.
 		$selected_addons = $party_bag_data['selected_addons'] ?? array();
@@ -216,10 +196,9 @@ final class Cart_Handler {
 		}
 
 		return array(
-			'base'      => $base,
-			'addons'    => $addon_total,
-			'name_tags' => $name_tag_total,
-			'total'     => $base + $addon_total + $name_tag_total,
+			'base'   => $base,
+			'addons' => $addon_total,
+			'total'  => $base + $addon_total,
 		);
 	}
 
@@ -271,6 +250,40 @@ final class Cart_Handler {
 			);
 		}
 
+		// Add toy print colors.
+		if ( ! empty( $party_bag_data['toy_color'] ) && ! empty( $party_bag_data['selected_toys'] ) ) {
+			$config      = require PBB_PLUGIN_DIR . 'includes/config.php';
+			$all_colors  = $config['print_colors'] ?? array();
+			$toy_colors  = $party_bag_data['toy_color'];
+			$color_lines = array();
+
+			// Build array of toy name => color name.
+			foreach ( $party_bag_data['selected_toys'] as $toy ) {
+				$toy_id = $toy['id'];
+				if ( isset( $toy_colors[ $toy_id ] ) ) {
+					$color_id = $toy_colors[ $toy_id ];
+					// Find the color name.
+					foreach ( $all_colors as $color ) {
+						if ( $color['id'] === $color_id ) {
+							$color_lines[] = sprintf(
+								'%s: %s',
+								esc_html( $toy['name'] ),
+								esc_html( $color['name'] )
+							);
+							break;
+						}
+					}
+				}
+			}
+
+			if ( ! empty( $color_lines ) ) {
+				$item_data[] = array(
+					'key'   => __( 'Print Colors', 'party-bag-builder' ),
+					'value' => implode( ', ', $color_lines ),
+				);
+			}
+		}
+
 		// Add selected addons.
 		if ( ! empty( $party_bag_data['selected_addons'] ) ) {
 			$addon_names = array_map(
@@ -299,18 +312,9 @@ final class Cart_Handler {
 				}
 			}
 
-			// Name tags are free on premium tier (when name_tag_total is 0).
-			$name_tag_cost = $party_bag_data['price_breakdown']['name_tags'] ?? 0;
-			$is_free       = 0.0 === floatval( $name_tag_cost );
-			$tag_display   = $tag_style_name;
-
-			if ( $is_free ) {
-				$tag_display .= ' ' . __( '(FREE)', 'party-bag-builder' );
-			}
-
 			$item_data[] = array(
 				'key'   => __( 'Name Tags', 'party-bag-builder' ),
-				'value' => $tag_display,
+				'value' => $tag_style_name,
 			);
 		}
 
@@ -394,14 +398,6 @@ final class Cart_Handler {
 				/* translators: %s: addon price */
 				esc_html__( 'Add-ons: %s', 'party-bag-builder' ),
 				wc_price( $breakdown['addons'] )
-			) . '<br>';
-		}
-
-		if ( isset( $breakdown['name_tags'] ) && $breakdown['name_tags'] > 0 ) {
-			$tooltip .= sprintf(
-				/* translators: %s: name tag price */
-				esc_html__( 'Name Tags: %s', 'party-bag-builder' ),
-				wc_price( $breakdown['name_tags'] )
 			) . '<br>';
 		}
 

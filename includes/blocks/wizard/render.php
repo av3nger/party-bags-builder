@@ -23,36 +23,41 @@ $config = require PBB_PLUGIN_DIR . 'includes/config.php';
 wp_interactivity_state(
 	'party-bag-builder',
 	array(
-		'currentStep'         => 1,
-		'kidCount'            => 5,
-		'selectedTier'        => 'medium',
-		'tierConfig'          => $config['tiers']['medium'],
-		'selectedBag'         => null,
-		'selectedToys'        => array(),
-		'selectedAddons'      => array(),
-		'nameTagAddonEnabled' => false,
-		'selectedTagStyle'    => null,
-		'kidNames'            => array_fill( 0, 5, '' ),
-		'priceBreakdown'      => array(
+		'currentStep'      => 1,
+		'kidCount'         => 5,
+		'selectedTier'     => 'medium',
+		'tierConfig'       => $config['tiers']['medium'],
+		'selectedBag'      => null,
+		'selectedToys'     => array(),
+		'selectedAddons'   => array(),
+		'selectedToyColor' => array(),
+		'selectedTagStyle' => null,
+		'kidNames'         => array_fill( 0, 5, '' ),
+		'priceBreakdown'   => array(
 			'base'   => $config['tiers']['medium']['base_price'] * 5,
 			'addons' => 0,
 			'total'  => $config['tiers']['medium']['base_price'] * 5,
 		),
-		'isLoading'           => false,
-		'errors'              => array(),
+		'isLoading'        => false,
+		'errors'           => array(),
+		'openCategory'     => null,
 	)
 );
 
 // Prepare context data (non-reactive, instance-specific).
+$all_toys = $product_manager->get_products_by_tag( 'toys' );
+
 $context = array(
-	'tiers'        => array_values( $config['tiers'] ),
-	'tag_styles'   => array_values( $config['tag_styles'] ),
-	'common_items' => $product_manager->get_products_by_tag( 'common' ),
-	'bags'         => $product_manager->get_products_by_category( 'bags' ),
-	'toys'         => $product_manager->get_products_by_tag( 'toys' ),
-	'addons'       => $product_manager->get_products_by_tag( 'addons' ),
-	'rest_url'     => rest_url( 'bag-builder/v1/add-to-cart' ),
-	'nonce'        => wp_create_nonce( 'wp_rest' ),
+	'tiers'         => array_values( $config['tiers'] ),
+	'tag_styles'    => array_values( $config['tag_styles'] ),
+	'colors'        => array_values( $config['print_colors'] ),
+	'toyCategories' => array_values( $config['toy_categories'] ),
+	'bags'          => $product_manager->get_products_by_category( 'bags' ),
+	'toysThemed'    => array_values( array_filter( $all_toys, fn( $toy ) => ! empty( $toy['theme'] ) ) ),
+	'toysGeneric'   => array_values( array_filter( $all_toys, fn( $toy ) => empty( $toy['theme'] ) ) ),
+	'addons'        => $product_manager->get_products_by_tag( 'addons' ),
+	'rest_url'      => rest_url( 'bag-builder/v1/add-to-cart' ),
+	'nonce'         => wp_create_nonce( 'wp_rest' ),
 );
 ?>
 
@@ -73,8 +78,7 @@ $context = array(
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-2-tier-selection.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-3-bag-selection.php';
 			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-4-toy-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-addon-selection.php';
-			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-6-review.php';
+			require_once PBB_PLUGIN_DIR . 'includes/templates/wizard/steps/step-5-review.php';
 			?>
 		</div>
 

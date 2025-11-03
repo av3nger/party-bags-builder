@@ -20,18 +20,14 @@ $steps = array(
 	),
 	array(
 		'id'    => 3,
-		'value' => __( 'Bag', 'party-bag-builder' ),
+		'value' => __( 'Theme', 'party-bag-builder' ),
 	),
 	array(
 		'id'    => 4,
-		'value' => __( 'Toys', 'party-bag-builder' ),
+		'value' => __( 'Customise', 'party-bag-builder' ),
 	),
 	array(
 		'id'    => 5,
-		'value' => __( 'Add-ons', 'party-bag-builder' ),
-	),
-	array(
-		'id'    => 6,
 		'value' => __( 'Review', 'party-bag-builder' ),
 	),
 );
@@ -43,6 +39,7 @@ $steps = array(
 			class="pbb-step-indicator-item"
 			data-wp-class--active="state.isCurrentStep"
 			data-wp-class--completed="state.isStepCompleted"
+			data-wp-on--click="actions.goToStep"
 		>
 			<span class="pbb-step-number">
 				<span data-wp-bind--hidden="!state.isStepCompleted">

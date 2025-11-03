@@ -32,17 +32,7 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 		get isLastStep() {
 			const { step } = getContext();
-			return step.id === 6;
-		},
-		get includedToysLabel() {
-			const { tier } = getContext();
-			const toys = tier?.includes?.toys || 0;
-
-			if (toys === 1) {
-				return '1 toy of your choice';
-			}
-
-			return `${toys} toys of your choice`;
+			return step.id === 5;
 		},
 		get isCurrentStep() {
 			const { step } = getContext();
@@ -72,17 +62,19 @@ const { state, actions } = store( 'party-bag-builder', {
 			const { toy } = getContext();
 			return state.selectedToys.includes( toy.id );
 		},
-		get isToyInputDisabled() {
-			return !state.isToySelected && state.selectedToys.length >= state.maxToysAllowed;
-		},
 		get canGoToToysStep() {
 			return null !== state.selectedBag;
 		},
-		get canGoToAddonsStep() {
-			return state.selectedToys.length === state.maxToysAllowed;
-		},
 		get canGoToReviewStep() {
-			return ! state.isNameTagAddonSelected || state.selectedTagStyle;
+			// Check if all required toys are selected
+			const themedValid = state.maxThemedToys === 0 || state.selectedThemedCount === state.maxThemedToys;
+			const genericValid = state.maxGenericToys === 0 || state.selectedGenericCount === state.maxGenericToys;
+			const toysValid = themedValid && genericValid;
+
+			// Check if tag style is selected (for premium tier only)
+			const tagStyleValid = ! state.hasFreeNameTag || state.selectedTagStyle;
+
+			return toysValid && tagStyleValid;
 		},
 		get isAddonSelected() {
 			const { addon } = getContext();
@@ -102,17 +94,18 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.priceBreakdown.total.toFixed( 2 );
 		},
 		get maxToysAllowed() {
-			return state.tierConfig?.includes?.toys || 0;
+			const themed = state.tierConfig?.includes?.themed || 0;
+			const generic = state.tierConfig?.includes?.generic || 0;
+			return themed + generic;
 		},
-		get tierHasFreeNameTag() {
-			const { tier } = getContext();
-			return tier.id === 'premium';
+		get maxThemedToys() {
+			return state.tierConfig?.includes?.themed || 0;
+		},
+		get maxGenericToys() {
+			return state.tierConfig?.includes?.generic || 0;
 		},
 		get hasFreeNameTag() {
 			return state.selectedTier === 'premium';
-		},
-		get isNameTagAddonSelected() {
-			return state.selectedTier === 'premium' || state.nameTagAddonEnabled;
 		},
 		get shouldShowInput() {
 			const { inputIndex } = getContext();
@@ -130,10 +123,13 @@ const { state, actions } = store( 'party-bag-builder', {
 			return state.isLoading ? 'Adding...' : 'Add to Cart';
 		},
 		get selectedItemsData() {
-			const { toys, addons } = getContext();
+			const { toysThemed, toysGeneric, addons } = getContext();
+
+			// Combine all toys
+			const allToys = [ ...( toysThemed || [] ), ...( toysGeneric || [] ) ];
 
 			// Get selected toys
-			const selectedToys = ( toys || [] ).filter(
+			const selectedToys = allToys.filter(
 				( toy ) => state.selectedToys.includes( toy.id )
 			);
 
@@ -170,6 +166,84 @@ const { state, actions } = store( 'party-bag-builder', {
 			);
 
 			return selectedBag || null;
+		},
+		get filteredToys() {
+			const { toysThemed } = getContext();
+			const theme = state.selectedBagData?.theme || null;
+
+			if ( ! theme || ! toysThemed ) {
+				return toysThemed || [];
+			}
+
+			return toysThemed.filter( ( toy ) => toy.theme === theme );
+		},
+		get selectedThemedCount() {
+			const themedToyIds = state.filteredToys.map( ( toy ) => toy.id );
+			return state.selectedToys.filter( ( toyId ) => themedToyIds.includes( toyId ) ).length;
+		},
+		get selectedGenericCount() {
+			const { toysGeneric } = getContext();
+			if ( ! toysGeneric ) return 0;
+
+			const genericToyIds = toysGeneric.map( ( toy ) => toy.id );
+			return state.selectedToys.filter( ( toyId ) => genericToyIds.includes( toyId ) ).length;
+		},
+		get isThemedToyDisabled() {
+			return !state.isToySelected && state.selectedThemedCount >= state.maxThemedToys;
+		},
+		get isGenericToyDisabled() {
+			return !state.isToySelected && state.selectedGenericCount >= state.maxGenericToys;
+		},
+		get showThemedToys() {
+			return state.maxThemedToys > 0;
+		},
+		get showGenericToys() {
+			return state.maxGenericToys > 0;
+		},
+		get isCategoryOpen() {
+			const { category } = getContext();
+			return state.openCategory === category?.slug;
+		},
+		get isToyInCategory() {
+			const { toy, category } = getContext();
+			if ( ! toy || ! category ) return false;
+			return toy.categories && toy.categories.includes( category.slug );
+		},
+		get isToyUncategorized() {
+			const { toy } = getContext();
+			if ( ! toy ) return false;
+			return ! toy.categories || toy.categories.length === 0;
+		},
+		get isToyThemedForBag() {
+			const { toy } = getContext();
+			const theme = state.selectedBagData?.theme || null;
+
+			if ( ! toy || ! theme ) return false;
+			return toy.theme === theme;
+		},
+		get hasCategoryToys() {
+			const { category, toysGeneric } = getContext();
+			if ( ! category || ! toysGeneric ) return false;
+			return toysGeneric.some( toy =>
+				toy.categories && toy.categories.includes( category.slug )
+			);
+		},
+		get hasUncategorizedToys() {
+			const { toysGeneric } = getContext();
+			if ( ! toysGeneric ) return false;
+			return toysGeneric.some( toy =>
+				! toy.categories || toy.categories.length === 0
+			);
+		},
+		get isToyColorSelected() {
+			const { toy, color } = getContext();
+			if ( ! toy || ! color ) return false;
+			return state.selectedToyColor[ toy.id ] === color.id;
+		},
+		get hasToyColorSelected() {
+			const { toy } = getContext();
+			if ( ! toy ) return false;
+			return !! state.selectedToyColor[ toy.id ];
 		},
 	},
 	actions: {
@@ -229,14 +303,20 @@ const { state, actions } = store( 'party-bag-builder', {
 		toggleToy: () => {
 			const { toy } = getContext();
 
-			const maxToys = state.tierConfig?.includes?.toys || 0;
-
 			if ( state.selectedToys.indexOf( toy.id ) > -1 ) {
 				// Remove toy
 				state.selectedToys = state.selectedToys.filter( ( id ) => id !== toy.id );
-			} else if ( state.selectedToys.length < maxToys ) {
-				// Add toy if under limit
-				state.selectedToys = [ ...state.selectedToys, toy.id ];
+			} else {
+				// Check if this is a themed or generic toy and enforce the correct limit
+				const theme = state.selectedBagData?.theme || null;
+				const isThemed = toy.theme === theme;
+				const canAdd = isThemed
+					? state.selectedThemedCount < state.maxThemedToys
+					: state.selectedGenericCount < state.maxGenericToys;
+
+				if ( canAdd ) {
+					state.selectedToys = [ ...state.selectedToys, toy.id ];
+				}
 			}
 		},
 
@@ -258,20 +338,6 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
-		 * Toggle name tag addon (for non-premium tiers).
-		 */
-		toggleNameTagAddon: () => {
-			state.nameTagAddonEnabled = ! state.nameTagAddonEnabled;
-
-			// Reset tag style and names if unchecked
-			if ( ! state.nameTagAddonEnabled ) {
-				state.selectedTagStyle = null;
-			}
-
-			state.priceBreakdown = calculatePriceBreakdown( state );
-		},
-
-		/**
 		 * Set tag style selection.
 		 */
 		setTagStyle: () => {
@@ -279,6 +345,20 @@ const { state, actions } = store( 'party-bag-builder', {
 
 			if ( style.id ) {
 				state.selectedTagStyle = style.id;
+			}
+		},
+
+		/**
+		 * Select a print color for a toy.
+		 */
+		selectToyColor: () => {
+			const { toy, color } = getContext();
+
+			if ( toy && color ) {
+				state.selectedToyColor = {
+					...state.selectedToyColor,
+					[ toy.id ]: color.id,
+				};
 			}
 		},
 
@@ -312,21 +392,6 @@ const { state, actions } = store( 'party-bag-builder', {
 		},
 
 		/**
-		 * Update kid name at specific index (legacy, kept for compatibility).
-		 */
-		updateKidName: ( event ) => {
-			const index = parseInt( event.target.dataset.index, 10 );
-			const name = event.target.value;
-
-			if ( index >= 0 && index < state.kidNames.length ) {
-				// Create new array to trigger reactivity
-				const updatedNames = [ ...state.kidNames ];
-				updatedNames[ index ] = name;
-				state.kidNames = updatedNames;
-			}
-		},
-
-		/**
 		 * Navigate to next step.
 		 */
 		nextStep: () => {
@@ -351,21 +416,38 @@ const { state, actions } = store( 'party-bag-builder', {
 			}
 
 			if ( state.currentStep === 4 ) {
-				const maxToys = state.tierConfig?.includes?.toys || 0;
-				if ( state.selectedToys.length !== maxToys ) {
-					state.errors = [ `Please select exactly ${ maxToys } toy(s).` ];
+				// Validate themed toys
+				if ( state.maxThemedToys > 0 && state.selectedThemedCount !== state.maxThemedToys ) {
+					state.errors = [ `Please select exactly ${ state.maxThemedToys } themed toy(s).` ];
+					return;
+				}
+
+				// Validate generic toys
+				if ( state.maxGenericToys > 0 && state.selectedGenericCount !== state.maxGenericToys ) {
+					state.errors = [ `Please select exactly ${ state.maxGenericToys } generic toy(s).` ];
+					return;
+				}
+
+				// Validate that all selected themed toys have a color selected
+				const themedToyIds = state.filteredToys.map( ( toy ) => toy.id );
+				const selectedThemedToyIds = state.selectedToys.filter( ( toyId ) => themedToyIds.includes( toyId ) );
+				const missingColors = selectedThemedToyIds.filter( ( toyId ) => ! state.selectedToyColor[ toyId ] );
+
+				if ( missingColors.length > 0 ) {
+					state.errors = [ 'Please select a print color for all themed toys.' ];
+					return;
+				}
+
+				// Validate tag style for premium tier
+				if ( state.hasFreeNameTag && ! state.selectedTagStyle ) {
+					state.errors = [ 'Please select a tag style.' ];
 					return;
 				}
 			}
 
-			if ( state.currentStep === 5 && state.isNameTagAddonSelected && ! state.selectedTagStyle ) {
-				state.errors = [ 'Please select a tag style.' ];
-				return;
-			}
-
 			// Clear errors and advance
 			state.errors = [];
-			if ( state.currentStep < 6 ) {
+			if ( state.currentStep < 5 ) {
 				state.currentStep += 1;
 				scrollWizardToTop();
 			}
@@ -387,12 +469,25 @@ const { state, actions } = store( 'party-bag-builder', {
 		 * Navigate to specific step.
 		 */
 		goToStep: () => {
-			const { targetStep } = getContext();
+			const { step } = getContext();
 
-			if ( targetStep >= 1 && targetStep <= 6 ) {
-				state.currentStep = targetStep;
+			// Only allow navigation to completed steps (backward navigation)
+			if ( step.id >= 1 && step.id <= 5 && step.id < state.currentStep ) {
+				state.currentStep = step.id;
 				state.errors = [];
 				scrollWizardToTop();
+			}
+		},
+
+		/**
+		 * Toggle accordion category.
+		 */
+		toggleCategory: () => {
+			const { category } = getContext();
+
+			if ( category && category.slug ) {
+				// Toggle: if already open, close it; otherwise open the clicked one
+				state.openCategory = state.openCategory === category.slug ? null : category.slug;
 			}
 		},
 
@@ -418,6 +513,7 @@ const { state, actions } = store( 'party-bag-builder', {
 					bag: state.selectedBag,
 					toys: state.selectedToys,
 					addons: state.selectedAddons,
+					toy_color: state.selectedToyColor,
 					tag_style: state.selectedTagStyle,
 					kid_names: state.kidNames.filter( ( name ) => name.trim() !== '' ),
 				};

@@ -40,25 +40,55 @@ if ( empty( $party_bag_data ) ) {
 	</div>
 
 	<!-- Items Section -->
-	<?php if ( ! empty( $party_bag_data['common_items'] ) || ! empty( $party_bag_data['selected_toys'] ) || ! empty( $party_bag_data['selected_addons'] ) ) : ?>
+	<?php if ( ! empty( $party_bag_data['selected_toys'] ) || ! empty( $party_bag_data['selected_addons'] ) ) : ?>
 		<div class="pbb-section">
-			<?php if ( ! empty( $party_bag_data['common_items'] ) ) : ?>
-				<div class="pbb-section-item">
-					<h4><?php esc_html_e( 'Common Items:', 'party-bag-builder' ); ?></h4>
-					<div class="pbb-badges">
-						<?php foreach ( $party_bag_data['common_items'] as $item ) : ?>
-							<span class="pbb-badge"><?php echo esc_html( $item['name'] ); ?></span>
-						<?php endforeach; ?>
-					</div>
-				</div>
-			<?php endif; ?>
-
 			<?php if ( ! empty( $party_bag_data['selected_toys'] ) ) : ?>
 				<div class="pbb-section-item">
 					<h4><?php esc_html_e( 'Toys:', 'party-bag-builder' ); ?></h4>
 					<div class="pbb-badges">
 						<?php foreach ( $party_bag_data['selected_toys'] as $item ) : ?>
 							<span class="pbb-badge"><?php echo esc_html( $item['name'] ); ?></span>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( ! empty( $party_bag_data['toy_color'] ) && ! empty( $party_bag_data['selected_toys'] ) ) : ?>
+				<?php
+				$config     = require PBB_PLUGIN_DIR . 'includes/config.php';
+				$all_colors = $config['print_colors'] ?? array();
+				$toy_colors = $party_bag_data['toy_color'];
+				?>
+				<div class="pbb-section-item">
+					<h4><?php esc_html_e( 'Print Colors:', 'party-bag-builder' ); ?></h4>
+					<div class="pbb-badges">
+						<?php foreach ( $party_bag_data['selected_toys'] as $toy ) : ?>
+							<?php if ( isset( $toy_colors[ $toy['id'] ] ) ) : ?>
+								<?php
+								$color_id   = $toy_colors[ $toy['id'] ];
+								$color_name = '';
+								foreach ( $all_colors as $color ) {
+									if ( $color['id'] === $color_id ) {
+										$color_name = $color['name'];
+										break;
+									}
+								}
+								?>
+								<?php if ( $color_name ) : ?>
+									<span class="pbb-badge">
+										<?php
+										echo esc_html(
+											sprintf(
+												/* translators: 1: toy name, 2: color name */
+												__( '%1$s: %2$s', 'party-bag-builder' ),
+												$toy['name'],
+												$color_name
+											)
+										);
+										?>
+									</span>
+								<?php endif; ?>
+							<?php endif; ?>
 						<?php endforeach; ?>
 					</div>
 				</div>

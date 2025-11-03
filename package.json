@@ -1,12 +1,13 @@
 {
   "name": "party-bag-builder",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "party-bag-builder.php",
   "scripts": {
     "build": "wp-scripts build --webpack-src-dir=includes/blocks --experimental-modules --blocks-manifest",
     "start": "wp-scripts start --webpack-src-dir=includes/blocks --experimental-modules --blocks-manifest",
     "lint:js": "wp-scripts lint-js 'includes/blocks/**/*.js'",
-    "format": "wp-scripts format 'includes/blocks/**/*.js'"
+    "format": "wp-scripts format 'includes/blocks/**/*.js'",
+	"zip": "wp-scripts plugin-zip --root-folder='party-bag-builder'"
   },
   "keywords": ["plugin", "wordperss"],
   "author": "vCore Digital",

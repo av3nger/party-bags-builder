@@ -12,8 +12,8 @@ defined( 'ABSPATH' ) || exit;
 
 <div class="pbb-step pbb-step-2" data-wp-context='{"step": {"id": 2}}' data-wp-bind--hidden="!state.isCurrentStep">
 	<div class="pbb-step-content">
-		<h2 class="pbb-step-title"><?php esc_html_e( 'Choose Your Tier', 'party-bag-builder' ); ?></h2>
-		<p><?php esc_html_e( 'Select the party bag tier that best fits your needs', 'party-bag-builder' ); ?></p>
+		<h2 class="pbb-step-title"><?php esc_html_e( 'Choose Your Party Tier', 'party-bag-builder' ); ?></h2>
+		<p class="pbb-step-subheading"><?php esc_html_e( "Pick the perfect balance of fun and surprises for your party bags. Each tier includes the same base goodies - you just choose how many toys (and extras) you'd like to include.", 'party-bag-builder' ); ?></p>
 
 		<div class="pbb-tier-grid">
 			<template data-wp-each--tier="context.tiers">
@@ -23,6 +23,9 @@ defined( 'ABSPATH' ) || exit;
 					data-wp-class--selected="state.isTierSelected"
 				>
 					<h3 class="pbb-tier-name" data-wp-text="context.tier.name"></h3>
+
+					<p data-wp-text="context.tier.description"></p>
+
 					<div class="pbb-tier-price">
 						$<span data-wp-text="context.tier.base_price"></span>.00
 						<span class="pbb-tier-price-label"><?php esc_html_e( 'per bag', 'party-bag-builder' ); ?></span>
@@ -31,10 +34,11 @@ defined( 'ABSPATH' ) || exit;
 					<p><?php esc_html_e( 'Each bag includes:', 'party-bag-builder' ); ?></p>
 
 					<ul class="pbb-tier-features">
-						<li><?php esc_html_e( 'Lolly, colorful ballon, sticker sheet', 'party-bag-builder' ); ?></li>
-						<li data-wp-text="state.includedToysLabel"></li>
-						<li><?php esc_html_e( 'Optional add-ons', 'party-bag-builder' ); ?></li>
-						<li data-wp-bind--hidden="!state.tierHasFreeNameTag"><?php esc_html_e( '3D-printed name tag', 'party-bag-builder' ); ?></li>
+						<li><?php esc_html_e( 'Lolly, colourful ballon, sticker sheet', 'party-bag-builder' ); ?></li>
+						<template data-wp-each--label="context.tier.label">
+							<li data-wp-text="context.label"></li>
+						</template>
+						<li><?php esc_html_e( 'Optional add-ons available', 'party-bag-builder' ); ?></li>
 					</ul>
 
 					<div class="pbb-tier-total">
@@ -45,26 +49,6 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 				</div>
 			</template>
-		</div>
-
-		<!-- Common Items Preview (shown when tier is selected) -->
-		<div class="pbb-common-items-preview" data-wp-bind--hidden="!state.selectedTier">
-			<h3><?php esc_html_e( 'Each party bag includes the following base items:', 'party-bag-builder' ); ?></h3>
-
-			<?php if ( ! empty( $context['common_items'] ) ) : ?>
-				<div class="pbb-preview-grid">
-					<?php foreach ( $context['common_items'] as $item ) : ?>
-						<div class="pbb-product-card pbb-preview-card">
-							<img src="<?php echo esc_url( $item['image_url'] ); ?>" alt="<?php echo esc_attr( $item['name'] ); ?>">
-							<h4 class="pbb-product-name"><?php echo esc_html( $item['name'] ); ?></h4>
-						</div>
-					<?php endforeach; ?>
-				</div>
-			<?php else : ?>
-				<p class="pbb-empty-message">
-					<?php esc_html_e( 'No common items available at the moment.', 'party-bag-builder' ); ?>
-				</p>
-			<?php endif; ?>
 		</div>
 
 		<div class="pbb-step-navigation">

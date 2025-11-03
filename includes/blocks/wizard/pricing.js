@@ -17,7 +17,7 @@ import { getContext } from '@wordpress/interactivity';
  * @return {Object} Price breakdown with base, addons, total, and addon categorization.
  */
 export function calculatePriceBreakdown( state ) {
-	const { kidCount, tierConfig, selectedAddons, nameTagAddonEnabled } = state;
+	const { kidCount, tierConfig, selectedAddons } = state;
 	const { addons } = getContext();
 
 	// Default breakdown if tier not selected
@@ -44,13 +44,6 @@ export function calculatePriceBreakdown( state ) {
 		const addonPrice = parseFloat( addon.price ) || 0;
 		addonTotal += addonPrice * kidCount;
 	} );
-
-	// Name tags are free on premium tier, $2.50 per kid on basic/medium
-	const NAME_TAG_PRICE = 2.50;
-	const isPremiumTier = tierConfig.id === 'premium';
-	if ( nameTagAddonEnabled && ! isPremiumTier ) {
-		addonTotal += NAME_TAG_PRICE * kidCount;
-	}
 
 	return {
 		base,
